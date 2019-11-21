@@ -1,0 +1,44 @@
+\chapter{Description of the problem and proposed model}
+\par
+Several months ago my friend reached out to me to ask me if I can automate part of his agenda at work. Administration of swimming competitions and creating statistics is repetitive, annoying and error-prone set of tasks. The procedure, nevertheless, almost all the time follows the same pattern.
+\par
+The structure consists of following objects and tasks. Swimming referees belong to clubs, clubs belong to geographical regions. Swimming cups are organised by one specific club. Each Club contains bunch swimming referees and one club manager. When a Cup is up each Swimming referee can sign himself or herself up as available for the Cup. Club manager can sign members of his club for a cup. At the end of the day, organiser of the cup assigns available referees who signed up to positions that he finds the person suitable for. My friend, the chairman of referee committee should be able to perform various other tasks, such as adding/removing users, creating new clubs and modifying all bunch of stuff. Time by the he is going to notify all visitors by posting an information article.
+\par
+The system should have public listing of users, cups, news and individual and club statistics on a year basis. System should allow to browse past years and display stats as well. 
+
+I thought I  
+%%%An~example citation: %\cite{Andel07}
+
+\section{Model of reality}
+
+\subsection*{Post}
+\par
+Post is an informative snippet to be displayed at the homepage to notify other swimmers about new event, or anything worth paying attention to anticipated by the administrator. Homepage can display last 3 posts and should be allowed to load more.
+\subsection*{User}
+\par
+User is an entity modelling swimming referee. A referee participating in these competitions fall in one of three categories. These categories are going to be modelled as swimming referee, manager of swimming club and administrator of SwimmPair application. User must contain informtion to be uniquely identifiable. A person i.e. User in our system is going to have profile information such as first name, family name, email address. Good practice of using an email address as a login information is going to be used here. User must also contain SwimmPair hierarchy listed above and indicator of one's skill and knowledge in the swimming field, i.e. referee category. User must also belong to exactly one club in our system.
+\subsection*{Club}
+\par
+Club is an administrative with attached people to it. Club has specific name, abbrevation and id in Czech Referee Federation. An image can be included as well. A club will be serving as a formal authority on which's behalf is a Cup being organised by a User who is Club manager. Club is unanimously to a region. Statistics regarding performance of members of club at swimming competitions must be implemented. Statistics will have informative maner and should save time instead of keeping track of these things in Excel spreadsheets. 
+\subsection*{Cup}
+Cup is the key object of SwimmPair system in terms of logic. From the perspective of system design this object is as important as other object. A Cup contains name of cup, description of cup, start date, end date and is attached to the organising club. Cups serve two purposes. Firstly, the pairing of signed up referees to positions/(rozpiska) must be generated before the actual cup. Secondly statistics summing up participations for Users and Clubs are going to be calculated for each year over all cups in this time period. Two types of cups must be distinguished from each other. Upcoming cups are displayed on the top, past cups should reside in the archive to be revisited and used for statistics purposes.
+\subsection*{Position}
+Predefined list of single positions necessary for each cup. This list is probably never going to change since there is a fixed set of roles. Referees are going to be assigned to these positions at each cup.
+\subsection*{Region}
+One of the 13 regions of the Czech Republic in which this system is used. Club belongs to specified region. When the SwimmPair is going to be used by more organisations, new region will be added and potential clubs created and attached to this region. 
+\section{Proposed practices}
+Several things how to make application practical easy to use come to my mind. As I was designing the mockup some of the ideas started taking a shape.
+\subsection*{Smooth frontend browsing}
+\par
+Our application should be as much easy to use as possible. There are several options and use cases of JavaScript that can come in handy. Reduction of page reloads is definitely a good way to go. Therefore there are going to be implemented some AJAX functions to obtain data. Functions will modify the DOM based on data received from asynchronous call. 
+\subsection*{Multiple device types}
+\par
+We are certain that there are going to be people who want to browse our system from tabled and a mobile phone. Therefore responsive design is a necessity. Since CSS supports media queries  we are going to use them for creation.
+\subsection*{Assigning referees to positions}
+\par
+Assigning referees to positions at cups should be implemented via drag'n'drop. Dragging a referee, moving referee over the region specified for the positions and releasing mouse button. Double clicking this person is a good way of removing it. This should be easy to use. This approach is not helpful at mobile devices and therefore there is going to be easy to use mobile app.
+\subsection*{Mobile administration}
+Since some things could be done from phone, a phone app without a necessity of web browser will have more native feel. Assigning by drag and drop would be very hazardeous to do with regards to difference between mouse and finger. Also we are not certain that the Events are the same. Therefore full version adminsitrative app should be necessary to be provided.
+\subsection*{Swim colors and lightwave scheme}
+\par
+Red blue and grey are colors that appear pretty much at a swimming pools. We are going to use them in our system as well. The elements should have fresh look and not be heavy.

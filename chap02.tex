@@ -1,0 +1,128 @@
+\chapter{Architecture overview}
+After going thru this section a reader should get a idea of how the whole Our system consists of two logical parts. User part and administration. The underlying parts are the same for these both.
+\par
+When designing the system, an object design and grouping similar functions together is a must. Objects that we have to move around the CMS described in previous chapter are Post, User, Club, Cup, Position and Region. Therefore we came up with a concept of controllers. Each page of SwimmPair is composed of same headerer, menu, footer and the content part is filled with usually results of controller call. These controllers must be distributed for use to all pages.
+\par
+Mobile app is composed separately, however, the communication is meant to be  calls to these controllers with extra layer of encapsulation.
+\section{Controllers}
+Controllers are written to provide API functionality for system administration. These controllers are taking populating or taking input from templated pages.
+\begin{itemize}
+    \item PostsManager
+    \item UsersManager
+    \item ClubsManager
+    \item CupsManager
+    \item PositionsManager
+\end{itemize}
+Controlers are implemented to extract and store data of class by which they are named after. Let's take PostsManager as an example. The Manager is implemented as following.
+\begin{phpcode}
+<?php
+class PostsManager
+{
+    private $mysqli;
+
+    public function __construct(mysqli $mysqli)
+    {
+        $this->mysqli = $mysqli;
+    }
+    public function getPostById($id)
+    {
+        $statement = $this->mysqli->prepare('SELECT id, timestamp, title, content, displayed, author, signed FROM `posts` WHERE id=?');
+        $statement->bind_param('i', $id);
+        return $this->createPostOrNullFromStatement($statement);
+    }
+
+
+
+    
+    public function getLastThreePosts()
+    {
+        $statement = $this->mysqli->prepare('SELECT id, timestamp, title, content, displayed, author, signed FROM posts WHERE displayed=1 ORDER BY id DESC LIMIT 3');
+        $posts = $this->createPostsFromStatement($statement);
+        return $posts;
+    }
+    public function addNewPost($title, $content, $displayed, $author, $signed)
+    { ... }
+    private function createPostOrNullFromStatement(mysqli_stmt $statement)
+    {
+        $statement->execute();
+        $row = $statement->get_result()->fetch_assoc();
+        if ($row !== NULL)
+        {
+            return $this->createPostFromRow($row);
+        }
+        else
+        {
+            return NULL;
+        }
+    }
+    private function createPostsFromStatement(mysqli_stmt $statement)
+    {
+        $statement->execute();
+        $rows = $statement->get_result()->fetch_all(MYSQLI_ASSOC);
+        $posts = [];
+        foreach ($rows as $row)
+        { 
+            $posts[] = $this->createPostFromRow($row);
+        }
+        return $posts;
+    }
+    private function createPostFromRow(array $row)
+    {
+        return new Post($row['id'], $row['timestamp'], $row['title'], $row['content'], $row['displayed'], $row['author'], $row['signed']);
+    }
+    public function updatePost($id, $title, $article)
+    { ... }
+}
+\end{phpcode}
+\section{Start file}
+Start file serves for connecting to database, definition of error handling, sanitization of input and most importantly includes defition of objects and controllers and constructs all controller passing reference to mysqli connection as their ctor argument
+\begin{phpcode}
+$postsManager     = new PostsManager($mysqli);
+$usersManager     = new UsersManager($mysqli);
+$clubsManager     = new ClubsManager($mysqli);
+$cupsManager      = new CupsManager($mysqli);
+$positionsManager = new PositionsManager($mysqli)
+\end{phpcode} 
+\section{Templating of web and administration}
+Each page of public web in / gets assembled from these three prefabricated parts
+\begin{itemize}
+    \item HEADER
+    \item MENU
+    \item page specialization - usually generated from result obtained by a controller call and might be updated by XMLHttpRequest call \& DOM modification
+    \item FOOTER
+\end{itemize}
+Homepage of /admin/profile.php gets assembled with regards to rights the logged user has. The ordering is following: Admin(2)\textgreater Club manager(1)\textgreater Swimming referee(0)
+\begin{itemize}
+    \item ADMIN SUBMENU - 2, 1, 0
+    \item CLUB MANAGER SUBMENU - 1, 0
+    \item SWIMMING REFEREE SUBMENU - 0
+\end{itemize}
+\section{Responsive layout}
+These media queries are used to provide design of the web. CSS design supports mobile devices and printing of cup pairing.
+\begin{itemize}
+    \item Basic CSS design
+    \item @media (max-width: 768px) \{ ... \}
+    \item @media (print) \{ ... \}
+\end{itemize}
+\section{Administrative tasks description}
+These are the tasks we need to perform.
+\begin{itemize}
+    \item Add post
+    \item Edit post
+    \item Add user
+    \item Edit user
+    \item Assign users
+    \item Add cup
+    \item Edit cup
+\end{itemize}    
+Adminn:
+All tasks and Drag n drop hlavne.
+Add post, Edit post
+Add club, Edit club
+Crea
+Manager:
+Rozhodci
+\section{Mobile app for administration}
+\par
+Mobile app was created in Xamarin. Xamarin allows cross-platform mobile development in Csharp.NET and XAML targeting of .NET Standard 2.0. While deploying, Mono runtime is used on both platforms to run the app. Despite some differencies, especially worse runtime support and necessity of AOT compilation at iOS this tool is able to save a lot of time. 
+\section{SESSION and TOKEN provisioning}

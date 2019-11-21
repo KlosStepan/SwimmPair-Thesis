@@ -1,0 +1,162 @@
+\chapter{Implementation}
+Detailed description of all components and  functions here.  
+\begin{csharpcode}
+//UDPHandler Constructor 
+public UDPHandler(String IP, Int32 Port, Int32 Timeout)
+{
+    ServerAddr = IPAddress.Parse(IP);
+    EndPoint = new IPEndPoint(ServerAddr, Port);
+    sock.ReceiveTimeout = Timeout;
+    s = new UdpClient(IP, Port);
+    
+    EncryptionKeyDefault = "YiyM/f2zNq5GkVmiUMJ8qVACaPaBBo5AJRqkIH9cgd4=";
+    EncryptionIVDefault = "tLafaj6+1YCiIIvbMO7iN/9QVLK1PPjRzARR9Fsh82c=";
+}
+\end{csharpcode}
+PHP Code
+\begin{phpcode}
+<?php
+class Payload
+{
+    public $Nth;
+    public $outOfN;
+    public $content;
+    //konstruktor
+    public function __construct($Nth, $outOfN, $content)
+    {
+        $this->Nth = $Nth;
+        $this->outOfN = $outOfN;
+        $this->content = $content;
+    }
+}
+?>
+\end{phpcode}
+
+\section{Database design}
+dbd
+\subsection{Object tables}
+\subsection{Relationship tables}
+\subsection{Schema}
+Export a picture here.
+\section{Controllers documentation}
+\par These five controllers are used followingly
+\subsection{PostsManager.php}
+\begin{itemize}
+  \setlength\itemsep{0em}
+  \item \underline{Post} $\vert$ null $\leftarrow$ \textbf{getPostById}(\$id) $\searrow$ createPostOrNullFromStatement(\$stmt) $\searrow$ createPostFromRow(\$row)
+  \item \underline{Post[]} $\vert$ null $\leftarrow$ \textbf{getLastThreePosts}() $\searrow$ createPostsFromStatement() $\searrow$ createPostFromRow(\$row)
+  \item \underline{Post[]} $\vert$ null $\leftarrow$ \textbf{getLastNPosts}(\$N) $\searrow$ createPostsFromStatement() $\searrow$ createPostFromRow(\$row)
+  \item \underline{true} $\vert$ false $\leftarrow$ \textbf{addNewPost}(\$title, \$content)
+  \item \underline{Post[]} $\vert$ false $\leftarrow$ \textbf{findAllPostsOrderedByIdDesc}() $\searrow$ createPostsFromStatement(\$stmt) $\searrow$ createPostFromRow(\$row)
+  \item \underline{true} $\vert$ false $\leftarrow$ \textbf{updatePost}(\$id, \$title, \$article)
+\end{itemize}
+\subsection{UsersManager.php}
+\begin{itemize}
+  \setlength\itemsep{0em}
+  \item \underline{User} $\vert$ null $\leftarrow$ \textbf{getUserById}(\$id) $\searrow$ createUserOrNullFromStatement(\$stmt) $\searrow$ createUserFromRow(\$row)
+  \item \underline{User[]} $\vert$ null $\leftarrow$ \textbf{findAllActiveUsersOrderByLastNameDesc} $\searrow$ createUsersFromStatement(\$stmt) $\hookrightarrow$ createUserFromRow (\$row)
+  \item \underline{User[]} $\vert$ null $\leftarrow$ \textbf{findAllInactiveUsersOrderByLastNameDesc} $\searrow$ createUsersFromStatement(\$stmt) $\hookrightarrow$ createUserFromRow (\$row)
+  \item \underline{User[]} $\vert$ null $\leftarrow$ \textbf{findAllRegisteredComradesForTheCup}(\$cupID, \$teamID) $\searrow$ createUsersFromStatement(\$stmt) $\hookrightarrow$ createUserFromRow (\$row)
+  \item \underline{User[]} $\vert$ null $\leftarrow$ \textbf{findAllComrades}(\$teamID) $\searrow$ createUsersFromStatement(\$stmt) $\hookrightarrow$ createUserFromRow(\$row)
+  \item \underline{User[]} $\vert$ null $\leftarrow$ \textbf{findAllRegisteredUsersForTheCup}(\$cupID) $\searrow$ createUsersFromStatement(\$stmt) $\hookrightarrow$ createUserFromRow(\$row)
+  \item \underline{User[]} $\vert$ null $\leftarrow$ \textbf{findAllNametagsForTheCup}(\$cupID) $\searrow$ createUsersFromStatement(\$stmt) $\hookrightarrow$ createUserFromRow(\$row)
+  \item \underline{User[]} $\vert$ null $\leftarrow$ \textbf{findPairedUsersOnCupForPosition}(\$cupID, \$posID) $\searrow$ createUsersFromStatement(\$stmt) $\hookrightarrow$ createUserFromRow(\$row)
+  \item \underline{Pair[]} $\vert$ null $\leftarrow$ \textbf{findPairedPozIDUserIDOnCup}(\$cupID) $\searrow$ createPairsFromStatement(\$stmt) $\hookrightarrow$ createPairFromRow(\$row)
+  \item \underline{string} $\vert$ null $\leftarrow$ \textbf{getClubAbbreviationByAffiliationId}(\$id) $\searrow$ getSingleResultFromStatement(\$stmt)
+  \item \underline{string} $\vert$ null $\leftarrow$ \textbf{getUserFullNameById}(\$id) $\searrow$ getSingleResultFromTwoColsStatement(\$stmt)
+  \item \underline{true} $\vert$ \underline{false} $\leftarrow$ \textbf{userWithEmailExists}(\$email)
+  \item \underline{true} $\vert$ false $\leftarrow$ \textbf{registerUserFromAdmin}(\$first\_name, \$last\_name, \$email, \$password, \$rights, \$klubaffil)
+  \item \underline{true} $\vert$ false $\leftarrow$ \textbf{sendYouWereRegisteredFromAdmin}(\$email, \$password)
+  \item \underline{true} $\vert$ false $\leftarrow$ \textbf{approveUser}(\$userID)
+  \item \underline{true} $\vert$ false $\leftarrow$ \textbf{updatePairing}(\$JSON) //TBReimplemented in controller
+  \item \underline{true} $\vert$ false $\leftarrow$ \textbf{registerUserFromAdminWrap}(\$first\_name, \$last\_name, \$email, \$password, \$prava, \$klub) check, register if possible ($\searrow$ true(not registering) | \underline{false} $\leftarrow$ userWithEmailExists(\$email) | $\searrow$ registerUserFromAdmin(\$first\_name, \$last\_name, \$email, \$password, \$prava, \$klub))
+  \item \underline{token(Action::SUCC, -creds-)} $\vert$ token(Action::UNFOUND, -null-) | token(Action::WRONGCRED, -null-) $\leftarrow$ \textbf{loginFromXamarin}(\$username, \$password)
+\end{itemize}
+\subsection{ClubsManager.php}
+\begin{itemize}
+  \setlength\itemsep{0em}
+  \item \underline{Club} | null $\leftarrow$ \textbf{getClubById}(\$id) $\searrow$ createClubFromStatement(\$stmt) $\searrow$ createClubFromRow(\$row)
+  \item \underline{Club []} | null $\leftarrow$ \textbf{findAllClubs}() $\searrow$ createClubsFromStatement(\$stmt) $\hookrightarrow$ createClubFromRow(\$row)
+\end{itemize}
+\subsection{CupsManager.php}
+\begin{itemize}
+  \setlength\itemsep{0em}
+  \item \underline{Cup[]} $\vert$ null $\leftarrow$ \textbf{findAllUpcomingCupsEarliestFirst}() $\searrow$ createCupsFromStatement(\$stmt) $\hookrightarrow$ createCupFromRow(\$row)
+  \item \underline{Cup[]} $\vert$ null $\leftarrow$ \textbf{findAllPastCupsMostRecentFirst}() $\searrow$ createCupsFromStatement(\$stmt) $\hookrightarrow$ createCupFromRow(\$row)
+  \item \underline{string} $\vert$ null  $\leftarrow$ \textbf{getCupNameById}(\$id) $\searrow$ getSingleResultFromStatement(\$stmt) $\searrow$ getSingleResultFromStatement (\$stmt)
+  \item \underline{Cup} $\vert$ null  $\leftarrow$  \textbf{getCupById}(\$id) $\searrow$ createCupOrNullFromStatement(\$stmt)  $\searrow$ createCupFromRow(\$row)
+  \item \underline{Pair[]} $\vert$ null $\leftarrow$  \textbf{findPairingsForThisCup}(\$id) $\searrow$ createPairsFromStatement(\$stmt) $\hookrightarrow$ createPairFromRow(\$row)
+  \item \underline{true} $\vert$ false $\leftarrow$  \textbf{insertNewCupFromAdmin}(\$name, \$date, \$club, \$content)
+  \item \underline{true} $\vert$ \underline{false} $\leftarrow$  \textbf{isUserAvailableForTheCup}(\$userID, \$cupID)
+  \item \underline{true} $\vert$ false $\leftarrow$  \textbf{updatePairingForThisCup}(\$cupID, \$json)
+  \item \underline{true} $\vert$ false $\leftarrow$  \textbf{updateAvailabilityForThisCup}(\$cupID, \$json)
+  \item \underline{true} $\vert$ false $\leftarrow$  \textbf{addAvailableUserForTheCup}(\$cupID, \$userID)
+\end{itemize}
+\subsection{PositionsManager.php}
+\begin{itemize}
+  \setlength\itemsep{0em}
+  \item \underline{Position[]} $\vert$ null $\leftarrow$  \textbf{findAllPositions}() $\searrow$ createPositionsFromStatement(\$stmt) $\hookrightarrow$ createPositionFromRow(\$row)
+  \item \underline{string} $\vert$ null $\leftarrow$ \textbf{getPositionNameById}(\$id) $\searrow$ getSingleResultFromStatement(\$stmt)
+\end{itemize}
+\section{Application structure}
+\subsection*{User part of the system}
+\begin{itemize}
+    \item index.php - Aktuality
+    \item \#\# - Závody
+    \begin{itemize}
+        \item nadchazejici.php -\textgreater zavod.php
+        \item archiv.php -\textgreater zavod.php
+    \end{itemize} 
+    \item \#\# - Rozhodčí
+    \begin{itemize}
+        \item lide.php -\textgreater clovek.php
+        \item kluby.php -\textgreater klub.php
+    \end{itemize} 
+    \item pravidla/ - Pravidla   
+    \item kontakty.php - Kontakty
+\end{itemize}
+\subsection*{User part of the system} 
+Administration
+\begin{itemize}
+    \item pridat\textunderscore aktualitu.php - PŘIDAT AKTUALITU 
+    \item editovat\textunderscore aktuality.php - EDITOVAT AKTUALITY -\textgreater editovat\textunderscore aktualitu.php
+    \item nove\textunderscore registrovani.php - SCHVÁLIT NOVÉ LIDI 
+    \item zaregistrovat\textunderscore uzivatele.php - ZAREGISTROVAT ČLOVĚKA
+    \item editovat\textunderscore profily.php EDITOVAT ČLOVĚKA -\textgreater editovat\textunderscore profil.php
+    \item novy\textunderscore klub.php NOVÝ KLUB
+    \item sprava\textunderscore klubu.php - EDITOVAT KLUB -\textgreater editovat\textunderscore klub.php
+    \item novy\textunderscore kraj.php PŘIDAT KRAJ
+    \item sprava\textunderscore kraju.php SPRÁVA KRAJŮ -\textgreater editovat\textunderscore kraj.php
+    \item konfigurace\textunderscore statistik.php - KONFIGURACE STATISTIK
+    \item editovat\textunderscore stranku?id=1 - EDITOVAT KONTAKTY
+\end{itemize}      
+My Club
+\begin{itemize}
+    \item pridat\textunderscore zavod.php - PŘÍDAT ZÁVOD
+    \item prihlasit\textunderscore moje\textunderscore lidi.php - PŘIHLÁÍSIT LIDI Z MÉHO -\textgreater prihlasit\textunderscore moje\textunderscore lidi\textunderscore na.php
+\end{itemize} 
+Me referee
+\begin{itemize}
+    \item sebe\textunderscore na\textunderscore zavod.php - PŘIHLÁSIT SE NA ZÁVOD -\textgreater prihlasit\textunderscore se\textunderscore na.php
+\end{itemize}    
+\section{JavaScript functions documentation}
+Several cool features for the web to make it more useful are described here.
+\subsection*{XMLHttpRequest/}
+\begin{itemize}
+    \item getarticleid.php, \textbf{GET args}: id
+    \item getpersonstatisticsfortheseason.php, \textbf{GET args}: user\textunderscore id, year
+    \item getclubstatisticsfortheseason.php, \textbf{GET args}: club\textunderscore id, year
+\end{itemize}
+\subsection{Previous post}
+This button on the main page serves as a tool for loading next post. This button has onclick="GetPostAppendPost(PushLastID())". These are both JavaScript functions, PushLastID() detects id "I" of last post from DOM by query and returns it. This value is then used as an argument of call GetPostAppendPost(I). This function requests article by opening GET request XMLHttpRequest/getarticleid?id="I". If result is null, button is deleted since there are no other articles to pull from DB. Otherwise next article is constructed.
+\subsection{Personal statistics change year}
+All individual referees have season picker when opened. Default season is this season. Clicking different season visibily changes selected year and obtains statistics and updates the table. Clicking onclick="processPersonForTheSeason(user-id, updatePairingForThisCup)" calls communicateStatsXHRAndPopulateStats(user-id, year) which gets data from XMLHttpRequest/getpersonstatisticsfortheseason. 
+\subsection{Club statistics change year}
+Club statistics are updated by clicking appropriate year, which gets visibly switched. Year onclick calls processClubForTheSeason(club-id, this) which gets statistics by calling communicateClubStatisticsXMHAndPopulateTable(club-id, year) which gets data by calling XMLHttpRequest/getclubstatisticsfortheseason and subsequently calling refreshClubStatsInTheTable(returnedGetJSON) which literally puts the stats in.
+\subsection{Filtering referees}
+This function is triggered by one of these: KrajPickerTapped(this), TridaPickerTapped(this) or SearchPerformed(). Each one calls FilterRozhodci("kraje", "tridy", "inputTrida", "nopplfound"). We then loop all people visible/hidden and check if this one's Region IsPermissible(args[]), then if one's Class IsPermissible(args[]) and then if one's IsNamePermissible(args[]). We then set one element style to style="" and continue cycle execution. If we fail one of these three conditions we proceed to code below which sets element style to style="display:none". After the cycle when check the aux variable and if our query is indeed empty we write it for the user.
+\par
+This long procedure gets triggered and subsequently executed everytime region, class or name is changed. Performance should be fine here since the algorithm is dependent on human input. 
+\section{Mobile app structure}
+Phone version of our administration follows the same structure. All objects are same, including data type, which have to be explicitly defined, unline in PHP.
+\section{Mobile app communication}
