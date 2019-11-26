@@ -43,78 +43,109 @@ Export a picture here.
 \subsection{PostsManager.php}
 \begin{itemize}
   \setlength\itemsep{0em}
-  \item \underline{Post} $\vert$ null $\leftarrow$ \textbf{getPostById}(\$id) $\searrow$ createPostOrNullFromStatement(\$stmt) $\searrow$ createPostFromRow(\$row)
-  \item \underline{Post[]} $\vert$ null $\leftarrow$ \textbf{getLastThreePosts}() $\searrow$ createPostsFromStatement() $\searrow$ createPostFromRow(\$row)
-  \item \underline{Post[]} $\vert$ null $\leftarrow$ \textbf{getLastNPosts}(\$N) $\searrow$ createPostsFromStatement() $\searrow$ createPostFromRow(\$row)
-  \item \underline{true} $\vert$ false $\leftarrow$ \textbf{addNewPost}(\$title, \$content)
-  \item \underline{Post[]} $\vert$ false $\leftarrow$ \textbf{findAllPostsOrderedByIdDesc}() $\searrow$ createPostsFromStatement(\$stmt) $\searrow$ createPostFromRow(\$row)
-  \item \underline{true} $\vert$ false $\leftarrow$ \textbf{updatePost}(\$id, \$title, \$article)
+  \item \underline{Post} $\vert$ null $\leftarrow$ \textbf{GetPostById}(\$id) $\searrow$ \_CreatePostOrNullFromStatement(\$stmt) $\searrow$ \_CreatePostFromRow(\$row)
+  \item \underline{Post[]} $\vert$ null $\leftarrow$ \textbf{GetLastThreePosts}() $\searrow$ \_CreatePostsFromStatement() $\searrow$ \_CreatePostFromRow(\$row)
+  \item \underline{Post[]} $\vert$ null $\leftarrow$ \textbf{GetLastNPosts}(\$N) $\searrow$ \_CreatePostsFromStatement() $\searrow$ \_CreatePostFromRow(\$row)
+  \item \underline{true} $\vert$ false $\leftarrow$ \textbf{AddNewPost}(\$title, \$content)
+  \item \underline{Post[]} $\vert$ false $\leftarrow$ \textbf{FindAllPostsOrderedByIdDesc}() $\searrow$ \_CreatePostsFromStatement(\$stmt) $\searrow$ \_CreatePostFromRow(\$row)
+  \item \underline{true} $\vert$ false $\leftarrow$ \textbf{UpdatePost}(\$id, \$title, \$article)
 \end{itemize}
 \subsection{UsersManager.php}
 \begin{itemize}
   \setlength\itemsep{0em}
-  \item \underline{User} $\vert$ null $\leftarrow$ \textbf{getUserById}(\$id) $\searrow$ createUserOrNullFromStatement(\$stmt) $\searrow$ createUserFromRow(\$row)
-  \item \underline{User[]} $\vert$ null $\leftarrow$ \textbf{findAllActiveUsersOrderByLastNameDesc} $\searrow$ createUsersFromStatement(\$stmt) $\hookrightarrow$ createUserFromRow (\$row)
-  \item \underline{User[]} $\vert$ null $\leftarrow$ \textbf{findAllInactiveUsersOrderByLastNameDesc} $\searrow$ createUsersFromStatement(\$stmt) $\hookrightarrow$ createUserFromRow (\$row)
-  \item \underline{User[]} $\vert$ null $\leftarrow$ \textbf{findAllRegisteredComradesForTheCup}(\$cupID, \$teamID) $\searrow$ createUsersFromStatement(\$stmt) $\hookrightarrow$ createUserFromRow (\$row)
-  \item \underline{User[]} $\vert$ null $\leftarrow$ \textbf{findAllComrades}(\$teamID) $\searrow$ createUsersFromStatement(\$stmt) $\hookrightarrow$ createUserFromRow(\$row)
-  \item \underline{User[]} $\vert$ null $\leftarrow$ \textbf{findAllRegisteredUsersForTheCup}(\$cupID) $\searrow$ createUsersFromStatement(\$stmt) $\hookrightarrow$ createUserFromRow(\$row)
-  \item \underline{User[]} $\vert$ null $\leftarrow$ \textbf{findAllNametagsForTheCup}(\$cupID) $\searrow$ createUsersFromStatement(\$stmt) $\hookrightarrow$ createUserFromRow(\$row)
-  \item \underline{User[]} $\vert$ null $\leftarrow$ \textbf{findPairedUsersOnCupForPosition}(\$cupID, \$posID) $\searrow$ createUsersFromStatement(\$stmt) $\hookrightarrow$ createUserFromRow(\$row)
-  \item \underline{Pair[]} $\vert$ null $\leftarrow$ \textbf{findPairedPozIDUserIDOnCup}(\$cupID) $\searrow$ createPairsFromStatement(\$stmt) $\hookrightarrow$ createPairFromRow(\$row)
-  \item \underline{string} $\vert$ null $\leftarrow$ \textbf{getClubAbbreviationByAffiliationId}(\$id) $\searrow$ getSingleResultFromStatement(\$stmt)
-  \item \underline{string} $\vert$ null $\leftarrow$ \textbf{getUserFullNameById}(\$id) $\searrow$ getSingleResultFromTwoColsStatement(\$stmt)
-  \item \underline{true} $\vert$ \underline{false} $\leftarrow$ \textbf{userWithEmailExists}(\$email)
-  \item \underline{true} $\vert$ false $\leftarrow$ \textbf{registerUserFromAdmin}(\$first\_name, \$last\_name, \$email, \$password, \$rights, \$klubaffil)
-  \item \underline{true} $\vert$ false $\leftarrow$ \textbf{sendYouWereRegisteredFromAdmin}(\$email, \$password)
-  \item \underline{true} $\vert$ false $\leftarrow$ \textbf{approveUser}(\$userID)
-  \item \underline{true} $\vert$ false $\leftarrow$ \textbf{updatePairing}(\$JSON) //TBReimplemented in controller
-  \item \underline{true} $\vert$ false $\leftarrow$ \textbf{registerUserFromAdminWrap}(\$first\_name, \$last\_name, \$email, \$password, \$prava, \$klub) check, register if possible ($\searrow$ true(not registering) | \underline{false} $\leftarrow$ userWithEmailExists(\$email) | $\searrow$ registerUserFromAdmin(\$first\_name, \$last\_name, \$email, \$password, \$prava, \$klub))
+  \item \underline{User} $\vert$ null $\leftarrow$ \textbf{GetUserById}(\$id) $\searrow$ \_CreateUserOrNullFromStatement(\$stmt) $\searrow$ \_CreateUserFromRow(\$row)
+  \item \underline{User[]} $\vert$ null $\leftarrow$ \textbf{FindAllActiveUsersOrderByLastNameDesc} $\searrow$ \_CreateUsersFromStatement(\$stmt) $\hookrightarrow$ \_CreateUserFromRow (\$row)
+  \item \underline{User[]} $\vert$ null $\leftarrow$ \textbf{FindAllInactiveUsersOrderByLastNameDesc} $\searrow$ \_CreateUsersFromStatement(\$stmt) $\hookrightarrow$ \_CreateUserFromRow (\$row)
+  \item \underline{User[]} $\vert$ null $\leftarrow$ \textbf{FindAllRegisteredComradesForTheCup}(\$cupID, \$teamID) $\searrow$ \_CreateUsersFromStatement(\$stmt) $\hookrightarrow$ \_CreateUserFromRow (\$row)
+  \item \underline{User[]} $\vert$ null $\leftarrow$ \textbf{FindAllComrades}(\$teamID) $\searrow$ \_CreateUsersFromStatement(\$stmt) $\hookrightarrow$ \_CreateUserFromRow(\$row)
+  \item \underline{User[]} $\vert$ null $\leftarrow$ \textbf{FindAllRegisteredUsersForTheCup}(\$cupID) $\searrow$ \_CreateUsersFromStatement(\$stmt) $\hookrightarrow$ \_CreateUserFromRow(\$row)
+  \item \underline{User[]} $\vert$ null $\leftarrow$ \textbf{FindAllNametagsForTheCup}(\$cupID) $\searrow$ \_CreateUsersFromStatement(\$stmt) $\hookrightarrow$ \_CreateUserFromRow(\$row)
+  \item \underline{User[]} $\vert$ null $\leftarrow$ \textbf{FindPairedUsersOnCupForPosition}(\$cupID, \$posID) $\searrow$ \_CreateUsersFromStatement(\$stmt) $\hookrightarrow$ \_CreateUserFromRow(\$row)
+  \item \underline{Pair[]} $\vert$ null $\leftarrow$ \textbf{FindPairedPozIDUserIDOnCup}(\$cupID) $\searrow$ \_CreatePairsFromStatement(\$stmt) $\hookrightarrow$ \_CreatePairFromRow(\$row)
+  \item \underline{string} $\vert$ null $\leftarrow$ \textbf{GetClubAbbreviationByAffiliationId}(\$id) $\searrow$ \_GetSingleResultFromStatement(\$stmt)
+  \item \underline{string} $\vert$ null $\leftarrow$ \textbf{GetUserFullNameById}(\$id) $\searrow$ \_GetSingleResultFromTwoColsStatement(\$stmt)
+  \item \underline{true} $\vert$ \underline{false} $\leftarrow$ \textbf{UserWithEmailExists}(\$email)
+  \item \underline{true} $\vert$ false $\leftarrow$ \textbf{RegisterUserFromAdmin}(\$first\_name, \$last\_name, \$email, \$password, \$rights, \$klubaffil)
+  \item \underline{true} $\vert$ false $\leftarrow$ \textbf{SendYouWereRegisteredFromAdmin}(\$email, \$password)
+  \item \underline{true} $\vert$ false $\leftarrow$ \textbf{ApproveUser}(\$userID)
+  \item \underline{true} $\vert$ false $\leftarrow$ \textbf{UpdatePairing}(\$JSON) //TBReimplemented in controller
+  \item \underline{true} $\vert$ false $\leftarrow$ \textbf{RegisterUserFromAdminWrap}(\$first\_name, \$last\_name, \$email, \$password, \$prava, \$klub) check, register if possible ($\searrow$ true(not registering) | \underline{false} $\leftarrow$ userWithEmailExists(\$email) | $\searrow$ registerUserFromAdmin(\$first\_name, \$last\_name, \$email, \$password, \$prava, \$klub))
   \item \underline{token(Action::SUCC, -creds-)} $\vert$ token(Action::UNFOUND, -null-) | token(Action::WRONGCRED, -null-) $\leftarrow$ \textbf{loginFromXamarin}(\$username, \$password)
 \end{itemize}
 \subsection{ClubsManager.php}
 \begin{itemize}
   \setlength\itemsep{0em}
-  \item \underline{Club} | null $\leftarrow$ \textbf{getClubById}(\$id) $\searrow$ createClubFromStatement(\$stmt) $\searrow$ createClubFromRow(\$row)
-  \item \underline{Club []} | null $\leftarrow$ \textbf{findAllClubs}() $\searrow$ createClubsFromStatement(\$stmt) $\hookrightarrow$ createClubFromRow(\$row)
+  \item \underline{Club} | null $\leftarrow$ \textbf{GetClubById}(\$id) $\searrow$ \_CreateClubFromStatement(\$stmt) $\searrow$ \_CreateClubFromRow(\$row)
+  \item \underline{Club []} | null $\leftarrow$ \textbf{FindAllClubs}() $\searrow$ \_CreateClubsFromStatement(\$stmt) $\hookrightarrow$ \_CsreateClubFromRow(\$row)
 \end{itemize}
 \subsection{CupsManager.php}
 \begin{itemize}
   \setlength\itemsep{0em}
-  \item \underline{Cup[]} $\vert$ null $\leftarrow$ \textbf{findAllUpcomingCupsEarliestFirst}() $\searrow$ createCupsFromStatement(\$stmt) $\hookrightarrow$ createCupFromRow(\$row)
-  \item \underline{Cup[]} $\vert$ null $\leftarrow$ \textbf{findAllPastCupsMostRecentFirst}() $\searrow$ createCupsFromStatement(\$stmt) $\hookrightarrow$ createCupFromRow(\$row)
-  \item \underline{string} $\vert$ null  $\leftarrow$ \textbf{getCupNameById}(\$id) $\searrow$ getSingleResultFromStatement(\$stmt) $\searrow$ getSingleResultFromStatement (\$stmt)
-  \item \underline{Cup} $\vert$ null  $\leftarrow$  \textbf{getCupById}(\$id) $\searrow$ createCupOrNullFromStatement(\$stmt)  $\searrow$ createCupFromRow(\$row)
-  \item \underline{Pair[]} $\vert$ null $\leftarrow$  \textbf{findPairingsForThisCup}(\$id) $\searrow$ createPairsFromStatement(\$stmt) $\hookrightarrow$ createPairFromRow(\$row)
-  \item \underline{true} $\vert$ false $\leftarrow$  \textbf{insertNewCupFromAdmin}(\$name, \$date, \$club, \$content)
-  \item \underline{true} $\vert$ \underline{false} $\leftarrow$  \textbf{isUserAvailableForTheCup}(\$userID, \$cupID)
-  \item \underline{true} $\vert$ false $\leftarrow$  \textbf{updatePairingForThisCup}(\$cupID, \$json)
-  \item \underline{true} $\vert$ false $\leftarrow$  \textbf{updateAvailabilityForThisCup}(\$cupID, \$json)
-  \item \underline{true} $\vert$ false $\leftarrow$  \textbf{addAvailableUserForTheCup}(\$cupID, \$userID)
+  \item \underline{Cup[]} $\vert$ null $\leftarrow$ \textbf{FindAllUpcomingCupsEarliestFirst}() $\searrow$ \_CreateCupsFromStatement(\$stmt) $\hookrightarrow$ \_CreateCupFromRow(\$row)
+  \item \underline{Cup[]} $\vert$ null $\leftarrow$ \textbf{FindAllPastCupsMostRecentFirst}() $\searrow$ \_CreateCupsFromStatement(\$stmt) $\hookrightarrow$ \_CreateCupFromRow(\$row)
+  \item \underline{string} $\vert$ null  $\leftarrow$ \textbf{GetCupNameById}(\$id) $\searrow$ \_GetSingleResultFromStatement(\$stmt) $\searrow$ \_GetSingleResultFromStatement (\$stmt)
+  \item \underline{Cup} $\vert$ null  $\leftarrow$  \textbf{GetCupById}(\$id) $\searrow$ \_CreateCupOrNullFromStatement(\$stmt)  $\searrow$ \_CreateCupFromRow(\$row)
+  \item \underline{Pair[]} $\vert$ null $\leftarrow$  \textbf{FindPairingsForThisCup}(\$id) $\searrow$ \_CreatePairsFromStatement(\$stmt) $\hookrightarrow$ \_CreatePairFromRow(\$row)
+  \item \underline{true} $\vert$ false $\leftarrow$  \textbf{InsertNewCupFromAdmin}(\$name, \$date, \$club, \$content)
+  \item \underline{true} $\vert$ \underline{false} $\leftarrow$  \textbf{IsUserAvailableForTheCup}(\$userID, \$cupID)
+  \item \underline{true} $\vert$ false $\leftarrow$  \textbf{UpdatePairingForThisCup}(\$cupID, \$json)
+  \item \underline{true} $\vert$ false $\leftarrow$  \textbf{UpdateAvailabilityForThisCup}(\$cupID, \$json)
+  \item \underline{true} $\vert$ false $\leftarrow$  \textbf{AddAvailableUserForTheCup}(\$cupID, \$userID)
 \end{itemize}
 \subsection{PositionsManager.php}
 \begin{itemize}
   \setlength\itemsep{0em}
-  \item \underline{Position[]} $\vert$ null $\leftarrow$  \textbf{findAllPositions}() $\searrow$ createPositionsFromStatement(\$stmt) $\hookrightarrow$ createPositionFromRow(\$row)
-  \item \underline{string} $\vert$ null $\leftarrow$ \textbf{getPositionNameById}(\$id) $\searrow$ getSingleResultFromStatement(\$stmt)
+  \item \underline{Position[]} $\vert$ null $\leftarrow$  \textbf{FindAllPositions}() $\searrow$ \_CreatePositionsFromStatement(\$stmt) $\hookrightarrow$ \_CreatePositionFromRow(\$row)
+  \item \underline{string} $\vert$ null $\leftarrow$ \textbf{GetPositionNameById}(\$id) $\searrow$ \_GetSingleResultFromStatement(\$stmt)
 \end{itemize}
 \section{Application structure}
 \subsection*{User part of the system}
-\begin{itemize}
-    \item index.php - Aktuality
-    \item \#\# - Závody
-    \begin{itemize}
-        \item nadchazejici.php -\textgreater zavod.php
-        \item archiv.php -\textgreater zavod.php
-    \end{itemize} 
-    \item \#\# - Rozhodčí
-    \begin{itemize}
-        \item lide.php -\textgreater clovek.php
-        \item kluby.php -\textgreater klub.php
-    \end{itemize} 
-    \item pravidla/ - Pravidla   
-    \item kontakty.php - Kontakty
-\end{itemize}
+Whole system must be running on Czech URLs for convinience reasons of administrators. English equivalents are attached. 
+\newline
+\begin{forest}
+  for tree={
+    font=\ttfamily,
+    grow'=0,
+    child anchor=west,
+    parent anchor=south,
+    anchor=west,
+    calign=first,
+    edge path={
+      \noexpand\path [draw, \forestoption{edge}]
+      (!u.south west) +(7.5pt,0) |- node[fill,inner sep=1.25pt] {} (.child anchor)\forestoption{edge label};
+    },
+    before typesetting nodes={
+      if n=1
+        {insert before={[,phantom]}}
+        {}
+    },
+    fit=band,
+    before computing xy={l=15pt},
+  }
+[SwimmPair
+  [Aktuality index.php \char`\~Posts\char`\~]
+  [Zavody \char`\~Cups\char`\~
+    [nadchazejici.php \char`\~upcoming.php\char`\~
+      [zavod.php \char`\~cup.php\char`\~]
+    ]
+    [archiv.php \char`\~archive.php\char`\~
+      [zavod.php \char`\~cup.php\char`\~] 
+    ]
+  ]
+  [Rozhodci \char`\~Referees\char`\~
+    [lide.php \char`\~users.php\char`\~
+      [clovek.php \char`\~user.php\char`\~]
+    ]
+    [kluby.php \char`\~clubs.php\char`\~
+      [klub.php \char`\~ club.php\char`\~]
+    ]
+  ]
+  [/pravidla/index.php \char`\~/rules/index.php\char`\~]
+  [kontakty.php \char`\~contacts.php\char`\~]
+  [/admin/index.php]
+]
+\end{forest}
+
 \subsection*{User part of the system} 
 Administration
 \begin{itemize}
