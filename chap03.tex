@@ -1,5 +1,5 @@
 \chapter{Implementation}
-DDetailed description of all components and  functions here.  
+Detailed description of all components and  functions here.  
 \begin{csharpcode}
 //UDPHandler Constructor 
 public UDPHandler(String IP, Int32 Port, Int32 Timeout)
@@ -34,6 +34,8 @@ class Payload
 
 \section{Database design}
 For this purposes a well defined database is a necessity. In this chapter we're going to learn how the proposed objects are represented, how relations between these objects are maintaned and what information tables exist. Later one we're gonna present a schema.
+\subsection{Schema}
+\includegraphics[scale=0.45]{imgs/schema}
 \subsection{Object tables}
 These are the tables in database modeling the object to satisfy the pripary motivation defined as a problem paradigm. These rows are then being converted to objects and returned to user by an apporpiate manager.
 \subsubsection*{sp\_posts}
@@ -242,8 +244,7 @@ This table stores pairing information about available referees/users on position
 \subsection{Content adjustment tables}
 Stats positions
 Pages
-\subsection{Schema}
-Export a picture here.
+
 \section{Controllers documentation}
 \par These five controllers work with objects and provide some login (i.e. joining more tables in varios ways)
 \subsection{PostsManager.php}

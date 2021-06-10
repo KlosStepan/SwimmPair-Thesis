@@ -1,39 +1,39 @@
-\chapter{Description of the problem and proposed model}
+\chapter{Description of problem and proposed solution}
+This section is an introduction into problem, how the proposed solution looks like and what practices are used in the SwimmPair system. 
+\section{Problem}
 \par
-Several months ago my friend reached out to me to ask me if I can automate part of his agenda at work. Administration of swimming competitions and creating statistics is repetitive, annoying and error-prone set of tasks. The procedure, nevertheless, almost all the time follows the same pattern.
+A friend of mine reached out to me to ask me if I can automate part of his agenda at work. Administration of swimming competitions and creating statistics is a repetitive and error-prone array of tasks. However, almost all the tasks from organisation perspective are executed in the same order.
 \par
-The structure consists of following objects and tasks. Swimming referees belong to clubs, clubs belong to geographical regions. Swimming cups are organised by one specific club. Each Club contains bunch swimming referees and one club manager. When a Cup is up each Swimming referee can sign himself or herself up as available for the Cup. Club manager can sign members of his club for a cup. At the end of the day, organiser of the cup assigns available referees who signed up to positions that he finds the person suitable for. My friend, the chairman of referee committee should be able to perform various other tasks, such as adding/removing users, creating new clubs and modifying all bunch of stuff. Time by the he is going to notify all visitors by posting an information article.
+The Czech Swimming Federation structure has to be modeled as objects in the application/database records as a storage. Thus the logical structure is following. Swimming referees belong to clubs, clubs are located in geographical regions. Swimming cup is organised by a club. Each Club contains several swimming referees and one of them is a club manager. When a Cup is online each Swimming referee can sign himself or herself up as available for the Cup. Club manager can also sign members of his club for a cup. At the end of the day, organiser of the cup assigns available referees that signed up to positions that he finds them suitable for. My friend, the chairman of referee committee should be able to perform additional administrative other tasks, such as adding/removing users, creating new clubs and modifying whole structure. Administrator can notify all visitors by posting an information psa on homepage.
 \par
-The system should have public listing of users, cups, news and individual and club statistics on a year basis. System should allow to browse past years and display stats as well. 
+The SwimmPair system should have public listing of users, cups, news and individual and club statistics on a yearly basis. System should allow to browse stats on yearly basis. 
 
-I thought I  
 %%%An~example citation: %\cite{Andel07}
 
-\section{Model of reality}
-
-\subsection*{Post}
-\par
-Post is an informative snippet to be displayed at the homepage to notify other swimmers about new event, or anything worth paying attention to anticipated by the administrator. Homepage can display last 3 posts and should be allowed to load more.
-\subsection*{User}
-\par
-User is an entity modelling swimming referee. A referee participating in these competitions fall in one of three categories. These categories are going to be modelled as swimming referee, manager of swimming club and administrator of SwimmPair application. User must contain informtion to be uniquely identifiable. A person i.e. User in our system is going to have profile information such as first name, family name, email address. Good practice of using an email address as a login information is going to be used here. User must also contain SwimmPair hierarchy listed above and indicator of one's skill and knowledge in the swimming field, i.e. referee category. User must also belong to exactly one club in our system.
+\section{Modelling}
+\subsection*{Cup}
+Cup is a key object of SwimmPair. A Cup contains name, description, date and is attached to the organising club. Cup serves two purposes. Firstly, a pairing of swimming referees for specific tasks has to be created before the actual cup takes place. Secondly, statistics summing up participations for Users and Clubs are going to be calculated for each year over all cups in this time period. Two types of cups must be distinguished from each other. Upcoming cups are displayed on the top, past cups should reside in the archive to be revisited and used for statistics purposes.
 \subsection*{Club}
 \par
 Club is an administrative with attached people to it. Club has specific name, abbrevation and id in Czech Referee Federation. An image can be included as well. A club will be serving as a formal authority on which's behalf is a Cup being organised by a User who is Club manager. Club is unanimously to a region. Statistics regarding performance of members of club at swimming competitions must be implemented. Statistics will have informative maner and should save time instead of keeping track of these things in Excel spreadsheets. 
-\subsection*{Cup}
-Cup is the key object of SwimmPair system in terms of logic. From the perspective of system design this object is as important as other object. A Cup contains name of cup, description of cup, start date, end date and is attached to the organising club. Cups serve two purposes. Firstly, the pairing of signed up referees to positions/(rozpiska) must be generated before the actual cup. Secondly statistics summing up participations for Users and Clubs are going to be calculated for each year over all cups in this time period. Two types of cups must be distinguished from each other. Upcoming cups are displayed on the top, past cups should reside in the archive to be revisited and used for statistics purposes.
+\subsection*{User}
+\par
+User is an entity modelling swimming referee. A referee participating in this system falls in one of three categories. These categories or levels if you want are swimming referee, manager of swimming club and administrator of SwimmPair application. User must be uniquely identifiable. A person i.e. User in the system is going to have profile information such as first name, family name, email address. Good practice of using an email address as a login information is going to be used here. User must also contain SwimmPair hierarchy listed above and indicator of one's skill and knowledge in the swimming field, i.e. referee category. User must also belong to exactly one club in our system.
+\subsection*{Post}
+\par
+Post is an informative snippet to be displayed at the homepage to notify other swimmers about new event, or anything worth paying attention to anticipated by the administrator. Homepage can display last 3 posts and should be allowed to load more.
 \subsection*{Position}
-Predefined list of single positions necessary for each cup. This list is probably never going to change since there is a fixed set of roles. Referees are going to be assigned to these positions at each cup.
+Predefined list of single position related tasks necessary to be done at each cup. This list is probably never going to change since there is a fixed set of roles. Referees are going to be assigned to these positions for each cup by drag'n'drop.
 \subsection*{Region}
-One of the 13 regions of the Czech Republic in which this system is used. Club belongs to specified region. When the SwimmPair is going to be used by more organisations, new region will be added and potential clubs created and attached to this region. 
-\section{Proposed practices}
-Several things how to make application practical easy to use come to my mind. As I was designing the mockup some of the ideas started taking a shape.
+One of the 13 regions of the Czech Republic in which this system is used. Club is located in one region. When new clubs start using SwimmPair, new region has to be added and potential clubs created and attached to this region. 
+\section{Practices}
+Several good practices had to be implemented to make SwimmPair easy to use. While designing the mockup some of these ideas started taking a shape.
 \subsection*{Smooth frontend browsing}
 \par
-Our application should be as much easy to use as possible. There are several options and use cases of JavaScript that can come in handy. Reduction of page reloads is definitely a good way to go. Therefore there are going to be implemented some AJAX functions to obtain data. Functions will modify the DOM based on data received from asynchronous call. 
+SwimmPair application should be as much easy to use as possible. There are several options and use cases of JavaScript that can come in handy. Reduction of page reloads is definitely a good way to go. Therefore there are going to be asynchronous JavaScript calls for obtain semi-partial data. After, next function will modify the DOM based on data received from asynchronous call. 
 \subsection*{Multiple device types}
 \par
-We are certain that there are going to be people who want to browse our system from tabled and a mobile phone. Therefore responsive design is a necessity. Since CSS supports media queries  we are going to use them for creation.
+We are certain that there are going to be people who want to browse our system from tablet or a mobile phone. Therefore responsive design is a necessity. Since CSS3 \cite{lamport94} supports media queries we are going to use them for creation.
 \subsection*{Assigning referees to positions}
 \par
 Assigning referees to positions at cups should be implemented via drag'n'drop. Dragging a referee, moving referee over the region specified for the positions and releasing mouse button. Double clicking this person is a good way of removing it. This should be easy to use. This approach is not helpful at mobile devices and therefore there is going to be easy to use mobile app.
