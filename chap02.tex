@@ -1,17 +1,16 @@
 \chapter{Architecture overview}
-After going thru this section a reader should get a idea of how the whole Our system consists of two logical parts. User part and administration. The underlying parts are the same for these both.
+Overview should familiarize the reader with architecture of the application. There are two parts, \textbf{public web} and \textbf{private administration}. Administration is hidden behing password and for storing login there is session. 
 \par
-When designing the system, an object design and grouping similar functions together is a must. Objects that we have to move around the CMS described in previous chapter are Post, User, Club, Cup, Position and Region. Therefore we came up with a concept of controllers. Each page of SwimmPair is composed of same headerer, menu, footer and the content part is filled with usually results of controller call. These controllers must be distributed for use to all pages.
-\par
-Mobile app is composed separately, however, the communication is meant to be  calls to these controllers with extra layer of encapsulation.
+When designing such system, object oriented approach and grouping of similar functions together is a good thing. There are objects that have to move around the CMS described in previous chapter. These objects are Post, User, Club, Cup, Position and Region. Therefore we came up with a concept of controllers. Each page of SwimmPair is composed of same headerer, menu, footer. The content part is filled with page's specific results of controller call put into UI. These controllers must be distributed for use to all pages.
 \section{Controllers}
-Controllers are written to provide API functionality for system administration. These controllers are taking populating or taking input from templated pages.
+Controllers are written to provide API functionality for system administration in PHP. These controllers are populating pages or taking new input from them and administer process of storing them.
 \begin{itemize}
     \item PostsManager
     \item UsersManager
     \item ClubsManager
     \item CupsManager
     \item PositionsManager
+    \item RegionsManager
 \end{itemize}
 Controlers are implemented to extract and store data of class by which they are named after. Let's take PostsManager as an example. The Manager is implemented as following.
 \begin{phpcode}
