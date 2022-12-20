@@ -12,72 +12,137 @@ Controllers are written to provide API functionality for system administration i
     \item PositionsManager
     \item RegionsManager
 \end{itemize}
-Controlers are implemented to extract and store data of class by which they are named after. Let's take PostsManager as an example. The Manager is implemented as following.
-\begin{phpcode}
+Controlers are implemented to extract and store data of class by which they are named after. Let's take PostsManager as an example. The Manager is implemented as following.  
+Post
+\begin{lstlisting}
 <?php
+
+class Post
+{
+    public $id;
+    public $timestamp;
+    public $title;
+    public $content;
+    public $display_flag;
+    public $author_user_id;
+	public $signature_flag;
+
+    public function __construct($id, $timestamp, $title, $content, $display_flag, $author_user_id, $signature_flag)
+    {
+        $this->id = $id;
+        $this->timestamp = $timestamp;
+        $this->title = $title;
+        $this->content = $content;
+        $this->display_flag = $display_flag;
+        $this->author_user_id = $author_user_id;
+        $this->signature_flag = $signature_flag;
+    }
+
+	//7/7: {id, timestamp, title, content, display_flag, author_user_id, signature_flag}
+	public function Serialize()
+	{
+		$_serialized = "{\"id\":\"".$this->id."\",\"timestamp\":\"".$this->timestamp."\",\"title\":\"".$this->title."\",\"content\":\"".$this->content."\",\"display_flag\":\"".$this->display_flag."\",\"author_user_id\":\"".$this->author_user_id."\",\"signature_flag\":\"".$this->signature_flag."\"}";
+		return $_serialized;
+	}
+
+}
+
+\end{lstlisting}
+PostsManager  
+\begin{lstlisting}
+<?php
+
 class PostsManager
 {
-    private $mysqli;
-
-    public function __construct(mysqli $mysqli)
-    {
-        $this->mysqli = $mysqli;
-    }
-    public function getPostById($id)
-    {
-        $statement = $this->mysqli->prepare('SELECT id, timestamp, title, content, displayed, author, signed FROM `posts` WHERE id=?');
-        $statement->bind_param('i', $id);
-        return $this->createPostOrNullFromStatement($statement);
-    }
-    public function getLastThreePosts()
-    {
-        $statement = $this->mysqli->prepare('SELECT id, timestamp, title, content, displayed, author, signed FROM posts WHERE displayed=1 ORDER BY id DESC LIMIT 3');
-        $posts = $this->createPostsFromStatement($statement);
-        return $posts;
-    }
-    public function addNewPost($title, $content, $displayed, $author, $signed)
-    { ... }
-    private function createPostOrNullFromStatement(mysqli_stmt $statement)
-    {
-        $statement->execute();
-        $row = $statement->get_result()->fetch_assoc();
-        if ($row !== NULL)
+	private $mysqli;
+	public function __construct(mysqli $mysqli)
+	{
+		$this->mysqli = $mysqli;
+	}
+	public function GetPostByID($id)
+	{
+		$statement = $this->mysqli->prepare("CALL `GetPostByID`(?);");
+		$statement->bind_param('i', $id);
+		return $this->_CreatePostOrNullFromStatement($statement);
+	}
+	public function FindLastNPosts($N)
+	{
+		$statement = $this->mysqli->prepare('CALL `FindLastNPosts`(?);');
+		$statement->bind_param('i', $N);
+		$posts = $this->_CreatePostsFromStatement($statement);
+		return $posts;
+	}
+	public function InsertNewPost($title, $content, $display_flag, $author, $signature_flag)
+	{
+		$statement = $this->mysqli->prepare('CALL `InsertNewPost`(?, ?, ?, ?, ?);');
+		$statement->bind_param('ssiii', $title, $content, $display_flag, $author, $signature_flag);
+		if ($statement->execute())
         {
-            return $this->createPostFromRow($row);
-        }
-        else
+			return true;
+		}
+   		else
         {
-            return NULL;
+			return false;
+		}
+	}
+    public function UpdatePost($id, $title, $content, $display_flag, $signature_flag)
+    {
+        $this->mysqli->begin_transaction();
+        try
+        {
+            $statement = $this->mysqli->prepare("CALL `UpdatePost`(?, ?, ?, ?, ?);");
+            $statement->bind_param('ssiii', $title, $content, $id, $display_flag, $signature_flag);
+            $statement->execute();
+            $this->mysqli->commit();
+            return true;
+        }
+        catch(RuntimeException $e)
+        {
+            $this->mysqli->rollback();
+            return false;
         }
     }
-    private function createPostsFromStatement(mysqli_stmt $statement)
-    {
-        $statement->execute();
-        $rows = $statement->get_result()->fetch_all(MYSQLI_ASSOC);
-        $posts = [];
-        foreach ($rows as $row)
-        { 
-            $posts[] = $this->createPostFromRow($row);
-        }
-        return $posts;
-    }
-    private function createPostFromRow(array $row)
-    {
-        return new Post($row['id'], $row['timestamp'], $row['title'], $row['content'], $row['displayed'], $row['author'], $row['signed']);
-    }
-    public function updatePost($id, $title, $article)
-    { ... }
+    //Private functions
+	private function _CreatePostOrNullFromStatement(mysqli_stmt $statement)
+	{
+		$statement->execute();
+		$row = $statement->get_result()->fetch_assoc();
+		if ($row !== NULL)
+        {
+			return $this->_CreatePostFromRow($row);
+		}
+ 		else
+        {
+			return NULL;
+		}
+	}
+	private function _CreatePostsFromStatement(mysqli_stmt $statement)
+	{
+		$statement->execute();
+		$rows = $statement->get_result()->fetch_all(MYSQLI_ASSOC);
+		$posts = [];
+		foreach ($rows as $row)
+		{
+			$posts[] = $this->_CreatePostFromRow($row);
+		}
+		return $posts;
+	}
+	private function _CreatePostFromRow(array $row)
+	{
+		return new Post($row['id'], $row['timestamp'], $row['title'], $row['content'], $row['display_flag'], $row['author_user_id'], $row['signature_flag']);
+	}
 }
-\end{phpcode}
+
+\end{lstlisting}
 \section{Start file}
 Start file serves for connecting to database, definition of error handling, sanitization of input and most importantly includes defition of objects and controllers and constructs all controller passing reference to mysqli connection as their ctor argument
-\begin{phpcode}
+\begin{lstlisting}
 $postsManager     = new PostsManager($mysqli);
 $usersManager     = new UsersManager($mysqli);
 $clubsManager     = new ClubsManager($mysqli);
 $cupsManager      = new CupsManager($mysqli);
 $positionsManager = new PositionsManager($mysqli)
-\end{phpcode} 
+\end{lstlisting}
 \section{Templating of web and administration}
 Each page of public web in / gets assembled from these three prefabricated parts
 \begin{itemize}

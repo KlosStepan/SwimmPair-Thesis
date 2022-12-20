@@ -53,6 +53,30 @@
 \usepackage{minted}
 \usepackage{forest}
 
+% My includes
+\usepackage{listings,xcolor}
+\usepackage{inconsolata}
+
+\definecolor{dkgreen}{rgb}{0,.6,0}
+\definecolor{dkblue}{rgb}{0,0,.6}
+\definecolor{dkyellow}{cmyk}{0,0,.8,.3}
+
+\lstset{
+  language        = php,
+  basicstyle      = \small\ttfamily,
+  keywordstyle    = \color{dkblue},
+  stringstyle     = \color{red},
+  identifierstyle = \color{dkgreen},
+  commentstyle    = \color{gray},
+  emph            =[1]{php},
+  emphstyle       =[1]\color{black},
+  emph            =[2]{if,and,or,else},
+  emphstyle       =[2]\color{dkyellow},
+  basicstyle=\footnotesize,  
+  breaklines=true,
+  tabsize=2,
+  literate={\ \ }{{\ }}1
+}
 %%% Basic information on the thesis
 
 % Thesis title in English (exactly as in the formal assignment)

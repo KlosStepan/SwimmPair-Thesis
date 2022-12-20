@@ -1,6 +1,6 @@
 \chapter{Implementation}
 Detailed description of all components and  functions here.  
-\begin{csharpcode}
+\begin{lstlisting}
 //UDPHandler Constructor 
 public UDPHandler(String IP, Int32 Port, Int32 Timeout)
 {
@@ -12,9 +12,9 @@ public UDPHandler(String IP, Int32 Port, Int32 Timeout)
     EncryptionKeyDefault = "YiyM/f2zNq5GkVmiUMJ8qVACaPaBBo5AJRqkIH9cgd4=";
     EncryptionIVDefault = "tLafaj6+1YCiIIvbMO7iN/9QVLK1PPjRzARR9Fsh82c=";
 }
-\end{csharpcode}
+\end{lstlisting}
 PHP Code
-\begin{phpcode}
+\begin{lstlisting}
 <?php
 class Payload
 {
@@ -30,12 +30,12 @@ class Payload
     }
 }
 ?>
-\end{phpcode}
+\end{lstlisting}
 
 \section{Database design}
 For this purposes a well defined database is a necessity. In this chapter we're going to learn how the proposed objects are represented, how relations between these objects are maintaned and what information tables exist. Later one we're gonna present a schema.
 \subsection{Schema}
-\includegraphics[scale=0.45]{imgs/schema}
+\includegraphics[scale=0.45]{img/schema.png}
 \subsection{Object tables}
 These are the tables in database modeling the object to satisfy the pripary motivation defined as a problem paradigm. These rows are then being converted to objects and returned to user by an apporpiate manager.
 \subsubsection*{sp\_posts}
