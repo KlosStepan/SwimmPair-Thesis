@@ -1,22 +1,25 @@
 \chapter{Architecture overview}
-Overview should familiarize the reader with architecture of the application. There are two parts, \textbf{public web} and \textbf{private administration}. Administration is hidden behing password and for storing login there is session. 
+This overview should familiarize the reader with architecture of our application. There are two parts, \textbf{public web} and \textbf{private administration}. Administration is hidden behing password login is held by PHP SESSION. 
 \par
-When designing such system, object oriented approach and grouping of similar functions together is a good thing. There are objects that have to move around the CMS described in previous chapter. These objects are Post, User, Club, Cup, Position and Region. Therefore we came up with a concept of controllers. Each page of SwimmPair is composed of same headerer, menu, footer. The content part is filled with page's specific results of controller call put into UI. These controllers must be distributed for use to all pages.
-\section{Controllers}
-Controllers are written to provide API functionality for system administration in PHP. These controllers are populating pages or taking new input from them and administer process of storing them.
+When designing such system, object oriented approach and grouping of similar functions together is a good thing. There are objects that have to be moved around the CMS described in previous chapter. These objects are Post, User, Club, Cup, Position and Region. Therefore we came up with a concept of managers. Each page of SwimmPair is composed of same headerer, menu, footer. The content part is filled with page's specific results of manager call used to construct data UI page layout. These managers are included and used in all pages via \textbf{start file}.
+\section{Application flow}
+Visitor comes to \textbf{app page}, where \textbf{managers} are included. From page there are API calls on Managers that retrieve and store data data.
+\newline
+\includegraphics[scale=0.707]{img/app-schema.jpg}
+\section{Managers}
+Managers are written to provide API functionality for system administration in PHP. These managers are populating pages or taking new input from them and administer process of storing them. Each object has a manager handling it and accomodates database loads and stores controlled by transactions.
 \begin{itemize}
-    \item PostsManager
-    \item UsersManager
-    \item ClubsManager
-    \item CupsManager
-    \item PositionsManager
-    \item RegionsManager
+    \item Post/PostsManager
+    \item User/UsersManager
+    \item Club/ClubsManager
+    \item Cup/CupsManager
+    \item Position/PositionsManager
+    \item Region/RegionsManager
 \end{itemize}
-Controlers are implemented to extract and store data of class by which they are named after. Let's take PostsManager as an example. The Manager is implemented as following.  
-Post
+Controlers are implemented to extract and store data of class by which they are named after. Let's take PostsManager as an example. This manager handles Post and is implemented as follows.
+\newline
+\textbf{Post.php}
 \begin{lstlisting}
-<?php
-
 class Post
 {
     public $id;
@@ -28,142 +31,117 @@ class Post
 	public $signature_flag;
 
     public function __construct($id, $timestamp, $title, $content, $display_flag, $author_user_id, $signature_flag)
-    {
-        $this->id = $id;
-        $this->timestamp = $timestamp;
-        $this->title = $title;
-        $this->content = $content;
-        $this->display_flag = $display_flag;
-        $this->author_user_id = $author_user_id;
-        $this->signature_flag = $signature_flag;
-    }
 
 	//7/7: {id, timestamp, title, content, display_flag, author_user_id, signature_flag}
 	public function Serialize()
-	{
-		$_serialized = "{\"id\":\"".$this->id."\",\"timestamp\":\"".$this->timestamp."\",\"title\":\"".$this->title."\",\"content\":\"".$this->content."\",\"display_flag\":\"".$this->display_flag."\",\"author_user_id\":\"".$this->author_user_id."\",\"signature_flag\":\"".$this->signature_flag."\"}";
-		return $_serialized;
-	}
-
 }
 
 \end{lstlisting}
-PostsManager  
+\textbf{PostsManager.php} 
 \begin{lstlisting}
-<?php
-
 class PostsManager
 {
 	private $mysqli;
-	public function __construct(mysqli $mysqli)
-	{
-		$this->mysqli = $mysqli;
-	}
-	public function GetPostByID($id)
-	{
-		$statement = $this->mysqli->prepare("CALL `GetPostByID`(?);");
-		$statement->bind_param('i', $id);
-		return $this->_CreatePostOrNullFromStatement($statement);
-	}
-	public function FindLastNPosts($N)
-	{
-		$statement = $this->mysqli->prepare('CALL `FindLastNPosts`(?);');
-		$statement->bind_param('i', $N);
-		$posts = $this->_CreatePostsFromStatement($statement);
-		return $posts;
-	}
-	public function InsertNewPost($title, $content, $display_flag, $author, $signature_flag)
-	{
-		$statement = $this->mysqli->prepare('CALL `InsertNewPost`(?, ?, ?, ?, ?);');
-		$statement->bind_param('ssiii', $title, $content, $display_flag, $author, $signature_flag);
-		if ($statement->execute())
-        {
-			return true;
-		}
-   		else
-        {
-			return false;
-		}
-	}
-    public function UpdatePost($id, $title, $content, $display_flag, $signature_flag)
-    {
-        $this->mysqli->begin_transaction();
-        try
-        {
-            $statement = $this->mysqli->prepare("CALL `UpdatePost`(?, ?, ?, ?, ?);");
-            $statement->bind_param('ssiii', $title, $content, $id, $display_flag, $signature_flag);
-            $statement->execute();
-            $this->mysqli->commit();
-            return true;
-        }
-        catch(RuntimeException $e)
-        {
-            $this->mysqli->rollback();
-            return false;
-        }
-    }
-    //Private functions
-	private function _CreatePostOrNullFromStatement(mysqli_stmt $statement)
-	{
-		$statement->execute();
-		$row = $statement->get_result()->fetch_assoc();
-		if ($row !== NULL)
-        {
-			return $this->_CreatePostFromRow($row);
-		}
- 		else
-        {
-			return NULL;
-		}
-	}
-	private function _CreatePostsFromStatement(mysqli_stmt $statement)
-	{
-		$statement->execute();
-		$rows = $statement->get_result()->fetch_all(MYSQLI_ASSOC);
-		$posts = [];
-		foreach ($rows as $row)
-		{
-			$posts[] = $this->_CreatePostFromRow($row);
-		}
-		return $posts;
-	}
-	private function _CreatePostFromRow(array $row)
-	{
-		return new Post($row['id'], $row['timestamp'], $row['title'], $row['content'], $row['display_flag'], $row['author_user_id'], $row['signature_flag']);
-	}
-}
 
+    //Constructor - setting $mysqli to $this->mysqli
+	public function __construct(mysqli $mysqli)
+
+    //Handling functions retrieve/store  
+	public function GetPostById($id)
+  	public function FindLastNPosts($N)
+	public function InsertNewPost($title, $content, $display_flag, $author, $signature_flag)
+    public function UpdatePost($id, $title, $content, $display_flag, $signature_flag)
+
+    //Private functions - auxiliary controller functions
+	private function _CreatePostOrNullFromStatement(mysqli_stmt $statement)
+	private function _CreatePostsFromStatement(mysqli_stmt $statement)
+	private function _CreatePostFromRow(array $row)
+}
+\end{lstlisting}
+\textbf{Demonstration - public function GetPostByID(\$id)}
+\begin{lstlisting}
+public function GetPostByID($id)
+{
+	$statement = $this->mysqli->prepare("CALL `GetPostByID`(?);");
+	$statement->bind_param('i', $id);
+	return $this->_CreatePostOrNullFromStatement($statement);
+}
 \end{lstlisting}
 \section{Start file}
-Start file serves for connecting to database, definition of error handling, sanitization of input and most importantly includes defition of objects and controllers and constructs all controller passing reference to mysqli connection as their ctor argument
+Start file is included the in beginning of each page. It serves for \textbf{connection to database},  \textbf{sanitization of input}, \textbf{definition of error handling} and most importantly \textbf{includes objects and managers} and subsequently \textbf{instantiates all managers} while passing reference to the database connection \textbf{\$mysqli} their only constructor argument.
 \begin{lstlisting}
+/*Database credentials from environment*/
+$host = getenv("DATABASE_HOST");
+$user = getenv("DATABASE_USER");
+$pass = getenv("DATABASE_PASS");
+$db   = getenv("DATABASE_NAME");
+/*Database connection and charset set*/
+$mysqli = new mysqli($host, $user, $pass, $db) or die($mysqli->error);
+$mysqli->set_charset('utf8');
+/* Sanitization function */
+function h($string)
+{
+    return htmlspecialchars($string);
+}
+/* Exception handling*/
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
+set_exception_handler(function () {
+    echo "<h3 style=\"color: red;\">INVALID REQUEST</h3>";
+    exit();
+});
+/* Objects and Managers*/
+require __DIR__ . '/model/Sanitizer.php';
+require __DIR__ . '/model/Auth.php';
+require __DIR__ . '/model/Post.php';
+require __DIR__ . '/model/PostsManager.php';
+require __DIR__ . '/model/Page.php';
+require __DIR__ . '/model/PagesManager.php';
+require __DIR__ . '/model/StatUserCnt.php';
+require __DIR__ . '/model/StatPositionCnt.php';
+require __DIR__ . '/model/RefereeRank.php';
+require __DIR__ . '/model/Region.php';
+require __DIR__ . '/model/RegionsManager.php';
+require __DIR__ . '/model/User.php';
+require __DIR__ . '/model/UsersManager.php';
+require __DIR__ . '/model/Cup.php';
+require __DIR__ . '/model/PairPositionUser.php';
+require __DIR__ . '/model/CupsManager.php';
+require __DIR__ . '/model/Position.php';
+require __DIR__ . '/model/PositionsManager.php';
+require __DIR__ . '/model/Club.php';
+require __DIR__ . '/model/ClubsManager.php';
+/* Construction of Managers w/ reference to $mysqli */
 $postsManager     = new PostsManager($mysqli);
+$pagesManager     = new PagesManager($mysqli);
 $usersManager     = new UsersManager($mysqli);
 $clubsManager     = new ClubsManager($mysqli);
 $cupsManager      = new CupsManager($mysqli);
-$positionsManager = new PositionsManager($mysqli)
+$positionsManager = new PositionsManager($mysqli);
+$regionsManager = new RegionsManager($mysqli);
 \end{lstlisting}
 \section{Templating of web and administration}
-Each page of public web in / gets assembled from these three prefabricated parts
+Each page layout of public website has common characteristics such as header, menu and footer. These sections are unified and included everywhere, therfore they are included everywhere. They are:
 \begin{itemize}
-    \item HEADER
-    \item MENU
-    \item page specialization - usually generated from result obtained by a controller call and might be updated by XMLHttpRequest call \& DOM modification
-    \item FOOTER
+    \item HEADER,
+    \item MENU,
+    \item Generated from result obtained by one or more manager calls. this section might be further updated via XMLHttpRequest calls \& DOM modifications of newly delivered data,
+    \item FOOTER.
 \end{itemize}
-Homepage of /admin/profile.php gets assembled with regards to rights the logged user has. The ordering is following: Admin(2)\textgreater Club manager(1)\textgreater Swimming referee(0)
+Homepage of administration panel /admin/profile.php after login gets assembled with regards to the rights of logged user. Ordering is following: Admin (2) \textgreater \: Club manager (1) \textgreater \: Swimming referee (0) and each user gets snippet of his and lower role snippets:
 \begin{itemize}
-    \item ADMIN SUBMENU - 2, 1, 0
-    \item CLUB MANAGER SUBMENU - 1, 0
-    \item SWIMMING REFEREE SUBMENU - 0
+    \item ADMIN menu snippet - 2,
+    \item CLUB MANAGER menu snippet - 1,
+    \item SWIMMING REFEREE menu snippet - 0.
 \end{itemize}
 \section{Responsive layout}
-These media queries are used to provide design of the web. CSS design supports mobile devices and printing of cup pairing.
+Listed media queries are used to provide design of the web by manually overriding specific classes for desired user experience outcome.
 \begin{itemize}
     \item Basic CSS design
-    \item @media (max-width: 768px) \{ ... \}
-    \item @media (print) \{ ... \}
+    \item @media (max-width: 768px)
+    \item @media (print)
 \end{itemize}
+\textbf{Basic CSS design} gives definition of colors and desktop layout of our application. \textbf{Media query with max-width: 768px} supports tablets and mobile devices while \textbf{media print} of cup pairing hides redundant controll and informative elements while it keeps the pairing of cup to be printed.
 \section{Administrative tasks description}
 These are the tasks we need to perform.
 \begin{itemize}
@@ -171,11 +149,11 @@ These are the tasks we need to perform.
     \item Edit post
     \item Add user
     \item Edit user
-    \item Assign users
     \item Add cup
     \item Edit cup
+    \item Assign users
 \end{itemize}    
-Adminn:
+Admin:
 All tasks and Drag n drop hlavne.
 Add post, Edit post
 Add club, Edit club
