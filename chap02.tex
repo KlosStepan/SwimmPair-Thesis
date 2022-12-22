@@ -176,22 +176,24 @@ Listed media queries are used to provide design of the web by manually overridin
     \item @media (print)
 \end{itemize}
 \textbf{Basic CSS design} gives definition of colors and desktop layout of our application. \textbf{Media query with max-width: 768px} supports tablets and mobile devices while \textbf{media print} of cup pairing hides redundant controll and informative elements while it keeps the pairing of cup to be printed.
-\section{Administrative tasks description}
-These are the tasks we need to perform.
+\section{Administrative tasks}
+Administration has these tasks to perform.
 \begin{itemize}
-    \item Add Post - calls PostsManager/InsertNewPost - calls SQL Proc
-    \item Edit Post - calls PostsManager/EditPost - calls SQL Proc
-    \item Add User - calls UsersManager/AddUser - calls SQL Proc
-    \item Edit User - calls UsersManager/EditUser - calls SQL Proc 
-    \item Add Cup - calls CupsManager/AddCup - calls SQL Proc
-    \item Edit Cup  calls CupsManager/EditCup - calls SQL Proc
-    \item Assign Users - calls UsersManager/UpdatePairing - calls several SQL Procs for different things in transaction and commits/rollbacks
+    \item \textbf{Add Post/Edit Post} - from PostsManager call InsertNewPost/UpdatePost
+    \item \textbf{Approve Newly Registered Users} - TODO
+    \item \textbf{Pair Available Users On Cup Positions} - from UsersManager call UpdatePairing - calls several SQL Procs for different things in transaction and commits/rollbacks
+    \item \textbf{Add User/Edit User} - from UsersManager call AddUser/UpdateUser
+    \item \textbf{Add Cup/Edit Cup} - from CupsManager call AddCup/UpdateCup
+    \item \textbf{Add Club/Edit Club} - from ClubsManager call AddClub/UpdateClub
+    \item \textbf{Add Region/Edit Region} - from RegionsManager call AddRegion/UpdateRegion
+    \item \textbf{Configure Stats Ordering} - TODO
+    \item \textbf{Edit Contacts} - from PagesManager call UpdatePage
 \end{itemize} 
-\section{Club managment tasks description}
+\section{Club Manager tasks}
 These tasks are performed on the level of clubsManager
 \begin{itemize}
-    \item Add Cup - calls CupsManager/AddCup - calls SQL Proc
-    \item Assing My Club Users - calls UsersManager/UpdatePairing - calls several SQL Procs for different things in transaction and commits/rollbacks
+    \item \textbf{Add Cup} - from CupsManager call AddCup
+    \item \textbf{Sign Up People From My Club As Available For Cup} - calls UsersManager/UpdatePairing - calls several SQL Procs for different things in transaction and commits/rollbacks
 \end{itemize}       
 Admin:
 All tasks and Drag n drop hlavne.
