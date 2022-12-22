@@ -10,13 +10,14 @@ Visitor comes to \textbf{app page}, where \textbf{managers} are included. From p
 Managers are written to provide API functionality for system administration in PHP. These managers are populating pages or taking new input from them and administer process of storing them. Each object has a manager handling it and accomodates database loads and stores controlled by transactions.
 \begin{itemize}
     \item Post/PostsManager
+    \item Page/PagesManager
     \item User/UsersManager
     \item Club/ClubsManager
     \item Cup/CupsManager
     \item Position/PositionsManager
     \item Region/RegionsManager
 \end{itemize}
-Controlers are implemented to extract and store data of class by which they are named after. Let's take PostsManager as an example. This manager handles Post and is implemented as follows.
+Managers are implemented to extract and store data of class by which they are named after. Let's take PostsManager as an example. This manager handles Post and is implemented as follows.
 \newline
 \textbf{Post.php}
 \begin{lstlisting}
@@ -130,10 +131,43 @@ Each page layout of public website has common characteristics such as header, me
 \end{itemize}
 Homepage of administration panel /admin/profile.php after login gets assembled with regards to the rights of logged user. Ordering is following: Admin (2) \textgreater \: Club manager (1) \textgreater \: Swimming referee (0) and each user gets snippet of his and lower role snippets:
 \begin{itemize}
-    \item ADMIN menu snippet - 2,
+    \item SUPERUSER menu snippet - 2,
     \item CLUB MANAGER menu snippet - 1,
     \item SWIMMING REFEREE menu snippet - 0.
 \end{itemize}
+Following flow is then discriminated based on rights code on each page. \newline
+\textbf{Rights check} 
+\begin {lstlisting}
+<?php
+    require __DIR__ . '/../start.php';
+    session_start();
+    Auth::requireRole(UserRights::SuperUser);
+    ...
+?>    
+...
+\end{lstlisting}
+\textbf{requireRole on Auth class} 
+\begin{lstlisting}
+class Auth
+{
+	public static function requireRole($role)
+	{
+		if (!isset($_SESSION['rights']))
+        {
+			header('Location: /prihlaseni.php');
+			exit();
+		}
+		//Rights sharply lower that user has, throw RuntimeException
+		if ($_SESSION['rights'] < $role)
+        {
+			echo '<h1>Not enough rights</h1>';
+			echo $_SESSION['rights'];
+			echo $role;
+			throw new RuntimeException();
+		}
+	}
+}
+\end{lstlisting}
 \section{Responsive layout}
 Listed media queries are used to provide design of the web by manually overriding specific classes for desired user experience outcome.
 \begin{itemize}
@@ -145,14 +179,20 @@ Listed media queries are used to provide design of the web by manually overridin
 \section{Administrative tasks description}
 These are the tasks we need to perform.
 \begin{itemize}
-    \item Add post
-    \item Edit post
-    \item Add user
-    \item Edit user
-    \item Add cup
-    \item Edit cup
-    \item Assign users
-\end{itemize}    
+    \item Add Post - calls PostsManager/InsertNewPost - calls SQL Proc
+    \item Edit Post - calls PostsManager/EditPost - calls SQL Proc
+    \item Add User - calls UsersManager/AddUser - calls SQL Proc
+    \item Edit User - calls UsersManager/EditUser - calls SQL Proc 
+    \item Add Cup - calls CupsManager/AddCup - calls SQL Proc
+    \item Edit Cup  calls CupsManager/EditCup - calls SQL Proc
+    \item Assign Users - calls UsersManager/UpdatePairing - calls several SQL Procs for different things in transaction and commits/rollbacks
+\end{itemize} 
+\section{Club managment tasks description}
+These tasks are performed on the level of clubsManager
+\begin{itemize}
+    \item Add Cup - calls CupsManager/AddCup - calls SQL Proc
+    \item Assing My Club Users - calls UsersManager/UpdatePairing - calls several SQL Procs for different things in transaction and commits/rollbacks
+\end{itemize}       
 Admin:
 All tasks and Drag n drop hlavne.
 Add post, Edit post
