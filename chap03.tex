@@ -1,43 +1,13 @@
-\chapter{Implementation}
-Detailed description of all components and  functions here.  
-\begin{lstlisting}
-//UDPHandler Constructor 
-public UDPHandler(String IP, Int32 Port, Int32 Timeout)
-{
-    ServerAddr = IPAddress.Parse(IP);
-    EndPoint = new IPEndPoint(ServerAddr, Port);
-    sock.ReceiveTimeout = Timeout;
-    s = new UdpClient(IP, Port);
-    
-    EncryptionKeyDefault = "YiyM/f2zNq5GkVmiUMJ8qVACaPaBBo5AJRqkIH9cgd4=";
-    EncryptionIVDefault = "tLafaj6+1YCiIIvbMO7iN/9QVLK1PPjRzARR9Fsh82c=";
-}
-\end{lstlisting}
-PHP Code
-\begin{lstlisting}
-<?php
-class Payload
-{
-    public $Nth;
-    public $outOfN;
-    public $content;
-    //konstruktor
-    public function __construct($Nth, $outOfN, $content)
-    {
-        $this->Nth = $Nth;
-        $this->outOfN = $outOfN;
-        $this->content = $content;
-    }
-}
-?>
-\end{lstlisting}
+\chapter{Implementation Documentation}
+Detailed description of \textbf{database} and \textbf{backend components and functions}.  
 
 \section{Database design}
-For this purposes a well defined database is a necessity. In this chapter we're going to learn how the proposed objects are represented, how relations between these objects are maintaned and what information tables exist. Later one we're gonna present a schema.
+For this purpose well defined database is a necessity. In this chapter we learn how the proposed objects are represented how relations between these objects are maintaned and what information tables exist.
 \subsection{Schema}
 \includegraphics[scale=0.45]{img/schema.png}
 \subsection{Object tables}
-These are the tables in database modeling the object to satisfy the pripary motivation defined as a problem paradigm. These rows are then being converted to objects and returned to user by an apporpiate manager.
+These are the tables in database modeling the object to satisfy the primary motivation defined as the \textbf{problem paradigm}. These rows are then being converted to Objects and returned to user by appropriate Manager.
+% \newline
 \subsubsection*{sp\_posts}
 Posts for main page are stored in this table.
 \newline
@@ -51,7 +21,7 @@ Posts for main page are stored in this table.
   \hline
   2 & ... & ... & ... & ... & ... & ... \\ 
  \hline
-  ... & ... & ... & ... & ... & ...  & ... \\ [1ex] 
+  ... & ... & ... & ... & ... & ...  & ... \\ [0.5ex] 
   \hline
   \end{tabular}
 \end{center}
@@ -63,24 +33,24 @@ Posts for main page are stored in this table.
   \item \textbf{title}, text
   \item \textbf{content}, text
   \item \textbf{display\_flag}, tinyint
-  \item \textbf{author}, FK, int(11)$|$NULL
+  \item \textbf{author}, FK, int(11) $|$ NULL
   \item \textbf{sign\_flag}, tinyint
 \end{enumerate}
 
 \subsubsection*{sp\_users}
-Model users here
+Users are stored in this table.
 \newline
 \underline{Table preview}
 \begin{center}
-  \begin{tabular}{||c c c c c c c c c c||} 
+  \begin{tabular}{||c c c c c c c||} 
   \hline
-  id & first\_name & last\_name & email & password & hash & active & approved & rights & affil \\ [0.5ex] 
+  id & first\_name & last\_name & email & password & hash & ... \\ [0.5ex] 
   \hline\hline
-  1 & Lukáš & Kousal & lukas@swim.cz & -PASS- & -HASH- & 1 & 1 & 2 & 2 \\ 
+  1 & Lukáš & Kousal & lukas@swim.cz & -PASS- & -HASH- & ... \\ 
   \hline
-  ... & ... & ... & ... & ... & ... & ... & ... & ... & ... \\
+  ... & ... & ... & ... & ... & ... & ... \\
   \hline
-  N & ... & ... & ... & ... & ... & ... & ... & ... & ... \\ [1ex] 
+  N & ... & ... & ... & ... & ... & ... \\ 
   \hline
  \end{tabular}
  \end{center}
@@ -100,7 +70,7 @@ Model users here
 \end{enumerate}
 
 \subsubsection*{sp\_clubs}
-This is how we store clubs in the 
+Clubs are stored in this table. 
 \newline
 \underline{Table preview}
 \begin{center}
@@ -108,11 +78,11 @@ This is how we store clubs in the
  \hline
  id & name & zkratka & idklubu & img \\ [0.5ex] 
  \hline\hline
- 1 & Klub plaveckých sportů Vyškov & KPSVy & 614 & null.jpg \\ 
+ 1 & Klub plaveckých sportů Vyškov & KPSVy & 614 & null.jpg \\  
  \hline
- ... & ... & ... & ... & ... \\ 
+ ... & ... & ... & ... & ... \\ [0.5ex]
 \hline
- 14 & TJ Rožnov pod Radhoštěm & TJRo & 0 & null.jpg \\ [1ex] 
+ 14 & TJ Rožnov pod Radhoštěm & TJRo & 0 & null.jpg \\
  \hline
 \end{tabular}
 \end{center}
@@ -127,7 +97,7 @@ This is how we store clubs in the
 \end{enumerate}
 
 \subsubsection*{sp\_cups}
-Tabulka se závody.
+Cups are stored in this table.
 \newline
 \underline{Table preview}
 \begin{center}
@@ -137,7 +107,7 @@ Tabulka se závody.
  \hline\hline
  1 & 2017-06-12 & GJW Cup I. & Nejlepsi turnaj na svete & 2 \\ 
  \hline
- ... & ... & ... & ... & ...  \\ [1ex] 
+ ... & ... & ... & ... & ...  \\ [0.5ex] 
  \hline
 \end{tabular}
 \end{center}
@@ -153,7 +123,7 @@ Tabulka se závody.
 
 
 \subsubsection*{sp\_positions}
-Tabulka obsahuje všechny pozice, na které přidělujeme rozhodčí. Seznam pozic je fixní.
+List of Positions for which we are pairing users are stored here.
 \newline
 \underline{Table preview}
 \begin{center}
@@ -163,9 +133,9 @@ Tabulka obsahuje všechny pozice, na které přidělujeme rozhodčí. Seznam poz
  \hline\hline
  1 & Vrchní rozhodčí \\ 
  \hline
- ... & ...  \\ 
+ ... & ...  \\ [0.5ex]
 \hline
- 19 & Ostatní  \\ [1ex] 
+ 19 & Ostatní  \\
  \hline
 \end{tabular}
 \end{center}
@@ -176,8 +146,8 @@ Tabulka obsahuje všechny pozice, na které přidělujeme rozhodčí. Seznam poz
   \item \textbf{poz}, varchar(512)
 \end{enumerate}
 
-\subsection{Relations tables}
-Relations tables hold the most important information stored in the SwimmPair system. Both availability for cups and pairing to positions are realised here.
+\subsection{Relation tables}
+Relation tables hold the most important information stored in the SwimmPair system - the \textbf{pairings} and \textbf{data for underlying statistics}. Both availability for cups and pairings to positions are represented here.
 \subsubsection*{sp\_cup\_user\_availability}
 This table stores relationships between referees/\underline{users} and \underline{cups} called availability. Referees are signed up by their team manager or themselves as available for the cup. In case of sudden inability to participate, the attendance\_flag is switched to 0 in case the user is already assigned to some position. In that case the administrator is going to see the user in red box.
 \newline
@@ -193,7 +163,7 @@ This table stores relationships between referees/\underline{users} and \underlin
  \hline
  7 & 3 & 19 & 0 \\ 
  \hline
- ... & ... & ... & ...  \\ [1ex] 
+ ... & ... & ... & ...  \\ [0.5ex] 
  \hline
 \end{tabular}
 \end{center}
@@ -229,7 +199,7 @@ This table stores pairing information about available referees/users on position
  \hline
  487 & 3 & 7 & 14 \\
  \hline
- ... & ... & ... & ... \\ [1ex] 
+ ... & ... & ... & ... \\ [0.5ex] 
  \hline
 \end{tabular}
 \end{center}
@@ -242,8 +212,58 @@ This table stores pairing information about available referees/users on position
   \item \textbf{user\_id}, FK, int(11)
 \end{enumerate}
 \subsection{Content adjustment tables}
-Stats positions
-Pages
+\subsubsection*{sp\_public\_stats\_config}
+Configuration table of which positions in what order should be displayed in statistics on frontend. For frontend then LEFT-JOIN \textbf{position\_id} from table \textbf{sp\_positions} ON \textbf{id} and display \textbf{poz}.
+\newline
+\underline{Table preview}
+\begin{center}
+ \begin{tabular}{||c c||} 
+ \hline
+ id & position\_id  \\ [0.5ex] 
+ \hline\hline
+ 148 & 1 \\ 
+ \hline
+ 149 & 8  \\ 
+ \hline
+ 150 & 2  \\ 
+ \hline
+ 151 & 4  \\ 
+ \hline
+ 152 & 6  \\  
+ \hline
+ \end{tabular}
+\end{center}
+\underline{Columns description}
+\begin{enumerate}
+  \setlength\itemsep{0em}
+  \item \textbf{id}, PK, int(11), AUTOINCREMENT
+  \item \textbf{position\_id}, FK, int(11)
+\end{enumerate}
+
+\subsubsection*{sp\_pages}
+SwimmPair static Pages.
+\newline
+\underline{Table preview}
+\begin{center}
+ \begin{tabular}{||c c c||} 
+ \hline
+ id & title & content \\ [0.5ex] 
+ \hline\hline
+ 1 & Kontakty &  <h1> title </h1> \\
+ \hline
+ ... & ...  & asd \\ [0.5ex]
+\hline
+ 19 & Ostatní  & asd \\
+ \hline
+\end{tabular}
+\end{center}
+\underline{Columns description}
+\begin{enumerate}
+  \setlength\itemsep{0em}
+  \item \textbf{id}, PK , int(11), AUTOINCREMENT
+  \item \textbf{title}, text
+  \item \textbf{content}, text
+\end{enumerate}
 
 \section{Controllers documentation}
 \par These five controllers work with objects and provide some login (i.e. joining more tables in varios ways)
