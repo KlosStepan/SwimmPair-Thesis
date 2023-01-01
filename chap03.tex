@@ -17,9 +17,9 @@ Posts for main page are stored in this table.
   \hline
   id & timestamp & title & content & display\_flag & author & sign\_flag  \\ [0.5ex] 
   \hline\hline
-  1 & ... & ... & ... & ... & ... & ... \\ 
+  1 & 2018-01-... & New Por... & SwimmPair... & 1 & 21 & 0 \\ 
   \hline
-  2 & ... & ... & ... & ... & ... & ... \\ 
+  2 & 2018-03-...  & Updates & This web... & 1 & 21 & 0 \\ 
  \hline
   ... & ... & ... & ... & ... & ...  & ... \\ [0.5ex] 
   \hline
@@ -105,7 +105,7 @@ Cups are stored in this table.
  \hline
  id & date & name & description & owningclub  \\ [0.5ex] 
  \hline\hline
- 1 & 2017-06-12 & GJW Cup I. & Nejlepsi turnaj na svete & 2 \\ 
+ 1 & 2017-06-12 & GJW Cup I. & Cup organized by GJW PV, ... & 2 \\ 
  \hline
  ... & ... & ... & ... & ...  \\ [0.5ex] 
  \hline
@@ -249,11 +249,8 @@ SwimmPair static Pages.
  \hline
  id & title & content \\ [0.5ex] 
  \hline\hline
- 1 & Kontakty &  <h1> title </h1> \\
- \hline
- ... & ...  & asd \\ [0.5ex]
-\hline
- 19 & Ostatní  & asd \\
+ 1 & Kontakty &  \textless h1\textgreater Title\textless /h1\textgreater  \textless p\textgreater Contact information +420...\textless /p\textgreater  \\
+
  \hline
 \end{tabular}
 \end{center}
@@ -264,71 +261,117 @@ SwimmPair static Pages.
   \item \textbf{title}, text
   \item \textbf{content}, text
 \end{enumerate}
-
-\section{Controllers documentation}
-\par These five controllers work with objects and provide some login (i.e. joining more tables in varios ways)
+\newpage
+\section{Managers documentation}
+\par These five controllers work with objects and provide login (i.e. joining more tables in varios ways to achieve all functionality).
 \subsection{PostsManager.php}
 \begin{itemize}
   \setlength\itemsep{0em}
-  \item \underline{Post} $\vert$ null $\leftarrow$ \textbf{GetPostById}(\$id) $\searrow$ \_CreatePostOrNullFromStatement(\$stmt) $\searrow$ \_CreatePostFromRow(\$row)
-  \item \underline{Post[]} $\vert$ null $\leftarrow$ \textbf{GetLastThreePosts}() $\searrow$ \_CreatePostsFromStatement() $\searrow$ \_CreatePostFromRow(\$row)
-  \item \underline{Post[]} $\vert$ null $\leftarrow$ \textbf{GetLastNPosts}(\$N) $\searrow$ \_CreatePostsFromStatement() $\searrow$ \_CreatePostFromRow(\$row)
+  \item \underline{Post} $\vert$ null $\leftarrow$ \textbf{GetPostById}(\$id)
+  \newline    $\searrow$ \_CreatePostOrNullFromStatement(\$stmt)
+  \newline    $\searrow$ \_CreatePostFromRow(\$row)
+  \item \underline{Post[]} $\vert$ null $\leftarrow$ \textbf{GetLastThreePosts}()
+  \newline    $\searrow$ \_CreatePostsFromStatement(\$stmt)
+  \newline    $\searrow$ \_CreatePostFromRow(\$row)
+  \item \underline{Post[]} $\vert$ null $\leftarrow$ \textbf{GetLastNPosts}(\$N)
+  \newline    $\searrow$ \_CreatePostsFromStatement()
+  \newline    $\searrow$ \_CreatePostFromRow(\$row)
   \item \underline{true} $\vert$ false $\leftarrow$ \textbf{AddNewPost}(\$title, \$content)
-  \item \underline{Post[]} $\vert$ false $\leftarrow$ \textbf{FindAllPostsOrderedByIdDesc}() $\searrow$ \_CreatePostsFromStatement(\$stmt) $\searrow$ \_CreatePostFromRow(\$row)
+  \item \underline{Post[]} $\vert$ false $\leftarrow$ \textbf{FindAllPostsOrderedByIdDesc}()
+  \newline    $\searrow$ \_CreatePostsFromStatement(\$stmt)
+  \newline    $\searrow$ \_CreatePostFromRow(\$row)
   \item \underline{true} $\vert$ false $\leftarrow$ \textbf{UpdatePost}(\$id, \$title, \$article)
 \end{itemize}
 \subsection{UsersManager.php}
 \begin{itemize}
   \setlength\itemsep{0em}
-  \item \underline{User} $\vert$ null $\leftarrow$ \textbf{GetUserById}(\$id) $\searrow$ \_CreateUserOrNullFromStatement(\$stmt) $\searrow$ \_CreateUserFromRow(\$row)
-  \item \underline{User[]} $\vert$ null $\leftarrow$ \textbf{FindAllActiveUsersOrderByLastNameDesc} $\searrow$ \_CreateUsersFromStatement(\$stmt) $\hookrightarrow$ \_CreateUserFromRow (\$row)
-  \item \underline{User[]} $\vert$ null $\leftarrow$ \textbf{FindAllInactiveUsersOrderByLastNameDesc} $\searrow$ \_CreateUsersFromStatement(\$stmt) $\hookrightarrow$ \_CreateUserFromRow (\$row)
-  \item \underline{User[]} $\vert$ null $\leftarrow$ \textbf{FindAllRegisteredComradesForTheCup}(\$cupID, \$teamID) $\searrow$ \_CreateUsersFromStatement(\$stmt) $\hookrightarrow$ \_CreateUserFromRow (\$row)
-  \item \underline{User[]} $\vert$ null $\leftarrow$ \textbf{FindAllComrades}(\$teamID) $\searrow$ \_CreateUsersFromStatement(\$stmt) $\hookrightarrow$ \_CreateUserFromRow(\$row)
-  \item \underline{User[]} $\vert$ null $\leftarrow$ \textbf{FindAllRegisteredUsersForTheCup}(\$cupID) $\searrow$ \_CreateUsersFromStatement(\$stmt) $\hookrightarrow$ \_CreateUserFromRow(\$row)
-  \item \underline{User[]} $\vert$ null $\leftarrow$ \textbf{FindAllNametagsForTheCup}(\$cupID) $\searrow$ \_CreateUsersFromStatement(\$stmt) $\hookrightarrow$ \_CreateUserFromRow(\$row)
-  \item \underline{User[]} $\vert$ null $\leftarrow$ \textbf{FindPairedUsersOnCupForPosition}(\$cupID, \$posID) $\searrow$ \_CreateUsersFromStatement(\$stmt) $\hookrightarrow$ \_CreateUserFromRow(\$row)
-  \item \underline{Pair[]} $\vert$ null $\leftarrow$ \textbf{FindPairedPozIDUserIDOnCup}(\$cupID) $\searrow$ \_CreatePairsFromStatement(\$stmt) $\hookrightarrow$ \_CreatePairFromRow(\$row)
-  \item \underline{string} $\vert$ null $\leftarrow$ \textbf{GetClubAbbreviationByAffiliationId}(\$id) $\searrow$ \_GetSingleResultFromStatement(\$stmt)
-  \item \underline{string} $\vert$ null $\leftarrow$ \textbf{GetUserFullNameById}(\$id) $\searrow$ \_GetSingleResultFromTwoColsStatement(\$stmt)
+  \item \underline{User} $\vert$ null $\leftarrow$ \textbf{GetUserById}(\$id)
+  \newline    $\searrow$ \_CreateUserOrNullFromStatement(\$stmt)
+  \newline    $\searrow$ \_CreateUserFromRow(\$row)
+  \item \underline{User[]} $\vert$ null $\leftarrow$ \textbf{FindAllActiveUsersOrderByLastNameDesc}()
+  \newline    $\searrow$ \_CreateUsersFromStatement(\$stmt)
+  \newline    $\hookrightarrow$ \_CreateUserFromRow (\$row)
+  \item \underline{User[]} $\vert$ null $\leftarrow$ \textbf{FindAllInactiveUsersOrderByLastNameDesc}()
+  \newline    $\searrow$ \_CreateUsersFromStatement(\$stmt)
+  \newline    $\hookrightarrow$ \_CreateUserFromRow (\$row)
+  \item \underline{User[]} $\vert$ null $\leftarrow$ \textbf{FindAllRegisteredMatesForTheCup}(\$cupId, \$teamId)
+  \newline    $\searrow$ \_CreateUsersFromStatement(\$stmt)
+  \newline    $\hookrightarrow$ \_CreateUserFromRow (\$row)
+  \item \underline{User[]} $\vert$ null $\leftarrow$ \textbf{FindAllMates}(\$teamId)
+  \newline    $\searrow$ \_CreateUsersFromStatement(\$stmt)
+  \newline    $\hookrightarrow$ \_CreateUserFromRow(\$row)
+  \item \underline{User[]} $\vert$ null $\leftarrow$ \textbf{FindAllRegisteredUsersForTheCup}(\$cupId)
+  \newline    $\searrow$ \_CreateUsersFromStatement(\$stmt)
+  \newline    $\hookrightarrow$ \_CreateUserFromRow(\$row)
+  \item \underline{User[]} $\vert$ null $\leftarrow$ \textbf{FindAllNametagsForTheCup}(\$cupId)
+  \newline    $\searrow$ \_CreateUsersFromStatement(\$stmt)
+  \newline    $\hookrightarrow$ \_CreateUserFromRow(\$row)
+  \item \underline{User[]} $\vert$ null $\leftarrow$ \textbf{FindPairedUsersOnCupForPosition}(\$cupId, \$posId)
+  \newline    $\searrow$ \_CreateUsersFromStatement(\$stmt)
+  \newline    $\hookrightarrow$ \_CreateUserFromRow(\$row)
+  \item \underline{Pair[]} $\vert$ null $\leftarrow$ \textbf{FindPairedPozIdUserIdOnCup}(\$cupId)
+  \newline    $\searrow$ \_CreatePairsFromStatement(\$stmt)
+  \newline    $\hookrightarrow$ \_CreatePairFromRow(\$row)
+  \item \underline{string} $\vert$ null $\leftarrow$ \textbf{GetClubAbbreviationByAffiliationId}(\$id)
+  \newline    $\searrow$ \_GetSingleResultFromStatement(\$stmt)
+  \item \underline{string} $\vert$ null $\leftarrow$ \textbf{GetUserFullNameById}(\$id)
+  \newline    $\searrow$ \_GetSingleResultFromTwoColsStatement(\$stmt)
   \item \underline{true} $\vert$ \underline{false} $\leftarrow$ \textbf{UserWithEmailExists}(\$email)
-  \item \underline{true} $\vert$ false $\leftarrow$ \textbf{RegisterUserFromAdmin}(\$first\_name, \$last\_name, \$email, \$password, \$rights, \$klubaffil)
-  \item \underline{true} $\vert$ false $\leftarrow$ \textbf{SendYouWereRegisteredFromAdmin}(\$email, \$password)
-  \item \underline{true} $\vert$ false $\leftarrow$ \textbf{ApproveUser}(\$userID)
-  \item \underline{true} $\vert$ false $\leftarrow$ \textbf{UpdatePairing}(\$JSON) //TBReimplemented in controller
-  \item \underline{true} $\vert$ false $\leftarrow$ \textbf{RegisterUserFromAdminWrap}(\$first\_name, \$last\_name, \$email, \$password, \$prava, \$klub) check, register if possible ($\searrow$ true(not registering) | \underline{false} $\leftarrow$ userWithEmailExists(\$email) | $\searrow$ registerUserFromAdmin(\$first\_name, \$last\_name, \$email, \$password, \$prava, \$klub))
-  \item \underline{token(Action::SUCC, -creds-)} $\vert$ token(Action::UNFOUND, -null-) | token(Action::WRONGCRED, -null-) $\leftarrow$ \textbf{loginFromXamarin}(\$username, \$password)
+  \item \underline{true} $\vert$ false $\leftarrow$ \textbf{RegisterUserFromAdmin}(\$first\_name, \$last\_name,
+  \newline    \$email, \$password, \$rights, \$klubaffil)
+  \item \underline{true} $\vert$ false $\leftarrow$ \textbf{SendYouWereRegisteredFromAdmin}(\$email,
+  \newline    \$password)
+  \item \underline{true} $\vert$ false $\leftarrow$ \textbf{ApproveUser}(\$userId)
+  \item \underline{true} $\vert$ false $\leftarrow$ \textbf{UpdatePairing}(\$JSON)
 \end{itemize}
 \subsection{ClubsManager.php}
 \begin{itemize}
   \setlength\itemsep{0em}
-  \item \underline{Club} | null $\leftarrow$ \textbf{GetClubById}(\$id) $\searrow$ \_CreateClubFromStatement(\$stmt) $\searrow$ \_CreateClubFromRow(\$row)
-  \item \underline{Club []} | null $\leftarrow$ \textbf{FindAllClubs}() $\searrow$ \_CreateClubsFromStatement(\$stmt) $\hookrightarrow$ \_CsreateClubFromRow(\$row)
+  \item \underline{Club} $\vert$ null $\leftarrow$ \textbf{GetClubById}(\$id)
+  \newline    $\searrow$ \_CreateClubFromStatement(\$stmt)
+  \newline    $\searrow$ \_CreateClubFromRow(\$row)
+  \item \underline{Club[]} $\vert$ null $\leftarrow$ \textbf{FindAllClubs}()
+  \newline    $\searrow$ \_CreateClubsFromStatement(\$stmt)
+  \newline    $\hookrightarrow$ \_CreateClubFromRow(\$row)
 \end{itemize}
 \subsection{CupsManager.php}
 \begin{itemize}
   \setlength\itemsep{0em}
-  \item \underline{Cup[]} $\vert$ null $\leftarrow$ \textbf{FindAllUpcomingCupsEarliestFirst}() $\searrow$ \_CreateCupsFromStatement(\$stmt) $\hookrightarrow$ \_CreateCupFromRow(\$row)
-  \item \underline{Cup[]} $\vert$ null $\leftarrow$ \textbf{FindAllPastCupsMostRecentFirst}() $\searrow$ \_CreateCupsFromStatement(\$stmt) $\hookrightarrow$ \_CreateCupFromRow(\$row)
-  \item \underline{string} $\vert$ null  $\leftarrow$ \textbf{GetCupNameById}(\$id) $\searrow$ \_GetSingleResultFromStatement(\$stmt) $\searrow$ \_GetSingleResultFromStatement (\$stmt)
-  \item \underline{Cup} $\vert$ null  $\leftarrow$  \textbf{GetCupById}(\$id) $\searrow$ \_CreateCupOrNullFromStatement(\$stmt)  $\searrow$ \_CreateCupFromRow(\$row)
-  \item \underline{Pair[]} $\vert$ null $\leftarrow$  \textbf{FindPairingsForThisCup}(\$id) $\searrow$ \_CreatePairsFromStatement(\$stmt) $\hookrightarrow$ \_CreatePairFromRow(\$row)
-  \item \underline{true} $\vert$ false $\leftarrow$  \textbf{InsertNewCupFromAdmin}(\$name, \$date, \$club, \$content)
-  \item \underline{true} $\vert$ \underline{false} $\leftarrow$  \textbf{IsUserAvailableForTheCup}(\$userID, \$cupID)
-  \item \underline{true} $\vert$ false $\leftarrow$  \textbf{UpdatePairingForThisCup}(\$cupID, \$json)
-  \item \underline{true} $\vert$ false $\leftarrow$  \textbf{UpdateAvailabilityForThisCup}(\$cupID, \$json)
-  \item \underline{true} $\vert$ false $\leftarrow$  \textbf{AddAvailableUserForTheCup}(\$cupID, \$userID)
+  \item \underline{Cup[]} $\vert$ null $\leftarrow$ \textbf{FindAllUpcomingCupsEarliestFirst}()
+  \newline    $\searrow$ \_CreateCupsFromStatement(\$stmt)
+  \newline    $\hookrightarrow$ \_CreateCupFromRow(\$row)
+  \item \underline{Cup[]} $\vert$ null $\leftarrow$ \textbf{FindAllPastCupsMostRecentFirst}()
+  \newline    $\searrow$ \_CreateCupsFromStatement(\$stmt)
+  \newline    $\hookrightarrow$ \_CreateCupFromRow(\$row)
+  \item \underline{string} $\vert$ null  $\leftarrow$ \textbf{GetCupNameById}(\$id)
+  \newline    $\searrow$ \_GetSingleResultFromStatement(\$stmt)
+  \newline    $\searrow$ \_GetSingleResultFromStatement (\$stmt)
+  \item \underline{Cup} $\vert$ null  $\leftarrow$  \textbf{GetCupById}(\$id)
+  \newline    $\searrow$ \_CreateCupOrNullFromStatement(\$stmt)
+  \newline    $\searrow$ \_CreateCupFromRow(\$row)
+  \item \underline{Pair[]} $\vert$ null $\leftarrow$  \textbf{FindPairingsForThisCup}(\$id)
+  \newline    $\searrow$ \_CreatePairsFromStatement(\$stmt)
+  \newline    $\hookrightarrow$ \_CreatePairFromRow(\$row)
+  \item \underline{true} $\vert$ false $\leftarrow$  \textbf{InsertNewCupFromAdmin}(\$name, \$date, \$club,
+  \newline    \$content)
+  \item \underline{true} $\vert$ \underline{false} $\leftarrow$  \textbf{IsUserAvailableForTheCup}(\$userId, \$cupId)
+  \item \underline{true} $\vert$ false $\leftarrow$  \textbf{UpdatePairingForThisCup}(\$cupId, \$JSON)
+  \item \underline{true} $\vert$ false $\leftarrow$  \textbf{UpdateAvailabilityForThisCup}(\$cupId, \$JSON)
+  \item \underline{true} $\vert$ false $\leftarrow$  \textbf{AddAvailableUserForTheCup}(\$cupId, \$userId)
 \end{itemize}
 \subsection{PositionsManager.php}
 \begin{itemize}
   \setlength\itemsep{0em}
-  \item \underline{Position[]} $\vert$ null $\leftarrow$  \textbf{FindAllPositions}() $\searrow$ \_CreatePositionsFromStatement(\$stmt) $\hookrightarrow$ \_CreatePositionFromRow(\$row)
-  \item \underline{string} $\vert$ null $\leftarrow$ \textbf{GetPositionNameById}(\$id) $\searrow$ \_GetSingleResultFromStatement(\$stmt)
+  \item \underline{Position[]} $\vert$ null $\leftarrow$  \textbf{FindAllPositions}()
+  \newline    $\searrow$ \_CreatePositionsFromStatement(\$stmt)
+  \newline    $\hookrightarrow$ \_CreatePositionFromRow(\$row)
+  \item \underline{string} $\vert$ null $\leftarrow$ \textbf{GetPositionNameById}(\$id)
+  \newline    $\searrow$ \_GetSingleResultFromStatement(\$stmt)
 \end{itemize}
-\newpage
-\section{Application structure}
+
+\section{Application structure - PHP files defined}
 \subsection*{User part of the system}
-Whole system must be running on Czech URLs for convinience reasons of administrators. English equivalents are attached. 
+The system is running on Czech URLs for convinience reasons of browsing. English equivalents of route pages are attached in brackets to demonstrate what the pages do for non-czech speaker. There is no client side routing with traditional LAMP stack.
 \newline
 \begin{forest}
   for tree={
@@ -350,8 +393,7 @@ Whole system must be running on Czech URLs for convinience reasons of administra
     fit=band,
     before computing xy={l=15pt},
   }
-[SwimmPair
-  [index.php]
+[www.SwimmPair.cz/index.php
   [Zavody (Cups)
     [nadchazejici.php (upcoming.php)
       [zavod.php (cup.php)]
@@ -375,7 +417,7 @@ Whole system must be running on Czech URLs for convinience reasons of administra
 \end{forest}
 \newpage
 \subsection*{Administrative part of the system} 
-The administration has following structure. Regarding yor rights have following structure. Each user has profile settings for reseting password and other stuff.  
+The administration has following structure. After going to /admin/index.php user gets logs in and goes to /administration/profile.php. Regarding user's rights (that are passed around along with other information in \textbf{SESSION}, retrievable like \textbf{\$SESSION\_['rights']}) one has following structure (\textbf{Administration}, \textbf{My Club}, \textbf{Me}). Each user has profile settings for reseting password and other stuff.  
 \newline
 \begin{forest}
   for tree={
@@ -397,7 +439,7 @@ The administration has following structure. Regarding yor rights have following 
     fit=band,
     before computing xy={l=15pt},
   }
-[Administration
+[www.SwimmPair.cz/administration/profile.php
   [pridat\_aktualitu.php (add\_post.php)]
   [editovat\_aktuality.php (edit\_posts.php)
     [editovat\_aktualitu.php (edit\_post.php)]
@@ -479,25 +521,33 @@ The administration has following structure. Regarding yor rights have following 
 \end{forest}
 \newline
 \section{JavaScript functions documentation}
-Several cool features for the web to make it more useful are described here.
-\subsection*{XMLHttpRequest/}
+Several features of public website implemented in JavaScript for interactive browsing are described here.
+\subsection*{Library js/SwimmPairFrontendJSLib.js}
+This library is created to support Ajax calls and DOM operations on frontend.
+\newline 
+GetPostAppendPost(PushLastId()) -- ConstructNextPost
+\newline
+ProcessClubForTheSeason(clubId, this) -- CommunicateClubStatsXhrAndUpdateTable(clubId, year) -- UpdateClubStatsTable(returnedJSON)
+\newline
+\subsection*{XMLHttpRequest endpoints}
 \begin{itemize}
-    \item getarticleid.php, \textbf{GET args}: id
-    \item getpersonstatisticsfortheseason.php, \textbf{GET args}: user\textunderscore id, year
-    \item getclubstatisticsfortheseason.php, \textbf{GET args}: club\textunderscore id, year
+    \item get\_post\_following.php, \textbf{GET args}: \textbf{id}
+    \item get\_person\_statistics\_for\_the\_season.php, \textbf{GET args}: user\textunderscore \textbf{id}, year
+    \item get\_club\_statistics\_for\_the\_season.php, \textbf{GET args}: club\textunderscore \textbf{id}, year
 \end{itemize}
 \subsection{Previous post}
-This button on the main page serves as a tool for loading next post. This button has onclick="GetPostAppendPost(PushLastID())". These are both JavaScript functions, PushLastID() detects id "I" of last post from DOM by query and returns it. This value is then used as an argument of call GetPostAppendPost(I). This function requests article by opening GET request XMLHttpRequest/getarticleid?id="I". If result is null, button is deleted since there are no other articles to pull from DB. Otherwise next article is constructed.
-\subsection{Personal statistics change year}
-All individual referees have season picker when opened. Default season is this season. Clicking different season visibily changes selected year and obtains statistics and updates the table. Clicking onclick="processPersonForTheSeason(user-id, updatePairingForThisCup)" calls communicateStatsXHRAndPopulateStats(user-id, year) which gets data from XMLHttpRequest/getpersonstatisticsfortheseason. 
-\subsection{Club statistics change year}
-Club statistics are updated by clicking appropriate year, which gets visibly switched. Year onclick calls processClubForTheSeason(club-id, this) which gets statistics by calling communicateClubStatisticsXMHAndPopulateTable(club-id, year) which gets data by calling XMLHttpRequest/getclubstatisticsfortheseason and subsequently calling refreshClubStatsInTheTable(returnedGetJSON) which literally puts the stats in.
+This button on the main page serves as a tool for loading next post. This button has \textbf{onclick="GetPostAppendPost(PushLastId())"}. These are both JavaScript functions, \textbf{PushLastId()} detects id \textbf{\textless article class="post" id="X"... } of last article class="post" from DOM by querySelector and returns it. This value is then used as an argument of call \textbf{GetPostAppendPost(id)}. This function requests article by GET request \textbf{XMLHttpRequest/get\_following\_post.php?id=X}.  
+If the result is
+\newline i)  \textbf{null} button is deleted since there are no other articles to pull from DB,
+\newline ii) \textbf{post} next article is constructed and appended from response.
+\subsection{User statistics - year change}
+All individual referees have seasons years picker when opened. Default season is the current season. Clicking different season visibily changes selected year and obtains appropriate statistics and updates the stats table. Clicking \textbf{\textless span onclick="ProcessPersonForTheSeason(userId, this)"... } calls inside \textbf{CommunicateStatsXhrAndPopulateStats(userId, year)} gets data from \textbf{XMLHttpRequest/call\_get\_person\_statistics\_for\_the\_season.php}\newline \textbf{?id=userId\&year=YYYY} and updates table. Also via \text{this} reference in call the button is marked as selected.  
+\subsection{Club statistics - year change}
+Club statistics are updated by clicking appropriate year that gets switched. Year onclick calls \textbf{ProcessClubForTheSeason(clubId, this)} which gets statistics by calling \textbf{CommunicateClubStatsXhrAndUpdateTable(clubId, year)}
+\newline by calling \textbf{XMLHttpRequest/get\_club\_statistics\_for\_the\_season.php}
+\newline \textbf{?id=clubId\&year=Year} and subsequently calling
+\newline \textbf{UpdateClubStatsTable(returnedGetJSON)} which literally updates stats.
 \subsection{Filtering referees}
 This function is triggered by one of these: KrajPickerTapped(this), TridaPickerTapped(this) or SearchPerformed(). Each one calls FilterRozhodci("kraje", "tridy", "inputTrida", "nopplfound"). We then loop all people visible/hidden and check if this one's Region IsPermissible(args[]), then if one's Class IsPermissible(args[]) and then if one's IsNamePermissible(args[]). We then set one element style to style="" and continue cycle execution. If we fail one of these three conditions we proceed to code below which sets element style to style="display:none". After the cycle when check the aux variable and if our query is indeed empty we write it for the user.
 \par
 This long procedure gets triggered and subsequently executed everytime region, class or name is changed. Performance should be fine here since the algorithm is dependent on human input. 
-
-\section{SwimmPair REST API}
-
-\section{Mobile app structure}
-Phone version of our administration follows the same structure. All objects are same, including data type, which have to be explicitly defined, unline in PHP.
