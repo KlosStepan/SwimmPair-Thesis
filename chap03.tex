@@ -521,33 +521,65 @@ The administration has following structure. After going to /admin/index.php user
 \end{forest}
 \newline
 \section{JavaScript functions documentation}
-Several features of public website implemented in JavaScript for interactive browsing are described here.
+Several features of public website implemented for interactive browsing.
 \subsection*{Library js/SwimmPairFrontendJSLib.js}
-This library is created to support Ajax calls and DOM operations on frontend.
-\newline 
-GetPostAppendPost(PushLastId()) -- ConstructNextPost
-\newline
-ProcessClubForTheSeason(clubId, this) -- CommunicateClubStatsXhrAndUpdateTable(clubId, year) -- UpdateClubStatsTable(returnedJSON)
-\newline
+This library is created to support Ajax calls and DOM operations on frontend. Functions are self-descriptive and \textbf{this} means reference to caller DOM element.
+\begin{itemize}
+  \setlength\itemsep{0em}
+  \item \textbf{GetPostAppendPost(PushLastId())}
+  \newline    $\searrow$ ConstructNextPost(id, timestamp, title, content, author, signed)
+  \item \textbf{ProcessClubForTheSeason(clubId, this)}
+  \newline    $\searrow$ CommunicateClubStatsXhrAndUpdateTable(clubId, year)
+  \newline    $\searrow$ UpdateClubStatsTable(returnedJSON)
+  \item \textbf{ProcessPersonForTheSeason(userId, this)}
+  \newline    $\searrow$ CommunicateUserStatsXhrAndUpdateTable(userId, year)
+  \newline    $\searrow$ UpdateUserStatsTable(cnt, arr\_str)
+\end{itemize}
+
 \subsection*{XMLHttpRequest endpoints}
 \begin{itemize}
     \item get\_post\_following.php, \textbf{GET args}: \textbf{id}
-    \item get\_person\_statistics\_for\_the\_season.php, \textbf{GET args}: user\textunderscore \textbf{id}, year
-    \item get\_club\_statistics\_for\_the\_season.php, \textbf{GET args}: club\textunderscore \textbf{id}, year
+    \item get\_person\_statistics\_for\_the\_season.php, \textbf{GET args}: user\textunderscore \textbf{id}, \textbf{year}
+    \item get\_club\_statistics\_for\_the\_season.php, \textbf{GET args}: club\textunderscore \textbf{id}, \textbf{year}
 \end{itemize}
+
 \subsection{Previous post}
-This button on the main page serves as a tool for loading next post. This button has \textbf{onclick="GetPostAppendPost(PushLastId())"}. These are both JavaScript functions, \textbf{PushLastId()} detects id \textbf{\textless article class="post" id="X"... } of last article class="post" from DOM by querySelector and returns it. This value is then used as an argument of call \textbf{GetPostAppendPost(id)}. This function requests article by GET request \textbf{XMLHttpRequest/get\_following\_post.php?id=X}.  
+This button on the main page serves as a tool for loading next post. It has \textbf{onclick="GetPostAppendPost(PushLastId())"}. Both are JavaScript functions, \textbf{PushLastId()} detects id \textbf{\textless article class="post" id="X"... } of last article \textbf{class="post"} from DOM by querySelector and returns it. This value is then used as an argument of call \textbf{GetPostAppendPost(id)}. This function requests article by GET request \textbf{XMLHttpRequest/get\_following\_post.php?id=X}.  
 If the result is
 \newline i)  \textbf{null} button is deleted since there are no other articles to pull from DB,
 \newline ii) \textbf{post} next article is constructed and appended from response.
+
 \subsection{User statistics - year change}
 All individual referees have seasons years picker when opened. Default season is the current season. Clicking different season visibily changes selected year and obtains appropriate statistics and updates the stats table. Clicking \textbf{\textless span onclick="ProcessPersonForTheSeason(userId, this)"... } calls inside \textbf{CommunicateStatsXhrAndPopulateStats(userId, year)} gets data from \textbf{XMLHttpRequest/call\_get\_person\_statistics\_for\_the\_season.php}\newline \textbf{?id=userId\&year=YYYY} and updates table. Also via \text{this} reference in call the button is marked as selected.  
+
 \subsection{Club statistics - year change}
 Club statistics are updated by clicking appropriate year that gets switched. Year onclick calls \textbf{ProcessClubForTheSeason(clubId, this)} which gets statistics by calling \textbf{CommunicateClubStatsXhrAndUpdateTable(clubId, year)}
 \newline by calling \textbf{XMLHttpRequest/get\_club\_statistics\_for\_the\_season.php}
 \newline \textbf{?id=clubId\&year=Year} and subsequently calling
 \newline \textbf{UpdateClubStatsTable(returnedGetJSON)} which literally updates stats.
+
 \subsection{Filtering referees}
-This function is triggered by one of these: KrajPickerTapped(this), TridaPickerTapped(this) or SearchPerformed(). Each one calls FilterRozhodci("kraje", "tridy", "inputTrida", "nopplfound"). We then loop all people visible/hidden and check if this one's Region IsPermissible(args[]), then if one's Class IsPermissible(args[]) and then if one's IsNamePermissible(args[]). We then set one element style to style="" and continue cycle execution. If we fail one of these three conditions we proceed to code below which sets element style to style="display:none". After the cycle when check the aux variable and if our query is indeed empty we write it for the user.
-\par
-This long procedure gets triggered and subsequently executed everytime region, class or name is changed. Performance should be fine here since the algorithm is dependent on human input. 
+This function is triggered by one of these: 
+\newline i) \textbf{RegionPickerChanged(this)}, 
+\newline ii) \textbf{RefereeRankPickerChanged(this)},
+\newline iii) \textbf{SearchBarChanged()}.
+\newline
+\includegraphics[scale=0.541]{img/filtering-preview.png}
+\newline
+\textbf{FilterQueriedReferees("kraje", "tridy", "inputTrida", "nopplfound")} is called every time one of 3 controlls is changed. We then loop all users visible/hidden and check if this one's \textbf{Region} IsOptionPermissible(raid, args[]) (referee area id), \textbf{Rank} IsOptionPermissible(rrid, args[]) (referee rank id) and then if one's Name IsNamePermissible(args[]). We then set one's element style to \textbf{style=""} and continue cycle execution. If we fail one of these three conditions we proceed to code below which sets element style to style="display:none".
+\begin{lstlisting}
+...  
+  //Querying
+  if (IsOptionPermissible(raid, krajeIDs)) {
+      if (IsOptionPermissible(rrid, tridyIDs)) {
+          if (IsNamePermissible(jmeno, first_name, last_name)) {
+              articlePerson.setAttribute("style", "");
+              empty = false;
+              continue;
+          }
+      }
+  }
+  //Some Condition Fails - Not Permissible
+  articlePerson.setAttribute("style", "display:none;");
+}  
+\end{lstlisting}
