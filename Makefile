@@ -9,7 +9,7 @@ thesis.pdf: thesis.tex $(wildcard *.tex) bibliography.bib thesis.xmpdata
 	pdflatex --shell-escape $<
 	pdflatex --shell-escape $<
 
-abstract.pdf: abstract.tex abstract.xmpdata
+abstract.pdf: abstract.tex # abstract.xmpdata
 	pdflatex --shell-escape $<
 
 clean:

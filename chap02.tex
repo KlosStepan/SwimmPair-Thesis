@@ -1,7 +1,17 @@
 \chapter{Architecture overview}
-This overview should familiarize the reader with architecture of our application. There are two parts, \textbf{public web} and \textbf{private administration}. Administration is hidden behing password login is held by PHP SESSION. 
+This overview should familiarize the reader with architecture of application. There are two parts, \textbf{public web} and \textbf{private administration}. Administration is hidden behing login/password. 
 \par
-When designing such system, object oriented approach and grouping of similar functions together is a good thing. There are objects that have to be moved around the CMS described in previous chapter. These objects are Post, User, Club, Cup, Position and Region. Therefore we came up with a concept of managers. Each page of SwimmPair is composed of same headerer, menu, footer. The content part is filled with page's specific results of manager call used to construct data UI page layout. These managers are included and used in all pages via \textbf{start file}.
+When designing such system, object oriented approach and grouping of similar functions together is a must. There are objects that have to be moved around the CMS described in the previous chapter. These objects are Post, User, Club, Cup, Position and Region. Therefore we came up with a concept of managers. Each page of SwimmPair is composed of same headerer, menu, footer. The content part is filled with page's specific results of manager call used to construct data UI page layout. These managers are included and used in all pages via \textbf{start file}.
+\section{Technologies}
+Following technologies were used to implement SwimmPair application:
+\begin{itemize}
+    \item \textbf{HTML} is markup language \footnote{\citep{Student08}}
+    \item \textbf{CSS}
+    \item \textbf{PHP}
+    \item \textbf{MySQL}
+    \item \textbf{Docker}
+    \item \textbf{Kubernetes}
+\end{itemize} 
 \section{Application flow}
 Visitor comes to \textbf{app page}, where \textbf{managers} are included. From page there are API calls on Managers that retrieve and store data data.
 \newline
