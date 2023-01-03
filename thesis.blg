@@ -11,44 +11,44 @@ A level-1 auxiliary file: epilog.aux
 A level-1 auxiliary file: bibliography.aux
 The style file: plainnat.bst
 Database file #1: bibliography.bib
-You've used 1 entry,
+You've used 6 entries,
             2773 wiz_defined-function locations,
-            608 strings with 4999 characters,
-and the built_in function-call counts, 382 in all, are:
-= -- 32
-> -- 10
-< -- 1
-+ -- 4
-- -- 3
-* -- 24
-:= -- 65
-add.period$ -- 3
-call.type$ -- 1
-change.case$ -- 4
-chr.to.int$ -- 1
-cite$ -- 2
-duplicate$ -- 20
-empty$ -- 37
-format.name$ -- 4
-if$ -- 76
+            637 strings with 5553 characters,
+and the built_in function-call counts, 1935 in all, are:
+= -- 186
+> -- 60
+< -- 6
++ -- 24
+- -- 18
+* -- 92
+:= -- 310
+add.period$ -- 30
+call.type$ -- 6
+change.case$ -- 24
+chr.to.int$ -- 6
+cite$ -- 12
+duplicate$ -- 90
+empty$ -- 193
+format.name$ -- 24
+if$ -- 415
 int.to.chr$ -- 1
 int.to.str$ -- 1
-missing$ -- 1
-newline$ -- 13
-num.names$ -- 4
-pop$ -- 7
+missing$ -- 0
+newline$ -- 50
+num.names$ -- 24
+pop$ -- 66
 preamble$ -- 1
-purify$ -- 3
+purify$ -- 18
 quote$ -- 0
-skip$ -- 14
+skip$ -- 73
 stack$ -- 0
-substring$ -- 14
-swap$ -- 1
+substring$ -- 12
+swap$ -- 6
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 11
+type$ -- 66
 warning$ -- 0
-while$ -- 4
+while$ -- 18
 width$ -- 0
-write$ -- 20
+write$ -- 103

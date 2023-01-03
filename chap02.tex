@@ -3,14 +3,15 @@ This overview should familiarize the reader with architecture of application. Th
 \par
 When designing such system, object oriented approach and grouping of similar functions together is a must. There are objects that have to be moved around the CMS described in the previous chapter. These objects are Post, User, Club, Cup, Position and Region. Therefore we came up with a concept of managers. Each page of SwimmPair is composed of same headerer, menu, footer. The content part is filled with page's specific results of manager call used to construct data UI page layout. These managers are included and used in all pages via \textbf{start file}.
 \section{Technologies}
-Following technologies were used to implement SwimmPair application:
+Following technologies are used to implement SwimmPair application:
 \begin{itemize}
-    \item \textbf{HTML} is markup language \footnote{\citep{Student08}}
-    \item \textbf{CSS}
-    \item \textbf{PHP}
-    \item \textbf{MySQL}
-    \item \textbf{Docker}
-    \item \textbf{Kubernetes}
+    \item \textbf{HTML} is HyperText Markup Language \footnote{\citep{HTML5Standard}} - application pages are templated in HTML with PHP inside of them,
+    \item \textbf{CSS} is Cascading Style Sheets \footnote{\citep{CSS3Standard}},
+    \item \textbf{PHP} is a general-purpose scripting language geared toward web development \footnote{\citep{PHP74Standard}} - object model and backend services are provided by it,
+    \item \textbf{JavaScript}  is a general-purpose scripting language that conforms to the ECMAScript specification
+    \item \textbf{MySQL} is an open-source relational database management system \footnote{\citep{MySQLDocu}},
+    \item \textbf{Docker} is a set of platform as a service products that use OS-level virtualization to deliver software in packages called containers \footnote{\citep{DockerDocu}} - used for deployment of out application,
+    \item \textbf{Kubernetes} is an open-source container orchestration system for automating software deployment, scaling, and management \footnote{\citep{K8sDocu}} - used for production cluster of our application.
 \end{itemize} 
 \section{Application flow}
 Visitor comes to \textbf{app page}, where \textbf{managers} are included. From page there are API calls on Managers that retrieve and store data data.
