@@ -1,18 +1,20 @@
 \chapter{Architecture overview}
 This overview should familiarize the reader with architecture of application. There are two parts, \textbf{public web} and \textbf{private administration}. Administration is hidden behing login/password. 
 \par
-When designing such system, object oriented approach and grouping of similar functions together is a must. There are objects that have to be moved around the CMS described in the previous chapter. These objects are Post, User, Club, Cup, Position and Region. Therefore we came up with a concept of managers. Each page of SwimmPair is composed of same headerer, menu, footer. The content part is filled with page's specific results of manager call used to construct data UI page layout. These managers are included and used in all pages via \textbf{start file}.
+When designing such system, object oriented approach and grouping of similar functions together is a must. There are objects that have to be moved around the web application described in previous chapter. These objects are Post, User, Club, Cup, Position and Region. Therefore we came up with a concept of managers. Each page of SwimmPair is composed of same headerer, menu, footer. The content part is filled with page's specific results of manager call used to construct data UI page layout. These managers are included and used in all pages via \textbf{start file}.
 \section{Technologies}
 Following technologies are used to implement SwimmPair application:
 \begin{itemize}
-    \item \textbf{HTML} is HyperText Markup Language \footnote{\citep{HTML5Standard}} - application pages are templated in HTML with PHP inside of them,
+    \item \textbf{HTML} is HyperText Markup Language \footnote{\citep{HTML5Standard}} - application pages are templated in HTML by PHP,
     \item \textbf{CSS} is Cascading Style Sheets \footnote{\citep{CSS3Standard}},
     \item \textbf{PHP} is a general-purpose scripting language geared toward web development \footnote{\citep{PHP74Standard}} - object model and backend services are provided by it,
-    \item \textbf{JavaScript}  is a general-purpose scripting language that conforms to the ECMAScript specification
+    \item \textbf{JavaScript}  is a general-purpose scripting language that conforms to the ECMAScript specification \footnote{\citep{ECMADocu}},
     \item \textbf{MySQL} is an open-source relational database management system \footnote{\citep{MySQLDocu}},
+    \item \textbf{Git} is a distributed version control system: tracking changes in any set of files - this project is versioned and kept in public GitHub repository \footnote{https://github.com/KlosStepan/SwimmPair-Www},
     \item \textbf{Docker} is a set of platform as a service products that use OS-level virtualization to deliver software in packages called containers \footnote{\citep{DockerDocu}} - used for deployment of out application,
     \item \textbf{Kubernetes} is an open-source container orchestration system for automating software deployment, scaling, and management \footnote{\citep{K8sDocu}} - used for production cluster of our application.
 \end{itemize} 
+\newpage
 \section{Application flow}
 Visitor comes to \textbf{app page}, where \textbf{managers} are included. From page there are API calls on Managers that retrieve and store data data.
 \newline
@@ -21,8 +23,8 @@ Visitor comes to \textbf{app page}, where \textbf{managers} are included. From p
 Managers are written to provide API functionality for system administration in PHP. These managers are populating pages or taking new input from them and administer process of storing them. Each object has a manager handling it and accomodates database loads and stores controlled by transactions.
 \begin{itemize}
     \item Post/PostsManager
-    \item Page/PagesManager
     \item User/UsersManager
+    \item Page/PagesManager
     \item Club/ClubsManager
     \item Cup/CupsManager
     \item Position/PositionsManager
