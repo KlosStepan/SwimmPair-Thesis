@@ -1,1 +1,25 @@
 \chapter{Testing}
+There are two ways how to test this web application. Either key parts performance and then user testing. 
+\section{Perf. testing}
+\begin{lstlisting}
+//1. Create 98 Users - random affil to 1-15
+$usersManager->RegisterUser($first_name, $last_name, $email, 12345, $rights[$rights_idx], $ranks[$rrid_idx]->id, $clubs[$club_idx]->id);
+//2. Create 12 Cups
+$cupsManager->InsertNewCup($cups_names[$cup_name_idx]." ".rand(1, 8), "2023-".str_pad($j, 2, '0', STR_PAD_LEFT)."-26", "2023-".str_pad($j, 2, '0', STR_PAD_LEFT)."-28", $clubs[$club_idx]->id, $content[$content_idx]);
+//3. Fetch new Users and Cups (&positions)
+$users = $usersManager->FindAllActiveUsersOrderByLastNameAsc();
+$cups = $cupsManager->FindAllUpcomingCupsEarliestFirst();
+$positions = $positionsManager->FindAllPositions();
+//4. Create Availabilities
+$cupsManager->InsertNewAvailability($cups[$k]->id, $users[$user_idx[$kk]]->id, 1);
+//5. Create Pairings (availabilities 1 random pos. for each)
+$cupsManager->InsertNewPairing(($l+1), $positions[$position_idx]->id, $avails[$ll]->id);
+echo("6. Call stats queries (20 either Clubs/Users stat queryings)<br/>\r\n");
+$personCupsCount = $usersManager->CountCupsAttendanceOfUserGivenYear($users[$user_idx]->id, $year);
+$stats_cups = $usersManager->CountOverallStatisticsOfUserGivenYear($users[$user_idx]->id, $year);
+$stats_users = $usersManager->CountClubSeasonalStatistics($clubs[$club_idx]->id, $year);
+
+\end{lstlisting}
+\includegraphics[scale=0.707]{img/app-benchmarking.png}
+\section{User testing}
+SUS preparation
