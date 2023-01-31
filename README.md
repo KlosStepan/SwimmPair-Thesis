@@ -6,8 +6,18 @@ Architecture overview, technical challenges, brainstorming of ideas and techniqu
 ## chap03.tex
 Database schema, tables description and technical implementation of Manager functions with nested calls to private ORM functions. 
 ## chap04.tex
-TODO some testing and benchmarks and stuff
+TODO - text
+Code testing - DONE
+User testing - TODO
 ## chap05.tex
-User guide
+User guide - TODO
+- Public part
+    - Application overview
+    - Cups printouts
+    - Public stats
+- Adminsitration
+    - just referee
+    - club admin.
+    - swimmpair admin
 ## Appendixes
-Mby 02 start file, 03 schema, 03 detailed tables and screenshots of running app 5x (homepage, cup, stat pers., stat club, administration). Results of testing. Dockerfile. Kubernetes deployment.
+Mby 02 start file, 03 schema, 03 detailed tables and screenshots of running app 5x (homepage, cup, stat pers., stat club, administration) 05 user manual. Results of testing. Dockerfile. Kubernetes deployment.
