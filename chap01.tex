@@ -19,7 +19,8 @@ These are tasks that have to be performed
     \item sdfghj.
   \end{itemize}
 \section{Model proposition}
-We list objects of our application model and describe their properties and purpose.
+
+\par
 \subsection*{Cup}
 Cup is the most important object of SwimmPair. A swimming Cup contains name, description, date and is affiliated to organising Club. Cup serves two purposes. Firstly - assigning referees for specific tasks (time tracking, computer support, head of the cup) has to be ready by the time the event takes place. Secondly - statistics summing up participations for Users and Clubs have to be calculated for each year over all cups in this time period. We also have to discriminate between upcoming and already past cups. Upcoming cups are displayed on the top, past cups should reside in the archive to be revisited for statistics purposes.
 \subsection*{Club}
@@ -28,13 +29,19 @@ Club is an administrative unit of people. Club has specific name, abbrevation an
 \subsection*{User}
 \par
 User is an entity modelling swimming referee. A referee participating in this system falls in one of three categories. These categories or levels if you wish are \textbf{referee}, \textbf{club manager} and \textbf{administrator}. User must be uniquely identifiable. A person i.e. User in the system is going to have profile information such as first name, family name, email address. Good practice of using an email address as a login information is going to be used here. User must also contain SwimmPair hierarchy listed above and indicator of one's skill and knowledge in the swimming field, i.e. referee category. User must also belong to exactly one club in our system.
-\subsection*{Post}
-\par
+%\subsection*{Post}
+%%\par
 Post is an informative snippet to be displayed at homepage to notify other swimmers about new event or anything worth paying attention to. Homepage should display last 3 posts and should be allowed to load more.
 \subsection*{Position}
 Predefined list of tasks necessary to be done at each cup. This list is probably never going to change since there is a fixed set of roles. Referees are going to be assigned to these positions for each cup by drag'n'drop user interface.
 \subsection*{Region}
 One of the 13 regions of the Czech Republic in which this system is used. Clubs are located in one of these regions. When new Club starts using SwimmPair, new region has to be added and potential clubs created and attached to this Region. 
+We list objects of our application model and describe their properties and purpose.
+\includegraphics[scale=0.430]{img/swimmpair_db_mockup.png}
+\subsection*{Availability}
+Lorem ipsub blablab.
+\subsection*{Pairing}
+Lorem ipsub blablab.
 \newpage
 \section{Frontend practices}
 Several good practices have to be implemented to make SwimmPair easy to use. These practices are either well known or situation specific but they have one thing in common - they make the application good to use.
