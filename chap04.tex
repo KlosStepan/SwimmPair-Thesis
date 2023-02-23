@@ -1,6 +1,15 @@
 \chapter{Testing}
-There are two ways how to test this web application. Either key parts performance and then user testing. 
-\section{Perf. testing}
+There are two main ways to make sure that web application works properly and fulfills it's role. There is code performance testing, performing system usage on backend level w/ dummy data and there is user testing to assure that users are able to use system and to get inspiration for future ux iterations.
+\section{Performance testing}
+Calling the script dummy\_data\_benchmark.php in www/ folder on basic database installation (2 admin users, default clubs administered by swimmpair, default usual positions that have to be carried on)
+\begin{enumerate}
+    \item Create 98 Users (no. 3-100) - each random affil to existing  Club 1-15
+    \item Create 12 Cups - each random affil to existing Club 1-15
+    \item Fetch new Users, new Cups (+ old static positions)
+    \item Create Availabilities (20 Users per Cup)
+    \item Create Pairings (each Availability gets 1 random pos.)
+    \item Call stats queries (20 - either Clubs or Users stat query w/ random club\_id or user\_id)
+\end{enumerate}    
 \begin{lstlisting}
 //1. Create 98 Users - random affil to 1-15
 $usersManager->RegisterUser($first_name, $last_name, $email, 12345, $rights[$rights_idx], $ranks[$rrid_idx]->id, $clubs[$club_idx]->id);
