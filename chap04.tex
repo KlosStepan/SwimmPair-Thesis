@@ -1,15 +1,54 @@
 \chapter{Testing}
-There are two main ways to make sure that web application works properly and fulfills it's role. There is code performance testing, performing system usage on backend level w/ dummy data and there is user testing to assure that users are able to use system and to get inspiration for future ux iterations.
+There are two main ways to make sure that a web application works properly and fulfills it's role. On one hand there is a code performance testing, performing test on backend level with dummy data insertion and performance benchmarking. On the other hand there is testing to assure that users are able to use system and to get inspiration for future ux iterations via SUS.
 \section{Performance testing}
-Calling the script dummy\_data\_benchmark.php in www/ folder on basic database installation (2 admin users, default clubs administered by swimmpair, default usual positions that have to be carried on)
+Performance script \textbf{dummy\_data\_benchmark.php} \footnote{In https://github.com/KlosStepan/SwimmPair-Www \textbf{dummy\_data\_benchmark.php}} is located in main swimmpair folder. It is performed on default database installation (w/ 2 admin users, w/ already existing clubs administered by application requesters, and default referee positions).  
+\newline
+\textbf{The script has several tasks (tests) which are performed and benchmarked.}
 \begin{enumerate}
-    \item Create 98 Users (no. 3-100) - each random affil to existing  Club 1-15
-    \item Create 12 Cups - each random affil to existing Club 1-15
-    \item Fetch new Users, new Cups (+ old static positions)
-    \item Create Availabilities (20 Users per Cup)
-    \item Create Pairings (each Availability gets 1 random pos.)
-    \item Call stats queries (20 - either Clubs or Users stat query w/ random club\_id or user\_id)
-\end{enumerate}    
+    \item \underline{Create 98 Users} (no. 3-100) - each random affiliation to existing Club (no. 1-15).
+    \item \underline{Create 12 Cups} - each random affiliation to existing Club (no. 1-15).
+    \item \underline{Fetch new Users}, \underline{fetch new Cups} (+ \underline{fetch static Positions}).
+    \item \underline{Create Availabilities} (20 Users available per Cup).
+    \item \underline{Create Pairings} (each Availability gets 1 random position).
+    \item \underline{Call stats queries} (20 - randomly either Clubs or Users stats w/ random club\_id or user\_id).
+\end{enumerate}
+\textbf{Docker Compose} - 2.3 GHz Core i5 (I5-8259U) RAM 16GB Storage 512GB
+\newline
+\begin{tabular}{ |c|c|c|c|c|c|c|c|c|c|c|c| } 
+    \hline
+    Tasks & \#1 & \#2& \#3& \#4& \#5& \#6& \#7& \#8& \#9& \#10 \\
+    \hline
+    Test \#1 & 6.57 & 0.00& 0.00& 0.00& 0.00& 0.00& 0.00& 0.00& 0.00& 0.00 \\ 
+    Test \#2 & 0.05 & 0.00& 0.00& 0.00& 0.00& 0.00& 0.00& 0.00& 0.00& 0.00 \\ 
+    Test \#3 & 6.57 & 0.00& 0.00& 0.00& 0.00& 0.00& 0.00& 0.00& 0.00& 0.00 \\ 
+    Test \#4 & 1.14 & 0.00& 0.00& 0.00& 0.00& 0.00& 0.00& 0.00& 0.00& 0.00 \\ 
+    Test \#5 & 7.57 & 0.00& 0.00& 0.00& 0.00& 0.00& 0.00& 0.00& 0.00& 0.00 \\ 
+    Test \#6 & 1.18 & 0.00& 0.00& 0.00& 0.00& 0.00& 0.00& 0.00& 0.00& 0.00 \\ 
+    TOTAL RT & \textbf{8.75} & 0.00& 0.00& 0.00& 0.00& 0.00& 0.00& 0.00& 0.00& 0.00 \\ 
+    \hline
+\end{tabular}
+\newline
+\textbf{Kubernetes} - \textbf{DOKS} Kubernetes v 1.25.4-do.0, \textbf{2x Node} s-1vcpu-2gb-intel
+\newline
+\begin{tabular}{ |c|c|c|c|c|c|c|c|c|c|c|c| } 
+    \hline
+    Tasks & \#1 & \#2& \#3& \#4& \#5& \#6& \#7& \#8& \#9& \#10 \\
+    \hline
+    Test \#1 & 0.00 & 0.00& 0.00& 0.00& 0.00& 0.00& 0.00& 0.00& 0.00& 0.00 \\ 
+    Test \#2 & 0.00 & 0.00& 0.00& 0.00& 0.00& 0.00& 0.00& 0.00& 0.00& 0.00 \\ 
+    Test \#3 & 0.00 & 0.00& 0.00& 0.00& 0.00& 0.00& 0.00& 0.00& 0.00& 0.00 \\ 
+    Test \#4 & 0.00 & 0.00& 0.00& 0.00& 0.00& 0.00& 0.00& 0.00& 0.00& 0.00 \\ 
+    Test \#5 & 0.00 & 0.00& 0.00& 0.00& 0.00& 0.00& 0.00& 0.00& 0.00& 0.00 \\ 
+    Test \#6 & 0.00 & 0.00& 0.00& 0.00& 0.00& 0.00& 0.00& 0.00& 0.00& 0.00 \\ 
+    TOTAL RT & \textbf{0.00} & 0.00& 0.00& 0.00& 0.00& 0.00& 0.00& 0.00& 0.00& 0.00 \\ 
+    \hline
+\end{tabular}
+\section{User testing}
+SUS preparation
+\newline
+We collected SUS fedbacks from 20 people potentially using this system
+\newline
+TODO
 \begin{lstlisting}
 //1. Create 98 Users - random affil to 1-15
 $usersManager->RegisterUser($first_name, $last_name, $email, 12345, $rights[$rights_idx], $ranks[$rrid_idx]->id, $clubs[$club_idx]->id);
@@ -30,9 +69,7 @@ $stats_users = $usersManager->CountClubSeasonalStatistics($clubs[$club_idx]->id,
 
 \end{lstlisting}
 \includegraphics[scale=0.707]{img/app-benchmarking.png}
-\section{User testing}
-SUS preparation  
-We collected SUS fedbacks from 20 people potentially using this system  
+
 \subsection{description of methodic}
 asdhjkl
 \subsection{result table}
