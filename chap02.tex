@@ -81,6 +81,7 @@ public function GetPostByID($id)
 	return $this->_CreatePostOrNullFromStatement($statement);
 }
 \end{lstlisting}
+\newpage
 \section{Start file}
 Start file is included the in beginning of each page. It serves for \textbf{connection to database},  \textbf{sanitization of input}, \textbf{definition of error handling} and most importantly \textbf{includes objects and managers} and subsequently \textbf{instantiates all managers} while passing reference to the database connection \textbf{\$mysqli} their only constructor argument.
 \begin{lstlisting}
