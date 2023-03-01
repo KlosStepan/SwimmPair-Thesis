@@ -1,5 +1,5 @@
 \chapter{Status quo and solution}
-This section is an introduction into problem how the proposed solution looks like and what practices are used in the SwimmPair web application. 
+Section dedicated to description of problem and proposition of our application.
 \section{Problem description}
 \par
 A friend of mine reached out to me to ask me in order to ask if I could automate part of his agenda work agenda. Administration of swimming competitions and creating statistics is very repetitive and error-prone list of tasks. However, almost all the tasks from about organization are executed in the same order.
@@ -10,10 +10,10 @@ The Czech Swimming Federation \footnote{https://www.czechswimming.cz} structure 
 \par
 The SwimmPair system should deliver public listing of \textbf{users}, \textbf{cups}, \textbf{news}, \textbf{individual statistics} and \textbf{club statistics}. System should allow to browse stats on a yearly basis. This schema will then be appropriately modeled by objects and the schema will be shown below. 
 %\newpage
-\section{Target audience}
-Lukas and his pals.
+\section{Target audience of our application}
+Czech Swimming Federation referees are major users of this application, either actively or passively. Club managers and referees themselves can participate in cups along with others. Club managers, however, are administering Cup agenda and their Club agenda. Referees can be assigned by Club managers to cups as available, if they ask for it.
 %%%An~example citation: %\cite{Andel07}
-\section{Scenarios of storyboards}
+\section{Storyboards of tasks}
 These are tasks that have to be performed:
 \begin{itemize}
     \item create swimming cup,
@@ -21,15 +21,20 @@ These are tasks that have to be performed:
     \item manage swimming club,
     \item preview cup + print pairing,
     \item participate in cup or participate with teammates,
-    \item statistics prereviews for accreditations renewal,
+    \item statistics for accreditation renewal purposes,
     \item statistics of referees,
     \item statistics of clubs,
     \item referees managment,
     \item clubs managment,
-    \item clubs overview.
+    \item clubs overview,
+    \item referees managment,
+    \item referees overview
+    \item news publishing,
+    \item overall categorization of federation,
+    \item database archivation of federation.
   \end{itemize}
 \section{Model proposition}
-
+Let's iterate through things that have to be represented in this system one by one starting from the most important ones. We will outlay  objects, their relations and application connections. After that naive idea of entities and their relations will be established as a project specification for further implementation. We, however, worked more iteratively but this is an approproate modelling for implementation. 
 \par
 \subsection*{Cup}
 Cup is the most important object of SwimmPair. A swimming Cup contains name, description, date and is affiliated to organising Club. Cup serves two purposes. Firstly - assigning referees for specific tasks (time tracking, computer support, head of the cup) has to be ready by the time the event takes place. Secondly - statistics summing up participations for Users and Clubs have to be calculated for each year over all cups in this time period. We also have to discriminate between upcoming and already past cups. Upcoming cups are displayed on the top, past cups should reside in the archive to be revisited for statistics purposes.
@@ -45,20 +50,20 @@ Post is an informative snippet to be displayed at homepage to notify other swimm
 \subsection*{Region}
 One of the 13 regions of the Czech Republic in which this system is used. Clubs are located in one of these regions. When new Club starts using SwimmPair, new region has to be added and potential clubs created and attached to this Region. 
 We list objects of our application model and describe their properties and purpose.
-
+\newpage
 \subsection*{Schema mockup}
-Majority of focus should be on tables \textbf{users} and \textbf{cups} in presented schema. Users belong to clubs that belong to regions. These two entities \textbf{user} and \textbf{cups} are then brought together into table \textbf{availability} which lists referees for specific cups. Availabile users for cup are then paired in \textbf{pairing} where each couple can be assigned a position from \textbf{positions}.
+Majority of focus should be on tables \textbf{users} and \textbf{cups} in presented schema. Users belong to clubs that belong to regions. These two entities \textbf{user} and \textbf{cups} will then be brought together into table called \textbf{availability} which contains referees that are available for specific cups. Availabile users for cup are then paired in \textbf{pairing} where each record can be assigned a position from prescripted \textbf{positions}.
 \newline
 \includegraphics[scale=0.430]{img/swimmpair_db_mockup.png}
 \subsection*{Availability}
-Takes track of \textbf{User} available for \textbf{Cup} who are signed either by their team manager or themselves.
+Takes track of \textbf{User} to \textbf{Cup} availability of who is signed either by their team manager or themselves for the cup. Availability has extra flag going - in case User is paired but can't suddenly go then flag is switched to zero, in order to keep him in pairing but mark him as not going.
 \subsection*{Pairing}
-Record from availability is then taken and one or more \textbf{positions} are assigned to it. 
+Record from \textbf{Availability} is then taken and \textbf{Positions} is assigned to it. 
 \subsection*{Position}
-Predefined list of tasks necessary to be done at each cup. This list is probably never going to change since there is a fixed set of roles. Referees are going to be assigned to these positions for each cup by drag'n'drop user interface.
+Predefined list of tasks necessary to be done at each cup. This list is probably never going to change since there is a fixed set of roles. Referees are going to be assigned to these positions for each cup by drag'n'drop user interface in administration.
 \newpage
 \section{Frontend practices}
-Several good practices have to be implemented to make SwimmPair easy to use. These practices are either well known or situation specific but they have one thing in common - they make the application good to use.
+Several good practices have to be implemented to make SwimmPair easy to use. These practices are either well known or situation specific but they have one thing in common - they should make the application good to use.
 \subsection*{Smooth frontend browsing}
 \par
 Frontend of SwimmPair should be easy to use. There are several options and use cases of JavaScript that can come in handy. Reduction of page reloads is definitely a good way to go. Therefore there are going to be asynchronous JavaScript calls for obtain semi-partial data. After, next function will modify the DOM based on data received from asynchronous call. 

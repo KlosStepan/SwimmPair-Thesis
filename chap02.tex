@@ -1,5 +1,5 @@
 \chapter{Architecture overview}
-This overview should familiarize the reader with architecture of application. There are two parts, \textbf{public web} and \textbf{private administration}. Administration is hidden behing login/password. 
+This overview should familiarize reader with architecture of our application. There are two parts, \textbf{public web} and \textbf{private administration}. Administration is hidden behing login/password. 
 \par
 When designing such system, object oriented approach and grouping of similar functions together is a must. There are objects that have to be moved around the web application described in previous chapter. These objects are Post, User, Club, Cup, Position and Region. Therefore we came up with a concept of managers. Each page of SwimmPair is composed of same headerer, menu, footer. The content part is filled with page's specific results of manager call used to construct data UI page layout. These managers are included and used in all pages via \textbf{start file}.
 \section{Technologies}
@@ -138,16 +138,16 @@ $regionsManager = new RegionsManager($mysqli);
 \section{Templating of web and administration}
 Each page layout of public website has common characteristics such as header, menu and footer. These sections are unified and included everywhere, therfore they are included everywhere. They are:
 \begin{itemize}
-    \item HEADER,
-    \item MENU,
+    \item \textbf{HEADER},
+    \item \textbf{MENU},
     \item Generated from result obtained by one or more manager calls. this section might be further updated via XMLHttpRequest calls \& DOM modifications of newly delivered data,
-    \item FOOTER.
+    \item \textbf{FOOTER}.
 \end{itemize}
 Homepage of administration panel /admin/profile.php after login gets assembled with regards to the rights of logged user. Ordering is following: Admin (2) \textgreater \: Club manager (1) \textgreater \: Swimming referee (0) and each user gets snippet of his and lower role snippets:
 \begin{itemize}
-    \item SUPERUSER menu snippet - 2,
-    \item CLUB MANAGER menu snippet - 1,
-    \item SWIMMING REFEREE menu snippet - 0.
+    \item \textbf{SUPERUSER} menu snippet - \textbf{2},
+    \item \textbf{CLUB MANAGER} menu snippet - \textbf{1},
+    \item \textbf{SWIMMING REFEREE} menu snippet - \textbf{0}.
 \end{itemize}
 Following flow is then discriminated based on rights code on each page. \newline
 \textbf{Rights check} 
