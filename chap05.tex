@@ -17,6 +17,6 @@ docker push stepanklos/swimmpair
 \end{lstlisting}
 This image is then pullable as stepanklos/swimmpair from Deployment.
 \section*{Kubernetes}
-We run 2 replicas on 2 Nodes in order to ensure reliability and uptime of application. 
+We run 2 replicas on 2 Nodes in order to ensure reliability and uptime. 
 \section*{Database and Redis}
 As mentioned before, our application doesn't come with Database and Adminer, which have to be set up separately using persistent storage PV on which we write PVC and reference from deployment. 

@@ -266,7 +266,9 @@ SwimmPair static Pages.
 \end{enumerate}
 \newpage
 \section{Managers documentation}
-\par These five controllers work with objects and provide login (i.e. joining more tables in varios ways to achieve all functionality).
+\par These five controllers work with objects and provide views and functions (i.e. joining more tables in varios ways to achieve all functionality). We're providing an overview of which API functions are calling which internal functions (plain, in cycle) and what are desired return values.  
+\newline
+\textbf{Documentation of model - classes and public functions is available \footnote{\url{http://docu.swimmpair.cz}}}.
 \subsection{PostsManager.php}
 \begin{itemize}
   \setlength\itemsep{0em}
@@ -348,7 +350,6 @@ SwimmPair static Pages.
   \newline    $\hookrightarrow$ \_CreateCupFromRow(\$row)
   \item \underline{string} $\vert$ null  $\leftarrow$ \textbf{GetCupNameById}(\$id)
   \newline    $\searrow$ \_GetSingleResultFromStatement(\$stmt)
-  \newline    $\searrow$ \_GetSingleResultFromStatement (\$stmt)
   \item \underline{Cup} $\vert$ null  $\leftarrow$  \textbf{GetCupById}(\$id)
   \newline    $\searrow$ \_CreateCupOrNullFromStatement(\$stmt)
   \newline    $\searrow$ \_CreateCupFromRow(\$row)
@@ -371,10 +372,10 @@ SwimmPair static Pages.
   \item \underline{string} $\vert$ null $\leftarrow$ \textbf{GetPositionNameById}(\$id)
   \newline    $\searrow$ \_GetSingleResultFromStatement(\$stmt)
 \end{itemize}
-
-\section{Application structure - files defined structure}
+\newpage
+\section{Application structure - files defined}
 \subsection*{User part of the system}
-The system is running on Czech URLs for convinience reasons of browsing. English equivalents of route pages are attached in brackets to demonstrate what the pages do for non-czech speaker. There is no client side routing with traditional LAMP stack.
+The system is running on Czech URLs for convinience reasons of browsing. English equivalents of route pages are attached in brackets to demonstrate what the pages do for non-czech speaker. There is no client side routing with traditional LAMP stack.  
 \newline
 \begin{forest}
   for tree={
@@ -419,7 +420,7 @@ The system is running on Czech URLs for convinience reasons of browsing. English
 ]
 \end{forest}
 \newpage
-\subsection*{Administrative part of the system} 
+\subsection*{Admin part of the system} 
 The administration has following structure. After going to /admin/index.php user gets logs in and goes to /administration/profile.php. Regarding user's rights (that are passed around along with other information in \textbf{SESSION}, retrievable like \textbf{\$SESSION\_['rights']}) one has following structure (\textbf{Administration}, \textbf{My Club}, \textbf{Me}). Each user has profile settings for reseting password and other stuff.  
 \newline
 \begin{forest}

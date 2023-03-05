@@ -1,7 +1,7 @@
 \chapter{Testing}
-There are two main ways to make sure that a web application works properly and fulfills it's role. On one hand there is a code performance testing, performing test on backend level with dummy data insertion and performance benchmarking. On the other hand there is testing to assure that users are able to use system and to get inspiration for future ux iterations via SUS.
+There are two main ways to make sure that a web application works properly and fulfills its role. On one hand there is a code performance testing, performing test on backend level with dummy data insertion and performance benchmarking. On the other hand there is testing to assure that users are able to use system and to get inspiration for future UX improvements via SUS.
 \section{Performance testing}
-Performance script \textbf{dummy\_data\_benchmark.php} \footnote{In https://github.com/KlosStepan/SwimmPair-Www \textbf{dummy\_data\_benchmark.php}} is located in main swimmpair folder. It is performed on default database installation (w/ 2 admin users, w/ already existing clubs administered by application requesters, and default referee positions).  
+Performance script \textbf{dummy\_data\_benchmark.php} \footnote{In https://github.com/KlosStepan/SwimmPair-Www \textbf{dummy\_data\_benchmark.php}} is located in main swimmpair folder. It is performed on default database installation (with 2 admin users, with already existing clubs administered by application requesters, and with default referee positions).  
 \newline
 \textbf{The script has several tasks (tests) which are performed and benchmarked.}
 \begin{enumerate}
@@ -28,7 +28,7 @@ Performance script \textbf{dummy\_data\_benchmark.php} \footnote{In https://gith
     \hline
 \end{tabular}
 \newline
-\textbf{Kubernetes} - \textbf{DOKS} Kubernetes v 1.25.4-do.0, \textbf{2x Node} s-1vcpu-2gb-intel
+\textbf{Kubernetes} - \textbf{DOKS} Kubernetes v 1.25.4-do.0, s-1vcpu-2gb-intel
 \newline
 \begin{tabular}{ |c|c|c|c|c|c|c|c|c|c|c|c| } 
     \hline
@@ -87,6 +87,8 @@ We carried on testing of our application by handing SUS questionare to 20 respon
     Vera Z - \textbf{75}     & 3 & 3& 4& 1& 3& 1& 3& 1& 4& 1 \\ 
     \hline
 \end{tabular}
+
+\iffalse
 \newpage
 Rest of this stuff mby \textbf{depr.}
 \begin{lstlisting}
@@ -110,3 +112,4 @@ $stats_users = $usersManager->CountClubSeasonalStatistics($clubs[$club_idx]->id,
 This benchmark snippet probably \textbf{depr.}
 \newline
 \includegraphics[scale=0.707]{img/app-benchmarking.png}
+\fi
