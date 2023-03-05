@@ -10,13 +10,13 @@ File called \textbf{Dockerfile} has to be created in the project folder.
 FROM thecodingmachine/php:7.4-v4-apache
 COPY --chown=docker . /var/www/html
 \end{lstlisting}
-This image of Apache/PHP\footnote{thecodingmachine link} was chosen because it correctly dockerizes part of so-called LAMP stack. In order to build this image and push it into Dockerhub.com we run these commands:
+This image of Apache/PHP\footnote{Image \textbf{thecodingmachine/php:7.4-v4-apache}  by TheCodingMachine - \url{https://github.com/thecodingmachine/docker-images-php}} was chosen because it correctly dockerizes part of so-called LAMP stack. In order to build this image and push it into Dockerhub.com we run these commands:
 \begin{lstlisting}
 docker build -t stepanklos/swimmpair .
 docker push stepanklos/swimmpair
 \end{lstlisting}
 This image is then pullable as stepanklos/swimmpair from Deployment.
 \section*{Kubernetes}
-We run X replicas on X Nodes in order to ensure reliability and uptime. 
+We run 2 replicas on 2 Nodes in order to ensure reliability and uptime of application. 
 \section*{Database and Redis}
 As mentioned before, our application doesn't come with Database and Adminer, which have to be set up separately using persistent storage PV on which we write PVC and reference from deployment. 

@@ -2,19 +2,27 @@
 Section dedicated to description of problem and proposition of our application.
 \section{Problem description}
 \par
-A friend of mine reached out to me to ask me in order to ask if I could automate part of his agenda work agenda. Administration of swimming competitions and creating statistics is very repetitive and error-prone list of tasks. However, almost all the tasks from about organization are executed in the same order.
+A friend of mine reached out to me to ask me in order to ask if I could automate part of his agenda work agenda. Administration of swimming competitions and creating statistics is very repetitive and error-prone list of tasks. However, almost all the tasks are executed in same straightforward order.
 \par
-The Czech Swimming Federation \footnote{https://www.czechswimming.cz} structure has to be modeled as objects in the application and database records as a storage. Thus, logical structure should be set and implemented in following order. Swimming referees belong to clubs, clubs are located in geographical regions. Swimming cup is organised by a club. Each Club contains several swimming referees and one of them is a club manager. When a Cup is online each Swimming referee can sign himself or herself up as available for the Cup. Club manager can also sign members of his club for a cup. At the end of the day, organizer of the cup assigns available referees that signed up to positions that he finds them suitable for. My friend, the chairman of referee committee should be able to perform additional administrative other tasks, such as adding and removing users, creating new clubs and modifying whole structure. Administrator can notify all visitors by posting an information psa on homepage.
+The Czech Swimming Federation \footnote{\url{https://www.czechswimming.cz}} structure has to be modeled as objects in the application and database records as a storage. Thus, logical structure should be decided and implemented. Swimming referees belong to clubs, clubs are located in geographical regions. Swimming cup is hosted by club. Each club contains dozen of swimming referees and one of them is a club manager. When a cup is online each referee can sign himself or herself up as available for the cup. Club manager can also sign up members of his club for to attend a cup. At the end of the day, organizer of the cup assigns available referees to positions (dedicated task-related roles during cup) that he finds them suitable for. My friend, the chairman of referee committee should be able to perform additional administration related to the database as whole - such as adding and removing users, creating new clubs and modifying whole structure. Administrator can also notify all visitors by posting news displayed on homepage.
 \par
 \includegraphics[scale=0.335]{img/swimmpair_schema.png}
 \par
-The SwimmPair system should deliver public listing of \textbf{users}, \textbf{cups}, \textbf{news}, \textbf{individual statistics} and \textbf{club statistics}. System should allow to browse stats on a yearly basis. This schema will then be appropriately modeled by objects and the schema will be shown below. 
+The SwimmPair system should deliver public listing of all \textbf{users}, \textbf{cups}, \textbf{news}, \textbf{individual statistics} and \textbf{club statistics}. System should allow to browse stats on a yearly basis. Structure from this image then has to be appropriately modeled with objects. Proposition of database schema will be shown further down. 
 %\newpage
 \section{Target audience of our application}
-Czech Swimming Federation referees are major users of this application, either actively or passively. Club managers and referees themselves can participate in cups along with others. Club managers, however, are administering Cup agenda and their Club agenda. Referees can be assigned by Club managers to cups as available, if they ask for it.
+Our users are Czech Swimming Federation members. If their \textbf{region} is \textbf{participating in this application}, clubs and referees from this region must be in our system. With regards to referee's competence level within these clubs, one will have one of these roles: 
+\begin{itemize}
+  \item \textbf{system administrator} ($\sim$1-3)
+  \item \textbf{club manager} + referee ($\sim$10s),
+  \item \textbf{referee} ($\sim$100s).
+\end{itemize} 
+Roles are self-descriptive and previously casually mentioned. My friend, who came up with this idea is \textbf{system administrator} because he's been keeping track all this agenda. Club managers are taking care of competitions on behalf of the club and referees are common people who have some degree of knowledge about competitions. Colected statistics will then be used for accreditation granting, activity monitoring and categorization overall.
+\par
+We were iterating form and features of the web application with two future system administrators during time of development. We then tested usability on all three groups of users via. SUS \footnote{\textbf{System Usability Scale} is a questionnaire to reveal how friendly tested system is to target audience. We carried on initial testing for 20 people belonging to one of these 3 categories to find out if we met at least an average score which was determined to be 68/100.} questionnaire.
 %%%An~example citation: %\cite{Andel07}
 \section{Storyboards of tasks}
-These are tasks that have to be performed:
+These are the tasks that have to be performed:
 \begin{itemize}
     \item create swimming cup,
     \item perform pairing for swimming cup,
@@ -28,29 +36,28 @@ These are tasks that have to be performed:
     \item clubs managment,
     \item clubs overview,
     \item referees managment,
-    \item referees overview
+    \item referees overview,
     \item news publishing,
     \item overall categorization of federation,
     \item database archivation of federation.
   \end{itemize}
 \section{Model proposition}
-Let's iterate through things that have to be represented in this system one by one starting from the most important ones. We will outlay  objects, their relations and application connections. After that naive idea of entities and their relations will be established as a project specification for further implementation. We, however, worked more iteratively but this is an approproate modelling for implementation. 
+Let's go through things that have to be represented in this system one by one starting from the most important ones. We will outlay  objects, their relations and their relational connections. After that basic idea of entities and their relations will be established we continue to project specification for further implementation. We, however, worked more iteratively so this is just retrospective model for implementation that we were specifying during the time of development. 
 \par
 \subsection*{Cup}
-Cup is the most important object of SwimmPair. A swimming Cup contains name, description, date and is affiliated to organising Club. Cup serves two purposes. Firstly - assigning referees for specific tasks (time tracking, computer support, head of the cup) has to be ready by the time the event takes place. Secondly - statistics summing up participations for Users and Clubs have to be calculated for each year over all cups in this time period. We also have to discriminate between upcoming and already past cups. Upcoming cups are displayed on the top, past cups should reside in the archive to be revisited for statistics purposes.
+\textbf{Cup is the most important object of SwimmPair.} A swimming Cup contains name, description, date and is affiliated to organizing Club. Cup serves two purposes. \textbf{Firstly} - assigning referees for specific tasks (time tracking, computer support, head of the cup, etc.) has to be \textbf{ready by the time the event takes place}. \textbf{Secondly} - statistics summing up participations for Users and Clubs have to be calculated for each year over all cups in this time period. We also have to discriminate between upcoming and already past cups. Upcoming cups are displayed on the top, past cups should reside in the archive to be revisited for statistical purposes.
 \subsection*{User}
 \par
-User is an entity modelling swimming referee. A referee participating in this system falls in one of three categories. These categories or levels if you wish are \textbf{referee}, \textbf{club manager} and \textbf{administrator}. User must be uniquely identifiable. A person i.e. User in the system is going to have profile information such as first name, family name, email address. Good practice of using an email address as a login information is going to be used here. User must also contain SwimmPair hierarchy listed above and indicator of one's skill and knowledge in the swimming field, i.e. referee category. User must also belong to exactly one club in our system.
+User is an entity modelling swimming referee. A referee participating in this system falls in one of three categories. These categories or levels if you wish are \textbf{referee}, \textbf{club manager} and \textbf{system administrator}. User has to be uniquely identifiable. A person i.e. User in the system is going to have profile information such as first name, family name, email address. Good practice of using email address as a login information is going to be used here. User must also contain SwimmPair hierarchy listed above\footnote{\textbf{Rights} - referee 0 / club manager 1 / system administrator 2} and indicator of one's skill and knowledge in the swimming field\footnote{\textbf{Referee Rank} - 1/2/3/4/FINA - \url{https://www.czechswimming.cz/index.php/rozhodci}}, i.e. referee category. User must also belong to exactly one club in our system.
 \subsection*{Club}
 \par
-Club is an administrative unit of people. Club has specific name, abbrevation and ID in Czech Referee Federation. An image can be included as well. A club will be serving as a formal authority organising Cup - by a User who is Club Manager. Club is unanimously affiliated to Region. Statistics regarding performance of members of Club at swimming competitions must be implemented. Statistics have informative characted and will save time in the current status quo - keeping track of presence and work descriptions in Excel spreadsheets. 
-%\subsection*{Post}
-%%\par
-Post is an informative snippet to be displayed at homepage to notify other swimmers about new event or anything worth paying attention to. Homepage should display last 3 posts and should be allowed to load more.
+Club is an administrative unit grouping people (in the same city). Club has a specific name, abbrevation and ID in Czech Referee Federation. An image can be included as well. A club will be serving as a formal authority organising Cup by a User who is club manager. Club is unanimously affiliated to Region. Statistics regarding performance of members of Club at swimming competitions must be implemented. Statistics have informative characted and will save time in the current status quo - keeping track of presence and work descriptions in Excel spreadsheets.
 \subsection*{Region}
 One of the 13 regions of the Czech Republic in which this system is used. Clubs are located in one of these regions. When new Club starts using SwimmPair, new region has to be added and potential clubs created and attached to this Region. 
-We list objects of our application model and describe their properties and purpose.
-\newpage
+We list objects of our application model and describe their properties and purpose. 
+%\subsection*{Post}
+%Informative news snippet displayed on the homepage.
+%\newpage
 \subsection*{Schema mockup}
 Majority of focus should be on tables \textbf{users} and \textbf{cups} in presented schema. Users belong to clubs that belong to regions. These two entities \textbf{user} and \textbf{cups} will then be brought together into table called \textbf{availability} which contains referees that are available for specific cups. Availabile users for cup are then paired in \textbf{pairing} where each record can be assigned a position from prescripted \textbf{positions}.
 \newline
@@ -69,12 +76,12 @@ Several good practices have to be implemented to make SwimmPair easy to use. The
 Frontend of SwimmPair should be easy to use. There are several options and use cases of JavaScript that can come in handy. Reduction of page reloads is definitely a good way to go. Therefore there are going to be asynchronous JavaScript calls for obtain semi-partial data. After, next function will modify the DOM based on data received from asynchronous call. 
 \subsection*{Multiple device types}
 \par
-Today is certain that there are users who want to browse our system from pc, tablet or smartphone and responsive design is a necessity. Since CSS3 supports media queries we are going to use them for creation of device specific styling.
+Today is certain that there are users who want to browse our system from pc, tablet or smartphone and responsive design is a necessity. Since CSS3 supports media queries\footnote{\url{https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries}} we are going to use them for creation of device specific styling.
 \subsection*{Assigning referees to positions via. drag'n'drop}
 \par
 Assigning referees to positions for cups should be implemented via drag'n'drop. Dragging a referee, moving referee over the region specified for the positions and releasing mouse button. Double clicking this person is a good way of removing it.
 \subsection*{Printouts of pairing}
-Upcoming Cup can be directly printed from website and hanged as data printout. 
+Upcoming Cup can be directly printed\footnote{\url{https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries\#targeting_media_types}} from website and hanged as data printout. 
 %\subsection*{Mobile administration}
 %Since some things could be done from phone, a phone app without a necessity of web browser will have more native feel. Assigning by drag and drop would be very %hazardeous to do with regards to difference between mouse and finger. Also we are not certain that the Events are the same. Therefore full version %adminsitrative app should be necessary to be provided.
 \subsection*{Appropriate design}

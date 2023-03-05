@@ -1,5 +1,5 @@
 \chapter{Architecture overview}
-This overview should familiarize reader with architecture of our application. There are two parts, \textbf{public web} and \textbf{private administration}. Administration is hidden behing login/password. 
+Reader will be familiarized with architecture of our application. There are two logical parts, \textbf{public web} and \textbf{private administration}. Private administration is hidden behing \textbf{login/password}. 
 \par
 When designing such system, object oriented approach and grouping of similar functions together is a must. There are objects that have to be moved around the web application described in previous chapter. These objects are Post, User, Club, Cup, Position and Region. Therefore we came up with a concept of managers. Each page of SwimmPair is composed of same headerer, menu, footer. The content part is filled with page's specific results of manager call used to construct data UI page layout. These managers are included and used in all pages via \textbf{start file}.
 \section{Technologies}
@@ -10,29 +10,29 @@ Following technologies are used to implement SwimmPair application:
     \item \textbf{PHP} is a general-purpose scripting language geared toward web development \footnote{\citep{PHP74Standard}} - object model and backend services are provided by it,
     \item \textbf{JavaScript}  is a general-purpose scripting language that conforms to the ECMAScript specification \footnote{\citep{ECMADocu}},
     \item \textbf{MySQL} is an open-source relational database management system \footnote{\citep{MySQLDocu}},
-    \item \textbf{Git} is a distributed version control system: tracking changes in any set of files - this project is versioned and kept in public GitHub repository \footnote{https://github.com/KlosStepan/SwimmPair-Www},
+    \item \textbf{Git} is a distributed version control system: tracking changes in any set of files - this project is versioned and kept in public GitHub repository \footnote{\url{https://github.com/KlosStepan/SwimmPair-Www}},
     \item \textbf{Docker} is a set of platform as a service products that use OS-level virtualization to deliver software in packages called containers \footnote{\citep{DockerDocu}} - used for deployment of out application,
-    \item \textbf{Kubernetes} is an open-source container orchestration system for automating software deployment, scaling, and management \footnote{\citep{K8sDocu}} - used for production cluster of our application.
+    \item \textbf{Kubernetes} is an open-source container orchestration system for automating software deployment, scaling, and management \footnote{\citep{K8sDocu}} - used for production deployment of our application into cluster.
 \end{itemize} 
 \newpage
 \section{Application flow}
-Visitor comes to \textbf{app page}, where \textbf{managers} are included. From page there are API calls on Managers that retrieve and store data data.
+Visitor comes to \textbf{app page}, where \textbf{managers} are included. From page there are API calls on Managers that retrieve and store data data as follows.
 \newline
 \includegraphics[scale=0.707]{img/app-schema.jpg}
 \section{Managers}
-Managers are written to provide API functionality for system administration in PHP. These managers are populating pages or taking new input from them and administer process of storing them. Each object has a manager handling it and accomodates database loads and stores controlled by transactions.
+Managers are written to provide API functionality for system administration. These managers are populating pages or taking new input from them and administer process of storing them. Each object has a manager handling it and accomodates database loads and stores controlled by transactions.
 \begin{itemize}
-    \item Post/PostsManager
-    \item User/UsersManager
-    \item Page/PagesManager
-    \item Club/ClubsManager
-    \item Cup/CupsManager
-    \item Position/PositionsManager
-    \item Region/RegionsManager
+    \item Cup / CupsManager
+    \item User / UsersManager
+    \item Club / ClubsManager
+    \item Page / PagesManager
+    \item \textbf{Post / PostsManager}
+    \item Position / PositionsManager
+    \item Region / RegionsManager
 \end{itemize}
 Managers are implemented to extract and store data of class by which they are named after. Let's take PostsManager as an example. This manager handles Post and is implemented as follows.
 \newline
-\textbf{Post.php}
+\textbf{Object - Post.php}
 \begin{lstlisting}
 class Post
 {
@@ -51,7 +51,7 @@ class Post
 }
 
 \end{lstlisting}
-\textbf{PostsManager.php} 
+\textbf{Manager - PostsManager.php} 
 \begin{lstlisting}
 class PostsManager
 {
@@ -72,18 +72,19 @@ class PostsManager
 	private function _CreatePostFromRow(array $row)
 }
 \end{lstlisting}
-\textbf{Demonstration - public function GetPostByID(\$id)}
+\textbf{Demonstration - public function GetPostById(\$id)}
 \begin{lstlisting}
 public function GetPostByID($id)
 {
-	$statement = $this->mysqli->prepare("CALL `GetPostByID`(?);");
+	$statement = $this->mysqli->prepare("CALL `GetPostById`(?);");
 	$statement->bind_param('i', $id);
 	return $this->_CreatePostOrNullFromStatement($statement);
 }
 \end{lstlisting}
+Objects and their managers are made in the same manner. They contain different set of data and different number public functions. Description is included in documentation chapter below. 
 \newpage
 \section{Start file}
-Start file is included the in beginning of each page. It serves for \textbf{connection to database},  \textbf{sanitization of input}, \textbf{definition of error handling} and most importantly \textbf{includes objects and managers} and subsequently \textbf{instantiates all managers} while passing reference to the database connection \textbf{\$mysqli} their only constructor argument.
+Start file is included the in beginning of each page. It serves for \textbf{connection to database},  \textbf{sanitization of input}, \textbf{definition of error handling} and most importantly \textbf{includes objects and managers} and subsequently \textbf{instantiates all managers} by passing reference to live database connection \textbf{\$mysqli} - their only constructor argument.
 \begin{lstlisting}
 /*Database credentials from environment*/
 $host = getenv("DATABASE_HOST");
@@ -105,7 +106,7 @@ set_exception_handler(function () {
     echo "<h3 style=\"color: red;\">INVALID REQUEST</h3>";
     exit();
 });
-/* Objects and Managers*/
+/* Objects and Managers inclusion*/
 require __DIR__ . '/model/Sanitizer.php';
 require __DIR__ . '/model/Auth.php';
 require __DIR__ . '/model/Post.php';
@@ -140,7 +141,7 @@ Each page layout of public website has common characteristics such as header, me
 \begin{itemize}
     \item \textbf{HEADER},
     \item \textbf{MENU},
-    \item Generated from result obtained by one or more manager calls. this section might be further updated via XMLHttpRequest calls \& DOM modifications of newly delivered data,
+    \item Generated from result obtained by one or more manager calls. this section might be further updated via \textbf{XMLHttpRequest calls \& DOM modifications} of newly delivered data,
     \item \textbf{FOOTER}.
 \end{itemize}
 Homepage of administration panel /admin/profile.php after login gets assembled with regards to the rights of logged user. Ordering is following: Admin (2) \textgreater \: Club manager (1) \textgreater \: Swimming referee (0) and each user gets snippet of his and lower role snippets:
@@ -149,8 +150,8 @@ Homepage of administration panel /admin/profile.php after login gets assembled w
     \item \textbf{CLUB MANAGER} menu snippet - \textbf{1},
     \item \textbf{SWIMMING REFEREE} menu snippet - \textbf{0}.
 \end{itemize}
-Following flow is then discriminated based on rights code on each page. \newline
-\textbf{Rights check} 
+Access to different pages is then discriminated based on rights code on each page. \newline
+\textbf{Rights check on each page in administration} 
 \begin {lstlisting}
 <?php
     require __DIR__ . '/../start.php';
@@ -160,7 +161,7 @@ Following flow is then discriminated based on rights code on each page. \newline
 ?>    
 ...
 \end{lstlisting}
-\textbf{requireRole on Auth class} 
+\textbf{Static requireRole function on Auth class for access permission} 
 \begin{lstlisting}
 class Auth
 {
@@ -207,7 +208,7 @@ Listed media queries are used to provide design of the web by manually overridin
     \item \textbf{Add Cup} - from CupsManager call AddCup
     \item \textbf{Sign Up People From My Club As Available For Cup} - prihlasit\_moje\_lidi\_na.php then XMLHttpRequest/call\_update\_availability.php
 \end{itemize}   
-\section{Referee}    
+\section{Referee tasks}    
 \begin{itemize}
     \item \textbf{Sign Myself As Available For Cup} - add my Id to table \textbf{cupId}-\textbf{userId}
 \end{itemize}
