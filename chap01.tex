@@ -10,38 +10,49 @@ The Czech Swimming Federation \footnote{\url{https://www.czechswimming.cz}} stru
 \par
 The SwimmPair system should deliver public listing of all \textbf{users}, \textbf{cups}, \textbf{news}, \textbf{individual statistics} and \textbf{club statistics}. System should allow to browse stats on a yearly basis. Structure from this image then has to be appropriately modeled with objects. Proposition of database schema will be shown further down. 
 %\newpage
-\section{Target audience of our application}
+\section{Stakeholders}
+Groups direclty and indirectly interested in existence of this application and breakdown of its active/passive users.
+\subsection*{Interest groups}
+There are several entities that are interested in existence of this application. All these stakeholders will have their job facilitated and organized better to some extent thanks to this application.  
+Interested stakeholders are:
+\begin{itemize}
+  \item \textbf{Czech Swimming Federation} - organization for swimming,
+  \item \textbf{Olomouc Region}, \textbf{Zlin Region} - regions administered together,
+  \item \textbf{Lukas K} - manager who demanded this application.
+\end{itemize}
+\subsection*{Users of application}
 Our users are Czech Swimming Federation members. If their \textbf{region} is \textbf{participating in this application}, clubs and referees from this region must be in our system. With regards to referee's competence level within these clubs, one will have one of these roles: 
 \begin{itemize}
-  \item \textbf{system administrator} ($\sim$1-3)
+  \item \textbf{system administrator} ($\sim$1-3),
   \item \textbf{club manager} + referee ($\sim$10s),
   \item \textbf{referee} ($\sim$100s).
 \end{itemize} 
-Roles are self-descriptive and previously casually mentioned. My friend, who came up with this idea is \textbf{system administrator} because he's been keeping track all this agenda. Club managers are taking care of competitions on behalf of the club and referees are common people who have some degree of knowledge about competitions. Colected statistics will then be used for accreditation granting, activity monitoring and categorization overall.
+Roles are self-descriptive and previously casually mentioned. My friend, who came up with this idea is \textbf{system administrator} because he's been running all this agenda offline. Club managers are taking care of competitions on behalf of the club and referees are common people who have some degree of knowledge about competitions. Colected statistics will then be used for accreditation granting, activity monitoring and categorization overall.
 \par
 We were iterating form and features of the web application with two future system administrators during time of development. We then tested usability on all three groups of users via. SUS \footnote{\textbf{System Usability Scale} is a questionnaire to reveal how friendly tested system is to target audience. We carried on initial testing for 20 people belonging to one of these 3 categories to find out if we met at least an average score which was determined to be 68/100.} questionnaire.
 %%%An~example citation: %\cite{Andel07}
-\section{Storyboards of tasks}
-These are the tasks that have to be performed:
+\section{Functional requirements}
+These are the tasks that have to be performed within in our application:
 \begin{itemize}
-    \item create swimming cup,
-    \item perform pairing for swimming cup,
-    \item manage swimming club,
-    \item preview cup + print pairing,
-    \item participate in cup or participate with teammates,
-    \item statistics for accreditation renewal purposes,
-    \item statistics of referees,
-    \item statistics of clubs,
-    \item referees managment,
-    \item clubs managment,
-    \item clubs overview,
-    \item referees managment,
-    \item referees overview,
-    \item news publishing,
-    \item overall categorization of federation,
-    \item database archivation of federation.
+    \item \lbrack club manager\rbrack \,needs to\, \lbrack create swimming cup\rbrack \,in order to\, \lbrack publish cup and invite others to participate\rbrack,
+    \item \lbrack club manager\rbrack \,needs to\, \lbrack create pairing for swimming cup\rbrack \,in order to\, \lbrack finalize preparations of cup the day before it takes place\rbrack,
+    \item \lbrack club manager\rbrack \,needs to\, \lbrack manage swimming club\rbrack \,in order to\, \lbrack keep information and users up-to-date\rbrack,
+    \item \lbrack club manager\rbrack \,needs to\, \lbrack preview cup and print pairing\rbrack \,in order to\, \lbrack perform inspection and publish information offline\rbrack,
+    \item \lbrack club manager\rbrack \,needs to\, \lbrack participate in cup or participate with teammates\rbrack \, in order to\, \lbrack help with swimming cup to happen\rbrack,
+    \item \lbrack stakeholder\rbrack \,needs to\, \lbrack have information about participations\rbrack \, in order to\, \lbrack grant accreditations to referees\rbrack,
+    \item \lbrack referee\rbrack \,needs to\, \lbrack view statistics of referees\rbrack \, in order to \, \lbrack have track record about participation\rbrack,
+    \item \lbrack club manager\rbrack \,needs to\, \lbrack view statistics of clubs\rbrack \, in order to \, \lbrack have information about performance of own club\rbrack,
+    \item \lbrack club manager\rbrack \,needs to\, \lbrack perform referees managment\rbrack \, in order to \, \lbrack keep referees up-to-date\rbrack,
+    \item \lbrack club manager\rbrack \,needs to\, \lbrack perform club managment\rbrack \, in order to \, \lbrack keep own club up-to-date\rbrack,
+    \item \lbrack system administrator\rbrack \,needs to\, \lbrack have overview of clubs\rbrack \, in order to \, \lbrack be informed about happenings (within application)\rbrack,
+    \item \lbrack system administrator\rbrack \,needs to\, \lbrack manage referees\rbrack \, in order to \, \lbrack add, remove, update users in the application\rbrack,
+    \item \lbrack system administrator\rbrack \,needs to\, \lbrack list referees overview\rbrack \, in order to \, \lbrack see activity of referees\rbrack,
+    \item \lbrack system administrator\rbrack \,needs to\, \lbrack publish news\rbrack \, in order to \, \lbrack notify everybody about new things\rbrack,
+    \item \lbrack stakeholder\rbrack \,needs to\, \lbrack have overall categorization of federation\rbrack \, in order to \, \lbrack use system for administrative purposes\rbrack,
+    \item \lbrack stakeholder\rbrack \,needs to\, \lbrack have database archivation of federation\rbrack \, in order to \, \lbrack use system as archivation tool\rbrack.
+    %\item \lbrack SOMEBODY\rbrack \, needs to \, \lbrack TO DO SOMETHING\rbrack \, in order to \, \lbrack SOMETHING\rbrack,
   \end{itemize}
-\section{Model proposition}
+\section{Domain model}
 Let's go through things that have to be represented in this system one by one starting from the most important ones. We will outlay  objects, their relations and their relational connections. After that basic idea of entities and their relations will be established we continue to project specification for further implementation. We, however, worked more iteratively so this is just retrospective model for implementation that we were specifying during the time of development. 
 \par
 \subsection*{Cup}
@@ -69,7 +80,7 @@ Record from \textbf{Availability} is then taken and \textbf{Positions} is assign
 \subsection*{Position}
 Predefined list of tasks necessary to be done at each cup. This list is probably never going to change since there is a fixed set of roles. Referees are going to be assigned to these positions for each cup by drag'n'drop user interface in administration.
 \newpage
-\section{Frontend practices}
+\section{Quality/Usability requirements}
 Several good practices have to be implemented to make SwimmPair easy to use. These practices are either well known or situation specific but they have one thing in common - they should make the application good to use.
 \subsection*{Smooth frontend browsing}
 \par
