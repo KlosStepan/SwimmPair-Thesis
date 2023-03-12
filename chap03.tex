@@ -1,13 +1,8 @@
 \chapter{Implementation Documentation}
 Detailed description of \textbf{database} and \textbf{backend components} and \textbf{functions}.  
 
-\section{Database design}
-For this purpose well defined database is a necessity. In this chapter we learn how the proposed objects are represented how relations between these objects are maintaned and what information tables exist.
-\subsection{Schema}
-Full schema of underlying database of our application. 
-%\includegraphics[scale=0.45]{img/schema.png}
-\newline
-\includegraphics[scale=0.2175]{img/swimmpair_db_schema.png}
+\section{Database}
+Breakdown of tables and it's purposes.
 \subsection{Object tables}
 These are the tables in database modeling the object to satisfy the primary motivation defined as the \textbf{problem paradigm}. These rows are then being converted to Objects and returned to user by appropriate Manager.
 % \newline
@@ -266,7 +261,7 @@ SwimmPair static Pages.
 \end{enumerate}
 \newpage
 \section{Managers documentation}
-\par These five controllers work with objects and provide views and functions (i.e. joining more tables in varios ways to achieve all functionality). We're providing an overview of which API functions are calling which internal functions (plain, in cycle) and what are desired return values.  
+\par These five managers work with objects and provide views and functions (i.e. joining more tables in varios ways to achieve all functionality). We're providing an overview of which API functions are calling which internal functions (plain, in cycle) and what are desired return values.  
 \newline
 \textbf{Documentation of model - classes and public functions is available \footnote{\url{http://docu.swimmpair.cz}}}.
 \subsection{PostsManager.php}
@@ -372,6 +367,60 @@ SwimmPair static Pages.
   \item \underline{string} $\vert$ null $\leftarrow$ \textbf{GetPositionNameById}(\$id)
   \newline    $\searrow$ \_GetSingleResultFromStatement(\$stmt)
 \end{itemize}
+\newpage
+\section{Start file}
+Start file is included the in beginning of each page. It serves for \textbf{connection to database},  \textbf{sanitization of input}, \textbf{definition of error handling} and most importantly \textbf{includes objects and managers} and subsequently \textbf{instantiates all managers} by passing reference to live database connection \textbf{\$mysqli} - their only constructor argument.
+\begin{lstlisting}
+/*Database credentials from environment*/
+$host = getenv("DATABASE_HOST");
+$user = getenv("DATABASE_USER");
+$pass = getenv("DATABASE_PASS");
+$db   = getenv("DATABASE_NAME");
+/*Database connection and charset set*/
+$mysqli = new mysqli($host, $user, $pass, $db) or die($mysqli->error);
+$mysqli->set_charset('utf8');
+/* Sanitization function */
+function h($string)
+{
+    return htmlspecialchars($string);
+}
+/* Exception handling*/
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
+set_exception_handler(function () {
+    echo "<h3 style=\"color: red;\">INVALID REQUEST</h3>";
+    exit();
+});
+/* Objects and Managers inclusion*/
+require __DIR__ . '/model/Sanitizer.php';
+require __DIR__ . '/model/Auth.php';
+require __DIR__ . '/model/Post.php';
+require __DIR__ . '/model/PostsManager.php';
+require __DIR__ . '/model/Page.php';
+require __DIR__ . '/model/PagesManager.php';
+require __DIR__ . '/model/StatUserCnt.php';
+require __DIR__ . '/model/StatPositionCnt.php';
+require __DIR__ . '/model/RefereeRank.php';
+require __DIR__ . '/model/Region.php';
+require __DIR__ . '/model/RegionsManager.php';
+require __DIR__ . '/model/User.php';
+require __DIR__ . '/model/UsersManager.php';
+require __DIR__ . '/model/Cup.php';
+require __DIR__ . '/model/PairPositionUser.php';
+require __DIR__ . '/model/CupsManager.php';
+require __DIR__ . '/model/Position.php';
+require __DIR__ . '/model/PositionsManager.php';
+require __DIR__ . '/model/Club.php';
+require __DIR__ . '/model/ClubsManager.php';
+/* Construction of Managers w/ reference to $mysqli */
+$postsManager     = new PostsManager($mysqli);
+$pagesManager     = new PagesManager($mysqli);
+$usersManager     = new UsersManager($mysqli);
+$clubsManager     = new ClubsManager($mysqli);
+$cupsManager      = new CupsManager($mysqli);
+$positionsManager = new PositionsManager($mysqli);
+$regionsManager = new RegionsManager($mysqli);
+\end{lstlisting}
 \newpage
 \section{Application structure - files defined}
 \subsection*{User part of the system}
@@ -523,7 +572,54 @@ The administration has following structure. After going to /admin/index.php user
   ]
 ]
 \end{forest}
-\newline
+
+\section{Templating of web and administration}
+Each page layout of public website has common characteristics such as header, menu and footer. These sections are unified and included everywhere, therfore they are included everywhere. They are:
+\begin{itemize}
+    \item \textbf{HEADER},
+    \item \textbf{MENU},
+    \item Generated from result obtained by one or more manager calls. this section might be further updated via \textbf{XMLHttpRequest calls \& DOM modifications} of newly delivered data,
+    \item \textbf{FOOTER}.
+\end{itemize}
+Homepage of administration panel /admin/profile.php after login gets assembled with regards to the rights of logged user. Ordering is following: Admin (2) \textgreater \: Club manager (1) \textgreater \: Swimming referee (0) and each user gets snippet of his and lower role snippets:
+\begin{itemize}
+    \item \textbf{SUPERUSER} menu snippet - \textbf{2},
+    \item \textbf{CLUB MANAGER} menu snippet - \textbf{1},
+    \item \textbf{SWIMMING REFEREE} menu snippet - \textbf{0}.
+\end{itemize}
+Access to different pages is then discriminated based on rights code on each page. \newline
+\textbf{Rights check on each page in administration} 
+\begin {lstlisting}
+<?php
+    require __DIR__ . '/../start.php';
+    session_start();
+    Auth::requireRole(UserRights::SuperUser);
+    ...
+?>    
+...
+\end{lstlisting}
+\textbf{Static requireRole function on Auth class for access permission} 
+\begin{lstlisting}
+class Auth
+{
+	public static function requireRole($role)
+	{
+		if (!isset($_SESSION['rights']))
+        {
+			header('Location: /prihlaseni.php');
+			exit();
+		}
+		//Rights sharply lower that user has, throw RuntimeException
+		if ($_SESSION['rights'] < $role)
+        {
+			echo '<h1>Not enough rights</h1>';
+			echo $_SESSION['rights'];
+			echo $role;
+			throw new RuntimeException();
+		}
+	}
+}
+\end{lstlisting}
 \section{JavaScript functions documentation}
 Several features of public website implemented for interactive browsing.
 \subsection*{Library js/SwimmPairFrontendJSLib.js}

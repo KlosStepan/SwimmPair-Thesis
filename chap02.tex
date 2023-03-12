@@ -1,4 +1,4 @@
-\chapter{Architecture overview}
+\chapter{System design}
 Reader will be familiarized with architecture of our application. There are two logical parts, \textbf{public web} and \textbf{private administration}. Private administration is hidden behing \textbf{login/password}. 
 \par
 When designing such system, object oriented approach and grouping of similar functions together is a must. There are objects that have to be moved around the web application described in previous chapter. These objects are Post, User, Club, Cup, Position and Region. Therefore we came up with a concept of managers. Each page of SwimmPair is composed of same headerer, menu, footer. The content part is filled with page's specific results of manager call used to construct data UI page layout. These managers are included and used in all pages via \textbf{start file}.
@@ -15,10 +15,17 @@ Following technologies are used to implement SwimmPair application:
     \item \textbf{Kubernetes} is an open-source container orchestration system for automating software deployment, scaling, and management \footnote{\citep{K8sDocu}} - used for production deployment of our application into cluster.
 \end{itemize} 
 \newpage
-\section{Application flow}
+\section{Architecture overview}
 Visitor comes to \textbf{app page}, where \textbf{managers} are included. From page there are API calls on Managers that retrieve and store data data as follows.
 \newline
 \includegraphics[scale=0.707]{img/app-schema.jpg}
+\section{User Interface design}
+TODO: main page, cup, listing clubs, listing users ::: administrace, new cup, dnd pozice
+\section{Database design}
+For this purpose well defined database is a necessity. In this chapter we learn how the proposed objects are represented how relations between these objects are maintaned.
+%\includegraphics[scale=0.45]{img/schema.png}
+\newline
+\includegraphics[scale=0.2175]{img/swimmpair_db_schema.png}
 \section{Managers}
 Managers are written to provide API functionality for system administration. These managers are populating pages or taking new input from them and administer process of storing them. Each object has a manager handling it and accomodates database loads and stores controlled by transactions.
 \begin{itemize}
@@ -26,11 +33,13 @@ Managers are written to provide API functionality for system administration. The
     \item User / UsersManager
     \item Club / ClubsManager
     \item Page / PagesManager
-    \item \textbf{Post / PostsManager}
+    \item Post / PostsManager
     \item Position / PositionsManager
     \item Region / RegionsManager
 \end{itemize}
-Managers are implemented to extract and store data of class by which they are named after. Let's take PostsManager as an example. This manager handles Post and is implemented as follows.
+Managers are implemented to extract and store data of class by which they are named after.
+\iffalse
+% Let's take PostsManager as an example. This manager handles Post and is implemented as follows.
 \newline
 \textbf{Object - Post.php}
 \begin{lstlisting}
@@ -82,107 +91,8 @@ public function GetPostByID($id)
 }
 \end{lstlisting}
 Objects and their managers are made in the same manner. They contain different set of data and different number public functions. Description is included in documentation chapter below. 
-\newpage
-\section{Start file}
-Start file is included the in beginning of each page. It serves for \textbf{connection to database},  \textbf{sanitization of input}, \textbf{definition of error handling} and most importantly \textbf{includes objects and managers} and subsequently \textbf{instantiates all managers} by passing reference to live database connection \textbf{\$mysqli} - their only constructor argument.
-\begin{lstlisting}
-/*Database credentials from environment*/
-$host = getenv("DATABASE_HOST");
-$user = getenv("DATABASE_USER");
-$pass = getenv("DATABASE_PASS");
-$db   = getenv("DATABASE_NAME");
-/*Database connection and charset set*/
-$mysqli = new mysqli($host, $user, $pass, $db) or die($mysqli->error);
-$mysqli->set_charset('utf8');
-/* Sanitization function */
-function h($string)
-{
-    return htmlspecialchars($string);
-}
-/* Exception handling*/
-error_reporting(E_ALL);
-ini_set("display_errors", 1);
-set_exception_handler(function () {
-    echo "<h3 style=\"color: red;\">INVALID REQUEST</h3>";
-    exit();
-});
-/* Objects and Managers inclusion*/
-require __DIR__ . '/model/Sanitizer.php';
-require __DIR__ . '/model/Auth.php';
-require __DIR__ . '/model/Post.php';
-require __DIR__ . '/model/PostsManager.php';
-require __DIR__ . '/model/Page.php';
-require __DIR__ . '/model/PagesManager.php';
-require __DIR__ . '/model/StatUserCnt.php';
-require __DIR__ . '/model/StatPositionCnt.php';
-require __DIR__ . '/model/RefereeRank.php';
-require __DIR__ . '/model/Region.php';
-require __DIR__ . '/model/RegionsManager.php';
-require __DIR__ . '/model/User.php';
-require __DIR__ . '/model/UsersManager.php';
-require __DIR__ . '/model/Cup.php';
-require __DIR__ . '/model/PairPositionUser.php';
-require __DIR__ . '/model/CupsManager.php';
-require __DIR__ . '/model/Position.php';
-require __DIR__ . '/model/PositionsManager.php';
-require __DIR__ . '/model/Club.php';
-require __DIR__ . '/model/ClubsManager.php';
-/* Construction of Managers w/ reference to $mysqli */
-$postsManager     = new PostsManager($mysqli);
-$pagesManager     = new PagesManager($mysqli);
-$usersManager     = new UsersManager($mysqli);
-$clubsManager     = new ClubsManager($mysqli);
-$cupsManager      = new CupsManager($mysqli);
-$positionsManager = new PositionsManager($mysqli);
-$regionsManager = new RegionsManager($mysqli);
-\end{lstlisting}
-\section{Templating of web and administration}
-Each page layout of public website has common characteristics such as header, menu and footer. These sections are unified and included everywhere, therfore they are included everywhere. They are:
-\begin{itemize}
-    \item \textbf{HEADER},
-    \item \textbf{MENU},
-    \item Generated from result obtained by one or more manager calls. this section might be further updated via \textbf{XMLHttpRequest calls \& DOM modifications} of newly delivered data,
-    \item \textbf{FOOTER}.
-\end{itemize}
-Homepage of administration panel /admin/profile.php after login gets assembled with regards to the rights of logged user. Ordering is following: Admin (2) \textgreater \: Club manager (1) \textgreater \: Swimming referee (0) and each user gets snippet of his and lower role snippets:
-\begin{itemize}
-    \item \textbf{SUPERUSER} menu snippet - \textbf{2},
-    \item \textbf{CLUB MANAGER} menu snippet - \textbf{1},
-    \item \textbf{SWIMMING REFEREE} menu snippet - \textbf{0}.
-\end{itemize}
-Access to different pages is then discriminated based on rights code on each page. \newline
-\textbf{Rights check on each page in administration} 
-\begin {lstlisting}
-<?php
-    require __DIR__ . '/../start.php';
-    session_start();
-    Auth::requireRole(UserRights::SuperUser);
-    ...
-?>    
-...
-\end{lstlisting}
-\textbf{Static requireRole function on Auth class for access permission} 
-\begin{lstlisting}
-class Auth
-{
-	public static function requireRole($role)
-	{
-		if (!isset($_SESSION['rights']))
-        {
-			header('Location: /prihlaseni.php');
-			exit();
-		}
-		//Rights sharply lower that user has, throw RuntimeException
-		if ($_SESSION['rights'] < $role)
-        {
-			echo '<h1>Not enough rights</h1>';
-			echo $_SESSION['rights'];
-			echo $role;
-			throw new RuntimeException();
-		}
-	}
-}
-\end{lstlisting}
+\fi
+\iffalse
 \section{Responsive layout}
 Listed media queries are used to provide design of the web by manually overriding specific classes for desired user experience outcome.
 \begin{itemize}
@@ -191,6 +101,7 @@ Listed media queries are used to provide design of the web by manually overridin
     \item @media (print)
 \end{itemize}
 \textbf{Basic CSS design} gives definition of colors and desktop layout of our application. \textbf{Media query with max-width: 768px} supports tablets and mobile devices while \textbf{media print} of cup pairing hides redundant controll and informative elements while it keeps the pairing of cup to be printed.
+\fi
 \section{Administrative tasks}
 \begin{itemize}
     \item \textbf{Add Post/Edit Post} - from PostsManager call \newline InsertNewPost/UpdatePost
@@ -212,3 +123,6 @@ Listed media queries are used to provide design of the web by manually overridin
 \begin{itemize}
     \item \textbf{Sign Myself As Available For Cup} - add my Id to table \textbf{cupId}-\textbf{userId}
 \end{itemize}
+\section {Mapping of user stories to backend API functions}
+
+Table table table .... .. . . .. . . .. . .. .

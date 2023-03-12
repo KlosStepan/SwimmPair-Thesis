@@ -71,10 +71,10 @@ Mby 02 start file, 03 schema, 03 detailed tables and screenshots of running app 
 
 ## TODOs 12.03.2023
 ### Iterace textu z callu
-- [ ] Struktura problému - Class diagramy - UML Class 
+- [ ] Struktura problému - Class diagramy -> UML Class 
 - [ ] ch. 1.2 STAKEHOLDERS 
     - [x] zajem na existenci
-    - [x] kdo pouziva
+    - [x] kdo pouziva akt./pas.
 - [ ] ch. 1.3 FUNCTIONAL REQUIREMENTS - high lvl overview featur / funkcni pozadavky na system od stakeholderu  
     - [x] format (**vv** podle priority): [user] needs [task] because [goal]
     - [ ] ch. 1.4 DOMAIN MODEL 
@@ -83,11 +83,11 @@ Mby 02 start file, 03 schema, 03 detailed tables and screenshots of running app 
     - [x] ch. 1.5 ~~FE Practices~~ Quality requirements / Usability requirements -> USABILITY (&SECURITY &PERFORMANCE & SCALABILITY)
 - [ ] **SECTION 2** ~~Architecture Overview~~ System Design
     - [ ] ch. 2.1 OK, 2.2 OK, 2.3 UI MOCKUPS, 2.4 DB DESIGN, ...
-    - [ ] chs. 2.7 2.8 2.9 - instread table STORY->API F 
+    - [ ] chs. 2.7 2.8 2.9 - instead table STORY->API F 
 - [ ] **SECTION 3**     
-    - [ ] <ins>!TODO Doxygen - PDF option: attachment (now just [docu.swimmpair.cz](http://docu.swimmpair.cz))</ins>
+    - [ ] <ins>Add !TODO Doxygen - PDF option: attachment (now just [docu.swimmpair.cz](http://docu.swimmpair.cz))</ins>
 - [ ] **SECTION 4**
-    - [ ] ch. 4.1 PERFORMANCE EVALUATION
-    - [ ] <ins>!TODO ch 4.sth - Unit tests for PHP</ins>
+    - [x] ch. 4.1 PERFORMANCE EVALUATION
+    - [x] <ins>Add !TODO ch 4.sth - Unit tests for PHP</ins>
 - [ ] **SECTION Deployment**
-    - [ ] <ins>!TODO - Redis in Kubernetes Cluster</ins>
+    - [x] <ins>Add !TODO - Redis in Kubernetes Cluster</ins>
