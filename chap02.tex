@@ -19,14 +19,8 @@ Following technologies are used to implement SwimmPair application:
 Visitor comes to \textbf{app page}, where \textbf{managers} are included. From page there are API calls on Managers that retrieve and store data data as follows.
 \newline
 \includegraphics[scale=0.707]{img/app-schema.jpg}
-\section{User Interface design}
-TODO: main page, cup, listing clubs, listing users ::: administrace, new cup, dnd pozice
-\section{Database design}
-For this purpose well defined database is a necessity. In this chapter we learn how the proposed objects are represented how relations between these objects are maintaned.
-%\includegraphics[scale=0.45]{img/schema.png}
 \newline
-\includegraphics[scale=0.2175]{img/swimmpair_db_schema.png}
-\section{Managers}
+\section{Model Managers}
 Managers are written to provide API functionality for system administration. These managers are populating pages or taking new input from them and administer process of storing them. Each object has a manager handling it and accomodates database loads and stores controlled by transactions.
 \begin{itemize}
     \item Cup / CupsManager
@@ -38,6 +32,31 @@ Managers are written to provide API functionality for system administration. The
     \item Region / RegionsManager
 \end{itemize}
 Managers are implemented to extract and store data of class by which they are named after.
+\newpage
+\section{User Interface mockups}
+In this chapter we present UI mockups of both public and private parts of our applicaton. They serve as an initial virtualization mockups on which the real UI will be made. These mockups are not 1:1 guidances, rather an idea for reader and stakeholders in the beginning.
+\newline
+\includegraphics[scale=0.507]{img/def-U-Main.png}
+\includegraphics[scale=0.507]{img/def-U-ListingCups.png}
+\newline
+\includegraphics[scale=0.507]{img/def-U-Cup.png}
+\includegraphics[scale=0.507]{img/def-U-ListingUsers.png}
+\newpage
+Administration mockups
+\newline
+\includegraphics[scale=0.507]{img/A-administrace.png}
+\includegraphics[scale=0.507]{img/A-new-cup.png}
+\newline
+\includegraphics[scale=0.507]{img/A-pairing.png}
+\includegraphics[scale=0.507]{img/A-edit-page.png}
+\newpage
+\section{Database design}
+For this purpose well defined database is a necessity. In this chapter we learn how the proposed objects are represented how relations between these objects are maintaned.
+\newline
+\includegraphics[scale=0.2175]{img/swimmpair_db_schema.png}
+%\includegraphics[scale=0.45]{img/schema.png}
+\newline
+
 \iffalse
 % Let's take PostsManager as an example. This manager handles Post and is implemented as follows.
 \newline
@@ -102,6 +121,7 @@ Listed media queries are used to provide design of the web by manually overridin
 \end{itemize}
 \textbf{Basic CSS design} gives definition of colors and desktop layout of our application. \textbf{Media query with max-width: 768px} supports tablets and mobile devices while \textbf{media print} of cup pairing hides redundant controll and informative elements while it keeps the pairing of cup to be printed.
 \fi
+\iffalse
 \section{Administrative tasks}
 \begin{itemize}
     \item \textbf{Add Post/Edit Post} - from PostsManager call \newline InsertNewPost/UpdatePost
@@ -123,6 +143,41 @@ Listed media queries are used to provide design of the web by manually overridin
 \begin{itemize}
     \item \textbf{Sign Myself As Available For Cup} - add my Id to table \textbf{cupId}-\textbf{userId}
 \end{itemize}
-\section {Mapping of user stories to backend API functions}
-
-Table table table .... .. . . .. . . .. . .. .
+\fi
+\section {Administration tasks to API Functions}
+This is table that shows what is used where.
+\newline
+\begin{tabularx}{0.9\textwidth} { 
+  | >{\raggedright\arraybackslash}X 
+  | >{\centering\arraybackslash}X 
+  | >{\raggedright\arraybackslash}X | }
+ \hline
+ Add Post & system admin& InsertNewPost \\
+ \hline
+ Edit Post  & system admin  & UpdatePost  \\
+ \hline
+ Approve New Users & system admin & ApproveUser \\
+ \hline
+ Add User & system admin & AddUser \\
+ \hline
+ Edit User & system admin & UpdateUser \\
+ \hline
+ Add Club & system admin & AddClub \\
+ \hline
+ Edit Club & system admin & UpdateClub \\
+ \hline
+ Add Region & system admin & AddRegion \\
+ \hline
+ Edit Region & system admin & UpdateRegion \\
+ \hline
+ Configure Stats & system admin & UpdateOrdering \\
+ \hline
+ Edit Contacts & system admin & UpdatePage \\
+ \hline
+ Add Cup & club manager & AddCup \\
+ \hline
+ Sign Up People From My Club As Available For Cup & club manager & prihlasit moje lidi na.php then XMLHttpRequest/call update availability.php \\
+ \hline
+ Sign Myself As Available For Cup & referee & add my Id to table cupId-userId \\
+\hline
+\end{tabularx}

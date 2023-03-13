@@ -82,12 +82,12 @@ Mby 02 start file, 03 schema, 03 detailed tables and screenshots of running app 
         - [ ] UML diagram of "world"
     - [x] ch. 1.5 ~~FE Practices~~ Quality requirements / Usability requirements -> USABILITY (&SECURITY &PERFORMANCE & SCALABILITY)
 - [ ] **SECTION 2** ~~Architecture Overview~~ System Design
-    - [ ] ch. 2.1 OK, 2.2 OK, 2.3 UI MOCKUPS, 2.4 DB DESIGN, ...
-    - [ ] chs. 2.7 2.8 2.9 - instead table STORY->API F 
+    - [ ] ch. 2.1 OK [x], 2.2 OK [x], 2.3 UI MOCKUPS [x], 2.4 DB DESIGN [x], ...
+    - [x] chs. 2.7 2.8 2.9 - instead table STORY->API F 
 - [ ] **SECTION 3**     
     - [ ] <ins>Add !TODO Doxygen - PDF option: attachment (now just [docu.swimmpair.cz](http://docu.swimmpair.cz))</ins>
 - [ ] **SECTION 4**
     - [x] ch. 4.1 PERFORMANCE EVALUATION
-    - [x] <ins>Add !TODO ch 4.sth - Unit tests for PHP</ins>
+    - [ ] <ins>Add !TODO ch 4.sth - Unit tests for PHP</ins>
 - [ ] **SECTION Deployment**
-    - [x] <ins>Add !TODO - Redis in Kubernetes Cluster</ins>
+    - [ ] <ins>Add !TODO - Redis in Kubernetes Cluster</ins>
