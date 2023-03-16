@@ -79,7 +79,7 @@ Mby 02 start file, 03 schema, 03 detailed tables and screenshots of running app 
     - [x] format (**vv** podle priority): [user] needs [task] because [goal]
     - [ ] ch. 1.4 DOMAIN MODEL 
         - [x] ~~Schema mockup~~ Modelovani struktury domeny (Class dia, model. trid, mira detailu)
-        - [ ] UML diagram of "world"
+        - [x] UML diagram of the "world"
     - [x] ch. 1.5 ~~FE Practices~~ Quality requirements / Usability requirements -> USABILITY (&SECURITY &PERFORMANCE & SCALABILITY)
 - [ ] **SECTION 2** ~~Architecture Overview~~ System Design
     - [ ] ch. 2.1 OK [x], 2.2 OK [x], 2.3 UI MOCKUPS [x], 2.4 DB DESIGN [x], ...
