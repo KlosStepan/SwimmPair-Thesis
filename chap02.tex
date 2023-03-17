@@ -18,8 +18,12 @@ Following technologies are used to implement SwimmPair application:
 \section{Architecture overview}
 Visitor comes to \textbf{app page}, where \textbf{managers} are included. From page there are API calls on Managers that retrieve and store data data as follows.
 \newline
-\includegraphics[scale=0.707]{img/app-schema.jpg}
-\newline
+\begin{figure}[h]	
+	\centering	
+    \includegraphics[scale=0.707]{img/app-schema.jpg}
+	\caption{From page to manager, database, function, database and back.}
+	\label{fig2.1:appschema}
+\end{figure}
 \section{Model Managers}
 Managers are written to provide API functionality for system administration. These managers are populating pages or taking new input from them and administer process of storing them. Each object has a manager handling it and accomodates database loads and stores controlled by transactions.
 \begin{itemize}
@@ -34,32 +38,70 @@ Managers are written to provide API functionality for system administration. The
 Managers are implemented to extract and store data of class by which they are named after.
 \newpage
 \section{User Interface mockups}
-In this chapter we present UI mockups of both public and private parts of our applicaton. They serve as an initial virtualization mockups on which the real UI will be made. These mockups are not 1:1 guidances, rather an idea for reader and stakeholders in the beginning.
-\newline
-\includegraphics[scale=0.507]{img/def-U-Main.png}
-\includegraphics[scale=0.507]{img/def-U-ListingCups.png}
-\newline
-\includegraphics[scale=0.507]{img/def-U-Cup.png}
-\includegraphics[scale=0.507]{img/def-U-ListingUsers.png}
+In this chapter we present UI mockups of both public and private parts of our applicaton. They serve as an initial virtualization mockups on which the real UI will be made. These mockups are not 1:1 guidances, rather an idea for reader and stakeholders in the beginning.  
+\subsection*{Public website mockups}
+\begin{figure}[h]	
+	\centering	
+    \includegraphics[scale=0.457]{img/def-U-Main.png}
+    \includegraphics[scale=0.457]{img/def-U-ListingUsers.png}
+    %\includegraphics[scale=0.507]{img/def-U-ListingCups.png}
+    %\includegraphics[scale=0.507]{img/def-U-Cup.png}
+	\caption{Mockup of public pages - homepage and listing of users.}
+	\label{fig1.2:fepublicpages1}
+\end{figure}
+\begin{figure}[h]	
+	\centering	
+    %\includegraphics[scale=0.507]{img/def-U-Main.png}
+    %\includegraphics[scale=0.507]{img/def-U-ListingUsers.png}
+    \includegraphics[scale=0.457]{img/def-U-ListingCups.png}
+    \includegraphics[scale=0.457]{img/def-U-Cup.png}
+	\caption{Mockup of public pages - cups listing and cup preview.}
+	\label{fig1.3:fepublicpages2}
+\end{figure}
+%\newline
+%\includegraphics[scale=0.507]{img/def-U-Main.png}
+%\includegraphics[scale=0.507]{img/def-U-ListingCups.png}
+%\newline
+%\includegraphics[scale=0.507]{img/def-U-Cup.png}
+%\includegraphics[scale=0.507]{img/def-U-ListingUsers.png}
 \newpage
-Administration mockups
-\newline
-\includegraphics[scale=0.507]{img/A-administrace.png}
-\includegraphics[scale=0.507]{img/A-new-cup.png}
-\newline
-\includegraphics[scale=0.507]{img/A-pairing.png}
-\includegraphics[scale=0.507]{img/A-edit-page.png}
+\subsection*{Administration mockups}
+\begin{figure}[h]	
+	\centering	
+\includegraphics[scale=0.457]{img/A-administrace.png}
+\includegraphics[scale=0.457]{img/A-edit-page.png}
+
+\caption{Administration - menu gets assembled on rights, page edit.}
+\label{fig1.4:feprivatepages1}
+\end{figure}
+\begin{figure}[h]	
+	\centering
+    \includegraphics[scale=0.457]{img/A-new-cup.png}
+\includegraphics[scale=0.457]{img/A-pairing.png}
+\caption{Cup add and drag'n'drop pairing.}
+\label{fig1.5:feprivatepages2}
+\end{figure}
 \newpage
 \section{Database design}
-For this purpose well defined database is a necessity. In this chapter we learn how the proposed objects are represented how relations between these objects are maintaned.
+While designing such, system a well defined database schema modelled on functional requirements is a necessity. We will show basic database schema, which should be understandable after knowledge of UML schema (\autoref{fig1.2:uml}).  
 \newline
-\includegraphics[scale=0.2175]{img/swimmpair_db_schema.png}
-%\includegraphics[scale=0.45]{img/schema.png}
+\textbf{Basic preview schema}
+\begin{figure}[h]	
+    \centering	
+    \includegraphics[scale=0.33]{img/swimmpair_db_mockup.png}
+    \caption{Simplified schema without all information just for idea.}
+    \label{fig2.6:dbschemasimpl}
+\end{figure}
 \newline
-
+\textbf{Full database schema used for out application}
+\begin{figure}[h]	
+	\centering	
+    \includegraphics[scale=0.2175]{img/swimmpair_db_schema.png}
+	\caption{Full database schema for the SwimmPair application.}
+	\label{fig2.7:dbschemafull}
+\end{figure}
 \iffalse
 % Let's take PostsManager as an example. This manager handles Post and is implemented as follows.
-\newline
 \textbf{Object - Post.php}
 \begin{lstlisting}
 class Post
@@ -147,34 +189,37 @@ Listed media queries are used to provide design of the web by manually overridin
 \section {Administration tasks to API Functions}
 This is table that shows what is used where.
 \newline
-\begin{tabularx}{0.9\textwidth} { 
+\begin{tabularx}{1.00\textwidth} { 
   | >{\raggedright\arraybackslash}X 
   | >{\centering\arraybackslash}X 
   | >{\raggedright\arraybackslash}X | }
  \hline
- Add Post & system admin& InsertNewPost \\
+ Add Post & system admin& InsertNewPost() \\
  \hline
- Edit Post  & system admin  & UpdatePost  \\
+ Edit Post  & system admin  & UpdatePost()  \\
  \hline
- Approve New Users & system admin & ApproveUser \\
+ Approve New Users & system admin & SetApprovedForUser() \\
  \hline
- Add User & system admin & AddUser \\
+ Pairing & system admin & F() \\
  \hline
- Edit User & system admin & UpdateUser \\
+ Add User & system admin & AddUser() \\
  \hline
- Add Club & system admin & AddClub \\
+ Edit User & system admin & SetLoginEmailForUser()
+ SetRefereeRankForUser()  \\
  \hline
- Edit Club & system admin & UpdateClub \\
+ Add Club & system admin & InsertNewClub() \\
  \hline
- Add Region & system admin & AddRegion \\
+ Edit Club & system admin & UpdateClub() \\
  \hline
- Edit Region & system admin & UpdateRegion \\
+ Add Region & system admin & InsertNewRegion() \\
  \hline
- Configure Stats & system admin & UpdateOrdering \\
+ Edit Region & system admin & UpdateRegion() \\
  \hline
- Edit Contacts & system admin & UpdatePage \\
+ Configure Stats & system admin & InsertNewStatPosition() \\
  \hline
- Add Cup & club manager & AddCup \\
+ Edit Contacts & system admin & UpdatePage() \\
+ \hline
+ Add Cup & club manager & AddCup() \\
  \hline
  Sign Up People From My Club As Available For Cup & club manager & prihlasit moje lidi na.php then XMLHttpRequest/call update availability.php \\
  \hline

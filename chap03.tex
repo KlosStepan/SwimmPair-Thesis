@@ -2,22 +2,24 @@
 Detailed description of \textbf{database} and \textbf{backend components} and \textbf{functions}.  
 
 \section{Database}
-Breakdown of tables and it's purposes.
+We already showed full database schema while designing the system. This chapter should introduce reader to detailed description about how the tables and their relations are wired within the database.  
+\newline
+Some descriptions are added and for space saving some columns in tables are marked ... - (as etc.) and (a) - abbrevation.
 \subsection{Object tables}
-These are the tables in database modeling the object to satisfy the primary motivation defined as the \textbf{problem paradigm}. These rows are then being converted to Objects and returned to user by appropriate Manager.
+These are the tables in database modeling the object to satisfy the primary motivation defined as the (\autoref{fig1.2:uml}). These rows are then being converted to \textbf{Object} or \textbf{Array\textless Object\textgreater}  (Club, Cup, Page, PairPositionUser, Position, Post, RefereeRank, Region, StatPositionCnt, StatUserCnt, User) and returned to application page by appropriate Manager.
 % \newline
 \subsubsection*{sp\_posts}
-Posts for main page are stored in this table.
+\textbf{Post} is a static snippet of news for homepage of web application.
 \newline
 \underline{Table preview}
 \begin{center}
   \begin{tabular}{||c c c c c c c||} 
   \hline
-  id & timestamp & title & content & display\_flag & author & sign\_flag  \\ [0.5ex] 
+  id & timestamp & title & content & d\_flag(a) & auth\_id(a) & sign(a)  \\ [0.5ex] 
   \hline\hline
-  1 & 2018-01-... & New Por... & SwimmPair... & 1 & 21 & 0 \\ 
+  1 & 2023-01-... & Running... & SwimmPair... & 1 & 21 & 0 \\ 
   \hline
-  2 & 2018-03-...  & Updates & This web... & 1 & 21 & 0 \\ 
+  2 & 2023-03-...  & Updates & This web... & 1 & 21 & 0 \\ 
  \hline
   ... & ... & ... & ... & ... & ...  & ... \\ [0.5ex] 
   \hline
@@ -26,17 +28,17 @@ Posts for main page are stored in this table.
 \underline{Columns description}
 \begin{enumerate}
   \setlength\itemsep{0em}
-  \item \textbf{id}, PK, int(11), AUTOINCREMENT
-  \item \textbf{timestamp}, datetime
+  \item \textbf{id$|$PK}, int(11) \textit{Auto Increment}
+  \item \textbf{timestamp}, datetime \textit{NULL} \lbrack \textbf{CURRENT\_TIMESTAMP}\rbrack 
   \item \textbf{title}, text
   \item \textbf{content}, text
-  \item \textbf{display\_flag}, tinyint
-  \item \textbf{author}, FK, int(11) $|$ NULL
-  \item \textbf{sign\_flag}, tinyint
+  \item \textbf{display\_flag}, tinyint(1)
+  \item \textbf{author\_user\_id$|$FK}, int(11) \textit{NULL}
+  \item \textbf{signature\_flag}, tinyint(1)
 \end{enumerate}
 
 \subsubsection*{sp\_users}
-Users are stored in this table.
+User is referee in the system. User is affiliated to Club has one of UserRights and one of tier from RefereeRank. His statistics are presented via StatUserCnt in public sites via PositionsManager.
 \newline
 \underline{Table preview}
 \begin{center}
@@ -55,43 +57,45 @@ Users are stored in this table.
  \underline{Columns description}
  \begin{enumerate}
    \setlength\itemsep{0em}
-   \item \textbf{id}, PK, int(11), AUTOINCREMENT
+   \item \textbf{id$|$PK}, int(11) \textit{Auto Increment}
    \item \textbf{first\_name}, varchar(50)
    \item \textbf{last\_name}, varchar(50)
    \item \textbf{email}, varchar(100) //unique identifier
    \item \textbf{password}, varchar(100)
    \item \textbf{hash}, varchar(32)
-   \item \textbf{active}, tinyint(1)
-   \item \textbf{approved}, tinyint(1)
-   \item \textbf{rights}, int(11)
-   \item \textbf{klubaffil}, FK, int(11)
+   \item \textbf{active\_flag}, tinyint(1) \lbrack \textbf{0}\rbrack 
+   \item \textbf{approved\_flag}, tinyint(1) \lbrack \textbf{0}\rbrack 
+   \item \textbf{rights}, tinyint(1)
+   \item \textbf{referee\_rank\_id$|$FK}, int(11)
+   \item \textbf{affiliation\_club\_id$|$FK}, int(11)
 \end{enumerate}
 
 \subsubsection*{sp\_clubs}
-Clubs are stored in this table. 
+Club is an administrative unit of swimming club grouping bunch of users. One User is ClubManager/1 from UserRights, the rest is Referee/0. It can organize.
 \newline
 \underline{Table preview}
 \begin{center}
  \begin{tabular}{||c c c c c||} 
  \hline
- id & name & zkratka & idklubu & img \\ [0.5ex] 
+ id & name & abbrev(a) & club\_id & img \\ [0.5ex] 
  \hline\hline
- 1 & Klub plaveckých sportů Vyškov & KPSVy & 614 & null.jpg \\  
+ 1 & Klub plaveckých sportů Vyškov & KPSVy & 614 & vyskov.jpg \\  
  \hline
  ... & ... & ... & ... & ... \\ [0.5ex]
 \hline
- 14 & TJ Rožnov pod Radhoštěm & TJRo & 0 & null.jpg \\
+ 14 & TJ Rožnov pod Radhoštěm & TJRo & 0 & roznov.jpg \\
  \hline
 \end{tabular}
 \end{center}
 \underline{Columns description}
 \begin{enumerate}
   \setlength\itemsep{0em}
-  \item \textbf{id}, PK , int(11), AUTOINCREMENT
-  \item \textbf{name}, varchar(512)
-  \item \textbf{zkratka}, text
-  \item \textbf{idklubu}, int(11)
-  \item \textbf{img}, text
+  \item \textbf{id$|$PK}, int(11) \textit{Auto Increment}
+  \item \textbf{name}, varchar(80)
+  \item \textbf{abbreviation}, text
+  \item \textbf{code} int(11) \textit{NULL}
+  \item \textbf{img}, text \textit{NULL}
+  \item \textbf{affiliation\_region\_id$|$FK}, int(11)
 \end{enumerate}
 
 \subsubsection*{sp\_cups}
@@ -99,35 +103,36 @@ Cups are stored in this table.
 \newline
 \underline{Table preview}
 \begin{center}
- \begin{tabular}{||c c c c c||} 
+ \begin{tabular}{||c c c c c c||} 
  \hline
- id & date & name & description & owningclub  \\ [0.5ex] 
+ id & t\_st(a) & t\_e(a) & name & desc(a) & org\_c\_id(a) \\ [0.5ex] 
  \hline\hline
- 1 & 2017-06-12 & GJW Cup I. & Cup organized by GJW PV, ... & 2 \\ 
+ 1 & 2023-... & 2023-...& GJW Cup I. & Cup organized by ... & 2 \\ 
  \hline
- ... & ... & ... & ... & ...  \\ [0.5ex] 
+ ... & ... & ... & ...&... & ...  \\ [0.5ex] 
  \hline
 \end{tabular}
 \end{center}
 \underline{Columns description}
 \begin{enumerate}
   \setlength\itemsep{0em}
-  \item \textbf{id}, PK , int(11), AUTOINCREMENT
-  \item \textbf{date}, date
+  \item \textbf{id$|$PK}, int(11) \textit{Auto Increment}
+  \item \textbf{time\_start}, date
+  \item \textbf{time\_end}, date
   \item \textbf{name}, text
   \item \textbf{description}, text
-  \item \textbf{owningclub}, int(11)
+  \item \textbf{organizer\_club\_id$|$FK}, int(11)
 \end{enumerate}
 
 
 \subsubsection*{sp\_positions}
-List of Positions for which we are pairing users are stored here.
+Position is object representing task for Cup that has to be performed by User. It has internal id based on which it is wired through the system internally.
 \newline
 \underline{Table preview}
 \begin{center}
  \begin{tabular}{||c c||} 
  \hline
- id & poz  \\ [0.5ex] 
+ id & name  \\ [0.5ex] 
  \hline\hline
  1 & Vrchní rozhodčí \\ 
  \hline
@@ -140,13 +145,13 @@ List of Positions for which we are pairing users are stored here.
 \underline{Columns description}
 \begin{enumerate}
   \setlength\itemsep{0em}
-  \item \textbf{id}, PK , int(11), AUTOINCREMENT
-  \item \textbf{poz}, varchar(512)
+  \item \textbf{id$|$PK}, int(11), \textit{Auto Increment}
+  \item \textbf{name}, varchar(45)
 \end{enumerate}
 
 \subsection{Relation tables}
 Relation tables hold the most important information stored in the SwimmPair system - the \textbf{pairings} and \textbf{data for underlying statistics}. Both availability for cups and pairings to positions are represented here.
-\subsubsection*{sp\_cup\_user\_availability}
+\subsubsection*{sp\_user\_cup\_availability}
 This table stores relationships between referees/\underline{users} and \underline{cups} called availability. Referees are signed up by their team manager or themselves as available for the cup. In case of sudden inability to participate, the attendance\_flag is switched to 0 in case the user is already assigned to some position. In that case the administrator is going to see the user in red box.
 \newline
 \underline{Table preview}
@@ -168,13 +173,13 @@ This table stores relationships between referees/\underline{users} and \underlin
 \underline{Columns description}
 \begin{enumerate}
   \setlength\itemsep{0em}
-  \item \textbf{id}, PK, int(11), AUTOINCREMENT
-  \item \textbf{cup\_id}, FK, int(11)
-  \item \textbf{user\_id}, int(11)
-  \item \textbf{attendance\_flag}, tinyint(1)
+  \item \textbf{id$|$PK}, int(11) \textit{Auto Increment}
+  \item \textbf{cup\_id$|$FK}, int(11)
+  \item \textbf{user\_id$|$FK}, int(11)
+  \item \textbf{attendance\_flag}, tinyint(1) \lbrack \textbf{\textbf{1}}\rbrack 
 \end{enumerate}
 
-\subsubsection*{sp\_position\_user\_pairing}
+\subsubsection*{sp\_user\_position\_pairing}
 This table stores pairing information about available referees/users on positions for each cup. This is the most time saving utility of the SwimmPair.
 \newline
 \underline{Table preview}
@@ -204,14 +209,14 @@ This table stores pairing information about available referees/users on position
 \underline{Columns description}
 \begin{enumerate}
   \setlength\itemsep{0em}
-  \item \textbf{id}, PK, bigint(11), AUTOINCREMENT
-  \item \textbf{cup\_id}, FK, int(11)
-  \item \textbf{position\_id}, FK, int(11)
-  \item \textbf{user\_id}, FK, int(11)
+  \item \textbf{id$|$PK}, bigint(20) \textit{Auto Increment}
+  \item \textbf{cup\_id$|$FK}, int(11)
+  \item \textbf{position\_id$|$FK}, int(11)
+  \item \textbf{user\_id$|$FK}, int(11)
 \end{enumerate}
 \subsection{Content adjustment tables}
 \subsubsection*{sp\_public\_stats\_config}
-Configuration table of which positions in what order should be displayed in statistics on frontend. For frontend then LEFT-JOIN \textbf{position\_id} from table \textbf{sp\_positions} ON \textbf{id} and display \textbf{poz}.
+Configuration table of which positions in what order should be displayed in statistics on frontend. For frontend then LEFT-JOIN \textbf{position\_id} from table \textbf{sp\_positions} ON \textbf{id} and display \textbf{sp\_positions.name}.
 \newline
 \underline{Table preview}
 \begin{center}
@@ -234,12 +239,12 @@ Configuration table of which positions in what order should be displayed in stat
 \underline{Columns description}
 \begin{enumerate}
   \setlength\itemsep{0em}
-  \item \textbf{id}, PK, int(11), AUTOINCREMENT
-  \item \textbf{position\_id}, FK, int(11)
+  \item \textbf{id$|$PK}, int(11) \textit{Auto Increment}
+  \item \textbf{position\_id$|$FK}, int(11)
 \end{enumerate}
 
 \subsubsection*{sp\_pages}
-SwimmPair static Pages.
+\textbf{Page} is static website page with information in web application. It has some title and content.
 \newline
 \underline{Table preview}
 \begin{center}
@@ -255,7 +260,7 @@ SwimmPair static Pages.
 \underline{Columns description}
 \begin{enumerate}
   \setlength\itemsep{0em}
-  \item \textbf{id}, PK , int(11), AUTOINCREMENT
+  \item \textbf{id$|$}, int(11) \textit{Auto Increment}
   \item \textbf{title}, text
   \item \textbf{content}, text
 \end{enumerate}
@@ -270,17 +275,14 @@ SwimmPair static Pages.
   \item \underline{Post} $\vert$ null $\leftarrow$ \textbf{GetPostById}(\$id)
   \newline    $\searrow$ \_CreatePostOrNullFromStatement(\$stmt)
   \newline    $\searrow$ \_CreatePostFromRow(\$row)
-  \item \underline{Post[]} $\vert$ null $\leftarrow$ \textbf{GetLastThreePosts}()
+  \item \underline{Post[]} $\vert$ null $\leftarrow$ \textbf{FindLastNPosts}(\$N)
   \newline    $\searrow$ \_CreatePostsFromStatement(\$stmt)
-  \newline    $\searrow$ \_CreatePostFromRow(\$row)
-  \item \underline{Post[]} $\vert$ null $\leftarrow$ \textbf{GetLastNPosts}(\$N)
-  \newline    $\searrow$ \_CreatePostsFromStatement()
-  \newline    $\searrow$ \_CreatePostFromRow(\$row)
-  \item \underline{true} $\vert$ false $\leftarrow$ \textbf{AddNewPost}(\$title, \$content)
+  \newline    $\hookrightarrow$ \_CreatePostFromRow(\$row)
+  \item \underline{true} $\vert$ false $\leftarrow$ \textbf{InsertNewPost}(\$title, \$content, \$d\_flag, \$auth\_id, \$sign)
   \item \underline{Post[]} $\vert$ false $\leftarrow$ \textbf{FindAllPostsOrderedByIdDesc}()
   \newline    $\searrow$ \_CreatePostsFromStatement(\$stmt)
-  \newline    $\searrow$ \_CreatePostFromRow(\$row)
-  \item \underline{true} $\vert$ false $\leftarrow$ \textbf{UpdatePost}(\$id, \$title, \$article)
+  \newline    $\hookrightarrow$ \_CreatePostFromRow(\$row)
+  \item \underline{true} $\vert$ false $\leftarrow$ \textbf{UpdatePost}(\$id, \$title, \$content, \$d\_flag, \$sign)
 \end{itemize}
 \subsection{UsersManager.php}
 \begin{itemize}
@@ -288,42 +290,38 @@ SwimmPair static Pages.
   \item \underline{User} $\vert$ null $\leftarrow$ \textbf{GetUserById}(\$id)
   \newline    $\searrow$ \_CreateUserOrNullFromStatement(\$stmt)
   \newline    $\searrow$ \_CreateUserFromRow(\$row)
-  \item \underline{User[]} $\vert$ null $\leftarrow$ \textbf{FindAllActiveUsersOrderByLastNameDesc}()
+  \item \underline{User[]} $\vert$ null $\leftarrow$ \textbf{FindAllActiveUsersOrderByLastNameAsc}()
   \newline    $\searrow$ \_CreateUsersFromStatement(\$stmt)
   \newline    $\hookrightarrow$ \_CreateUserFromRow (\$row)
-  \item \underline{User[]} $\vert$ null $\leftarrow$ \textbf{FindAllInactiveUsersOrderByLastNameDesc}()
+  \item \underline{User[]} $\vert$ null $\leftarrow$ \textbf{FindAllInactiveUsersOrderByLastNameAsc}()
   \newline    $\searrow$ \_CreateUsersFromStatement(\$stmt)
   \newline    $\hookrightarrow$ \_CreateUserFromRow (\$row)
-  \item \underline{User[]} $\vert$ null $\leftarrow$ \textbf{FindAllRegisteredMatesForTheCup}(\$cupId, \$teamId)
+  \item \underline{User[]} $\vert$ null $\leftarrow$ \textbf{FindAllRegisteredTeamMembersForTheCup}(\$cupId, \$teamId)
   \newline    $\searrow$ \_CreateUsersFromStatement(\$stmt)
   \newline    $\hookrightarrow$ \_CreateUserFromRow (\$row)
-  \item \underline{User[]} $\vert$ null $\leftarrow$ \textbf{FindAllMates}(\$teamId)
+  \item \underline{User[]} $\vert$ null $\leftarrow$ \textbf{FindAllTeamMembers}(\$teamId)
   \newline    $\searrow$ \_CreateUsersFromStatement(\$stmt)
   \newline    $\hookrightarrow$ \_CreateUserFromRow(\$row)
   \item \underline{User[]} $\vert$ null $\leftarrow$ \textbf{FindAllRegisteredUsersForTheCup}(\$cupId)
   \newline    $\searrow$ \_CreateUsersFromStatement(\$stmt)
   \newline    $\hookrightarrow$ \_CreateUserFromRow(\$row)
-  \item \underline{User[]} $\vert$ null $\leftarrow$ \textbf{FindAllNametagsForTheCup}(\$cupId)
-  \newline    $\searrow$ \_CreateUsersFromStatement(\$stmt)
-  \newline    $\hookrightarrow$ \_CreateUserFromRow(\$row)
   \item \underline{User[]} $\vert$ null $\leftarrow$ \textbf{FindPairedUsersOnCupForPosition}(\$cupId, \$posId)
   \newline    $\searrow$ \_CreateUsersFromStatement(\$stmt)
   \newline    $\hookrightarrow$ \_CreateUserFromRow(\$row)
-  \item \underline{Pair[]} $\vert$ null $\leftarrow$ \textbf{FindPairedPozIdUserIdOnCup}(\$cupId)
-  \newline    $\searrow$ \_CreatePairsFromStatement(\$stmt)
-  \newline    $\hookrightarrow$ \_CreatePairFromRow(\$row)
   \item \underline{string} $\vert$ null $\leftarrow$ \textbf{GetClubAbbreviationByAffiliationId}(\$id)
   \newline    $\searrow$ \_GetSingleResultFromStatement(\$stmt)
   \item \underline{string} $\vert$ null $\leftarrow$ \textbf{GetUserFullNameById}(\$id)
   \newline    $\searrow$ \_GetSingleResultFromTwoColsStatement(\$stmt)
-  \item \underline{true} $\vert$ \underline{false} $\leftarrow$ \textbf{UserWithEmailExists}(\$email)
+  \item \underline{true} $\vert$ \underline{false} $\leftarrow$ \textbf{IsEmailPresentAlready}(\$email)
   \item \underline{true} $\vert$ false $\leftarrow$ \textbf{RegisterUserFromAdmin}(\$first\_name, \$last\_name,
   \newline    \$email, \$password, \$rights, \$klubaffil)
-  \item \underline{true} $\vert$ false $\leftarrow$ \textbf{SendYouWereRegisteredFromAdmin}(\$email,
+  \item \underline{true} $\vert$ false $\leftarrow$ \textbf{EmailNewPersonRegistered}(\$email,
   \newline    \$password)
-  \item \underline{true} $\vert$ false $\leftarrow$ \textbf{ApproveUser}(\$userId)
-  \item \underline{true} $\vert$ false $\leftarrow$ \textbf{UpdatePairing}(\$JSON)
+  \item \underline{true} $\vert$ false $\leftarrow$ \textbf{SetApprovedForUser}(\$userId)
+  %\item \underline{true} $\vert$ false $\leftarrow$ \textbf{UpdatePairing}(\$JSON) //cupId, user-pos JSON
 \end{itemize}
+
+
 \subsection{ClubsManager.php}
 \begin{itemize}
   \setlength\itemsep{0em}
@@ -343,21 +341,28 @@ SwimmPair static Pages.
   \item \underline{Cup[]} $\vert$ null $\leftarrow$ \textbf{FindAllPastCupsMostRecentFirst}()
   \newline    $\searrow$ \_CreateCupsFromStatement(\$stmt)
   \newline    $\hookrightarrow$ \_CreateCupFromRow(\$row)
-  \item \underline{string} $\vert$ null  $\leftarrow$ \textbf{GetCupNameById}(\$id)
-  \newline    $\searrow$ \_GetSingleResultFromStatement(\$stmt)
   \item \underline{Cup} $\vert$ null  $\leftarrow$  \textbf{GetCupById}(\$id)
   \newline    $\searrow$ \_CreateCupOrNullFromStatement(\$stmt)
   \newline    $\searrow$ \_CreateCupFromRow(\$row)
   \item \underline{Pair[]} $\vert$ null $\leftarrow$  \textbf{FindPairingsForThisCup}(\$id)
   \newline    $\searrow$ \_CreatePairsFromStatement(\$stmt)
   \newline    $\hookrightarrow$ \_CreatePairFromRow(\$row)
-  \item \underline{true} $\vert$ false $\leftarrow$  \textbf{InsertNewCupFromAdmin}(\$name, \$date, \$club,
-  \newline    \$content)
+  \item \underline{true} $\vert$ false $\leftarrow$  \textbf{InsertNewCup}(\$name, \$t\_st, \$t\_end, \$club, \$content)
   \item \underline{true} $\vert$ \underline{false} $\leftarrow$  \textbf{IsUserAvailableForTheCup}(\$userId, \$cupId)
-  \item \underline{true} $\vert$ false $\leftarrow$  \textbf{UpdatePairingForThisCup}(\$cupId, \$JSON)
-  \item \underline{true} $\vert$ false $\leftarrow$  \textbf{UpdateAvailabilityForThisCup}(\$cupId, \$JSON)
-  \item \underline{true} $\vert$ false $\leftarrow$  \textbf{AddAvailableUserForTheCup}(\$cupId, \$userId)
 \end{itemize}
+Called together in XMLHttpRequest/\textbf{update\_availability.php} in transaction.  
+  \begin{itemize}
+  \item \underline{true} $\vert$ false $\leftarrow$ \textbf{DeleteOldAvailability}(\$cupId)
+  \item \underline{true} $\vert$ false $\leftarrow$ \textbf{InsertNewAvailability}(\$cupId, \$userId, 1)
+\end{itemize}
+Called together in XMLHttpRequest/\textbf{update\_pairing.php} in transaction.  
+  \begin{itemize}
+  \item \underline{hash} $\vert$ null $\leftarrow$ \textbf{GetPairingHashForThisCup}(\$cupId)
+  \newline    $\searrow$ \_GetSingleResultFromStatement(\$stmt)
+  \item \underline{true} $\vert$ false $\leftarrow$ \textbf{DeleteOldPairing}(\$cupId)
+  \item \underline{true} $\vert$ false $\leftarrow$ \textbf{InsertNewPairing}(\$cupId, \$posId, \$userId)
+\end{itemize}
+%MBY TODO others
 \subsection{PositionsManager.php}
 \begin{itemize}
   \setlength\itemsep{0em}
@@ -664,7 +669,12 @@ This function is triggered by one of these:
 \newline ii) \textbf{RefereeRankPickerChanged(this)},
 \newline iii) \textbf{SearchBarChanged()}.
 \newline
-\includegraphics[scale=0.541]{img/filtering-preview.png}
+\begin{figure}[h]	
+	\centering
+\includegraphics[scale=0.441]{img/filtering-preview.png}
+\caption{Filtering of users ui preview.}
+\label{fig3.1:filtering}
+\end{figure}
 \newline
 \textbf{FilterQueriedReferees("kraje", "tridy", "inputTrida", "nopplfound")} is called every time one of 3 controlls is changed. We then loop all users visible/hidden and check if this one's \textbf{Region} IsOptionPermissible(raid, args[]) (referee area id), \textbf{Rank} IsOptionPermissible(rrid, args[]) (referee rank id) and then if one's Name IsNamePermissible(args[]). We then set one's element style to \textbf{style=""} and continue cycle execution. If we fail one of these three conditions we proceed to code below which sets element style to \textbf{style="display:none"}.
 \begin{lstlisting}
