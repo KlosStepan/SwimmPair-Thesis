@@ -81,7 +81,7 @@ Mby 02 start file, 03 schema, 03 detailed tables and screenshots of running app 
         - [x] ~~Schema mockup~~ Modelovani struktury domeny (Class dia, model. trid, mira detailu)
         - [x] UML diagram of the "world"
     - [x] ch. 1.5 ~~FE Practices~~ Quality requirements / Usability requirements -> USABILITY (&SECURITY &PERFORMANCE & SCALABILITY)
-- [ ] **SECTION 2** ~~Architecture Overview~~ System Design
+- [x] **SECTION 2** ~~Architecture Overview~~ System Design
     - [x] ch. 2.1 OK [x], 2.2 OK [x], 2.3 UI MOCKUPS [x], 2.4 DB DESIGN [x], ...
     - [x] chs. 2.7 2.8 2.9 - instead table STORY->API F 
 - [ ] **SECTION 3**     
