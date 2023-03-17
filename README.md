@@ -15,7 +15,36 @@
 | EN | The goal of this work is to create web application for managing swimming competitions for Czech Swimming Federation (CSF). In collaboration with employees we analysed status quo and iteratively come up with model and frontend for implementation. Besides administration of competitions we need to deliver database of users who can sign-up, management of users and most importantly public statistics for clubs and users for purposes of renewing accreditations by CSF for upcoming seasons. Tech stack of implementation is LAMP. Web application will be distributed as Docker image for production in arbitrary cloud. This production deployment will use private Kubernetes cluster. |
 | Řešitel | Štěpán Klos |
 
-## TODOs
+## TODOs 12.03.2023
+### Iterace textu z callu
+- [x] Struktura problému - Class diagramy -> UML Class 
+- [x] ch. 1.2 STAKEHOLDERS 
+    - [x] zajem na existenci
+    - [x] kdo pouziva akt./pas.
+- [x] ch. 1.3 FUNCTIONAL REQUIREMENTS - high lvl overview featur / funkcni pozadavky na system od stakeholderu  
+    - [x] format (**vv** podle priority): [user] needs [task] because [goal]
+    - [x] ch. 1.4 DOMAIN MODEL 
+        - [x] ~~Schema mockup~~ Modelovani struktury domeny (Class dia, model. trid, mira detailu)
+        - [x] UML diagram of the "world"
+    - [x] ch. 1.5 ~~FE Practices~~ Quality requirements / Usability requirements -> USABILITY (&SECURITY &PERFORMANCE & SCALABILITY)
+- [x] **SECTION 2** ~~Architecture Overview~~ System Design
+    - [x] ch. 2.1 OK [x], 2.2 OK [x], 2.3 UI MOCKUPS [x], 2.4 DB DESIGN [x], ...
+    - [x] chs. 2.7 2.8 2.9 - instead table STORY->API F 
+- [ ] **SECTION 3**     
+    - [ ] <ins>Add !TODO Doxygen - PDF option: attachment (now just [docu.swimmpair.cz](http://docu.swimmpair.cz))</ins>
+- [ ] **SECTION 4**
+    - [x] ch. 4.1 PERFORMANCE EVALUATION
+    - [ ] <ins>Add !TODO ch 4.sth - Unit tests for PHP</ins>
+- [ ] **SECTION Deployment**
+    - [ ] <ins>Add !TODO - Redis in Kubernetes Cluster</ins>
+
+## Dalsi veci co byly treba
+- [x] Anotace vsech fotek \caption{Lorem ipsum fotka} a \label{x.y:figloremipsum} - na referencovani skrz text
+- [x] Review vsech DB tabulek v 3. //PK FK names fixes, (a) abbrev. previews
+- [x] Review funkci a callu v 3.
+- [x] Vyhozeni "6. Dokumentace"
+
+## TODOs 1st ITERACE + TIPY
 - [x] Scénáře UX testing
 - [x] Konceptuální model - sdružování
 - [x] Popis uživatelů - co můžou dělat…jak(?) Analýza CO (1. kdo jsou uživatelé 2. co potřebují dělat 3.s čím pracují-data v db, co dělají (v analýze, spíše z příběhu)
@@ -69,31 +98,3 @@ User guide - TODO
 ## Appendixes
 Mby 02 start file, 03 schema, 03 detailed tables and screenshots of running app 5x (homepage, cup, stat pers., stat club, administration) 05 user manual. Results of testing. Dockerfile. Kubernetes deployment.
 
-## TODOs 12.03.2023
-### Iterace textu z callu
-- [x] Struktura problému - Class diagramy -> UML Class 
-- [x] ch. 1.2 STAKEHOLDERS 
-    - [x] zajem na existenci
-    - [x] kdo pouziva akt./pas.
-- [x] ch. 1.3 FUNCTIONAL REQUIREMENTS - high lvl overview featur / funkcni pozadavky na system od stakeholderu  
-    - [x] format (**vv** podle priority): [user] needs [task] because [goal]
-    - [x] ch. 1.4 DOMAIN MODEL 
-        - [x] ~~Schema mockup~~ Modelovani struktury domeny (Class dia, model. trid, mira detailu)
-        - [x] UML diagram of the "world"
-    - [x] ch. 1.5 ~~FE Practices~~ Quality requirements / Usability requirements -> USABILITY (&SECURITY &PERFORMANCE & SCALABILITY)
-- [x] **SECTION 2** ~~Architecture Overview~~ System Design
-    - [x] ch. 2.1 OK [x], 2.2 OK [x], 2.3 UI MOCKUPS [x], 2.4 DB DESIGN [x], ...
-    - [x] chs. 2.7 2.8 2.9 - instead table STORY->API F 
-- [ ] **SECTION 3**     
-    - [ ] <ins>Add !TODO Doxygen - PDF option: attachment (now just [docu.swimmpair.cz](http://docu.swimmpair.cz))</ins>
-- [ ] **SECTION 4**
-    - [x] ch. 4.1 PERFORMANCE EVALUATION
-    - [ ] <ins>Add !TODO ch 4.sth - Unit tests for PHP</ins>
-- [ ] **SECTION Deployment**
-    - [ ] <ins>Add !TODO - Redis in Kubernetes Cluster</ins>
-
-## Dalsi veci co byly treba
-- [x] Anotace vsech fotek \caption{Lorem ipsum fotka} a \label{x.y:figloremipsum} - na referencovani skrz text
-- [x] Review vsech DB tabulek v 3. //PK FK names fixes, (a) abbrev. previews
-- [x] Review funkci a callu v 3.
-- [x] Vyhozeni "6. Dokumentace"
