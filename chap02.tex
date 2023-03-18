@@ -187,42 +187,64 @@ Listed media queries are used to provide design of the web by manually overridin
 \end{itemize}
 \fi
 \section {Administration tasks to API Functions}
-This is table that shows what is used where.
+We will show how specific \textbf{functional requirements} administrative tasks are realized via \textbf{model api functions}\footnote{\url{http://docu.swimmpair.cz/functions_func.html}}.
 \newline
-\begin{tabularx}{1.00\textwidth} { 
+Table has following structure: \textbf{Task} / \textbf{Role} / \textbf{Function(s)}.
+\newline
+\begin{tabularx}{1.0\textwidth} { 
   | >{\raggedright\arraybackslash}X 
   | >{\centering\arraybackslash}X 
   | >{\raggedright\arraybackslash}X | }
  \hline
- Add Post & system admin& InsertNewPost() \\
+ Add Post & system admin& InsertNewPost \\
  \hline
- Edit Post  & system admin  & UpdatePost()  \\
+ Edit Post  & system admin  & UpdatePost \\
  \hline
- Approve New Users & system admin & SetApprovedForUser() \\
+ Approve New Users & system admin & SetApprovedForUser \\
  \hline
- Pairing & system admin & F() \\
+ Create Pairing For Cup & system admin & DeleteOldPairing
+InsertNewPairing\\
  \hline
- Add User & system admin & AddUser() \\
+ Add User & system admin & RegisterUser \\
  \hline
- Edit User & system admin & SetLoginEmailForUser()
- SetRefereeRankForUser()  \\
+ Edit User & system admin &
+ SetLoginEmailForUser
+ SetRefereeRankForUser
+ SetPasswordForUser\\
  \hline
- Add Club & system admin & InsertNewClub() \\
+ Add Club & system admin & InsertNewClub \\
  \hline
- Edit Club & system admin & UpdateClub() \\
+ Edit Club & system admin & UpdateClub \\
  \hline
- Add Region & system admin & InsertNewRegion() \\
+ Add Region & system admin & InsertNewRegion \\
  \hline
- Edit Region & system admin & UpdateRegion() \\
+ Edit Region & system admin & UpdateRegion \\
  \hline
- Configure Stats & system admin & InsertNewStatPosition() \\
+ Configure Stats & system admin & DeleteOldStatsPositions
+ InsertNewStatPosition \\
  \hline
- Edit Contacts & system admin & UpdatePage() \\
+ Edit Contacts & system admin & UpdatePage \\
  \hline
- Add Cup & club manager & AddCup() \\
+ Add Cup & club manager & InsertNewCup \\
  \hline
- Sign Up People From My Club As Available For Cup & club manager & prihlasit moje lidi na.php then XMLHttpRequest/call update availability.php \\
+ Sign People From My Club Available For Cup & club manager & DeleteOldAvailability
+ InsertNewAvailability \\
  \hline
- Sign Myself As Available For Cup & referee & add my Id to table cupId-userId \\
+ Sign Myself As Available For Cup & referee & SetAvailabilityRegister
+ SetAvailabilityCantGo 
+ SetAvailabilityCanGo \\
 \hline
 \end{tabularx}
+These functions are used for retrieving data to navigate across the administration.
+\begin{itemize}
+    \item Posts: FindAllPostsOrderByIDDesc
+    \item Approve Users: FindAllInactiveUsersOrderByLastNameAsc
+    \item Cups For Pairings: FindAllUpcomingCupsEarliestFirst
+    \item Users: FindAllUsers
+    \item Clubs: FindAllClubs
+    \item Regions: FindAllRegions
+    \item Stats: FindAllPositions, DisplayedLiveStatsConfiguredPositions
+    \item Pages: GetPageByID
+    \item Sign People From My Club Available For Cup: FindAllUpcomingCupsEarliestFirst, GetCupByID, FindAllTeamMembers, FindAllRegisteredTeamMembersForTheCup
+    \item Sign Myself As Available For Cup: FindAllUpcomingCupsEarliestFirst, GetCupByID, IsUserAvailableForTheCup, IsComing
+\end{itemize} 
