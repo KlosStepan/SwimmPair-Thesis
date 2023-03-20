@@ -2,9 +2,14 @@
 Detailed description of \textbf{database} and \textbf{backend components} and \textbf{functions}.  
 
 \section{Database}
-We already showed full database schema while designing the system. This chapter should introduce reader to detailed description about how the tables and their relations are wired within the database.  
+Full database schema of the application was already shown in previous chapter (\autoref{fig2.7:dbschemafull}). This chapter will introduce reader to detailed description of tables and their relations.  
 \newline
-Some descriptions are added and for space saving some columns in tables are marked ... - (as etc.) and (a) - abbrevation.
+Each database table is accompanied with example table preview, where: 
+\begin{itemize}
+  \item abbreviated column name: \underline{(a)},
+  \item contracted/ommited info: \underline{...},
+\end{itemize}
+followed by full listing of attributes - datatypes, keys, etc.
 \subsection{Object tables}
 These are the tables in database modeling the object to satisfy the primary motivation defined as the (\autoref{fig1.2:uml}). These rows are then being converted to \textbf{Object} or \textbf{Array\textless Object\textgreater}  (Club, Cup, Page, PairPositionUser, Position, Post, RefereeRank, Region, StatPositionCnt, StatUserCnt, User) and returned to application page by appropriate Manager.
 % \newline
