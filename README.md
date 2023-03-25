@@ -15,6 +15,41 @@
 | EN | The goal of this work is to create web application for managing swimming competitions for Czech Swimming Federation (CSF). In collaboration with employees we analysed status quo and iteratively come up with model and frontend for implementation. Besides administration of competitions we need to deliver database of users who can sign-up, management of users and most importantly public statistics for clubs and users for purposes of renewing accreditations by CSF for upcoming seasons. Tech stack of implementation is LAMP. Web application will be distributed as Docker image for production in arbitrary cloud. This production deployment will use private Kubernetes cluster. |
 | Řešitel | Štěpán Klos |
 
+## TODOs 24.03.2023
+### Iterace ze schuzky
+- [ ] Funct. req
+    - [ ] vecne oblasti grouping
+    - [ ] ids pro stories
+- [ ] Dom. model 
+    - UML Class " Co ma delat s cim" - image
+    - popis realneho sveta
+    - [ ] polozky - ne jmena, ale popisne
+    - [ ] vyhodit ciselniky
+    - [ ] ~~Objects~~ Domain concepts/entities
+    - [ ] User - ~~uzivatele~~ realny svet, Rozhodci/Klubovy manazer
+- [ ] 1.5 Requirements
+    - [ ] Security req - bezpecnost
+    - [ ] Performance, scalability - load, dava smysl (?) snadno up v bodoucnu, scalability - pocet rust bude OK
+- [ ] 2.4 Priprat text
+    - [ ] Zdokumentovat mockupy map -> f pozadavek (mame cislo)
+    - [ ] Text mezi obrazky - mezi-pozadavky, ktere to pokryvaji
+- [ ] 2.5 DB chap
+    - [ ] jmena tabulek pro db
+    - [ ] jak jsme dosli k db (Rozhodci, Club manager = User)
+    - [ ] text okolo co a jak proc 
+- [ ] 2.6 Mapovani funkci
+    - tabulka ok
+    - [ ] List retr. funkci lepe
+- [ ] 3.2 Popis manageru
+    - mby UML Sequence Diagram
+    - [ ] text ke kazdemu
+- [ ] Testing
+    - [ ] SUS plotting
+    - [ ] PHP Unit Testing
+### Dalsi veci co byly treba
+- [ ] mozna plot dummy\_benchmark A dummy bench na projected load v budoucnu, (4x plot do obrazku)
+___
+ 
 ## TODOs 12.03.2023
 ### Iterace textu z callu
 - [x] Struktura problému - Class diagramy -> UML Class 
