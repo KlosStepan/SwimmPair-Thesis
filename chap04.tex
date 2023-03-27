@@ -104,9 +104,13 @@ So we plotted our tes results for further investivation. We can compare results 
 \end{figure}
 \newpage
 \section{Unit testing}
-Test serve two puposes. Firstly, to ensure that functionality works as intended. Secondly not only that new functionaly works as intended but also that any previous stuff or functions were not broken either. We did write PHPUnit tests for each Manager called ManagerTest.php in folder tests/Unit in our project. These tests test ordinry CRUD \footnote{Create, Read, Update, Delete} functionalities.
+Testing serves two puposes.
+\newline i) \, \textbf{Firstly}, to ensure that functionality works as intended.
+\newline ii) \textbf{Secondly}, not only that new functionaly works as intended but also that any previous stuff or functions were not broken either.  
+\newline
+We wrote bunch of PHPUnit tests for each Manager called ManagerTest.php in folder \textbf{tests/Unit} in our project. These tests test ordinry CRUD \footnote{CRUD = Create, Read, Update, Delete} functionalities.
 \subsection{Local execution of tests}
-See results of test during local development by following these steps: attach VS Code to running Container \footnote{Volume \textbf{. : /var/www/html} is, in fact, our working folder.} and see results in PHP Tools by DEVSENSE \footnote{\url{https://www.devsense.com/en}}. We can open command line - \textbf{docker@6bd3d752da84:/var/www/html} and run tests by simply writing \textbf{phpunit} there alternatively. 
+See results of test during local development by following these steps: attach VS Code to running Container \footnote{Volume \textbf{. : /var/www/html} is, in fact, our working folder.} and see results in PHP Tools by DEVSENSE \footnote{\url{https://www.devsense.com/en/features\#vscode}}. We can open command line - \textbf{docker@6bd3d752da84:/var/www/html} and run tests by typing \textbf{phpunit} to the command line. 
 \begin{figure}[h]	
     \centering	
     \includegraphics[scale=0.207]{img/phpunit_locally.png}
@@ -121,7 +125,7 @@ We then load our project repository with folder with tests and proceed to let au
 \begin{itemize}
     \item code gets pushed into master brach of repository,
     \item GitHub Action workload gets triggered,
-    \item creates databas, fill it with dummy data, app connects to it,
+    \item creates database, fill it with dummy data, app connects to it,
     \item then \textbf{phpunit} command is run.
 \end{itemize} 
 Result of all these steps are visible on GitHub website. All steps are openable for more deliberate investigation.
