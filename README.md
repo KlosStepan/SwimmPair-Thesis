@@ -27,9 +27,9 @@
     - [x] vyhodit ciselniky
     - [x] ~~Objects~~ Domain concepts/entities
     - [x] User - ~~uzivatele~~ realny svet, Rozhodci/Klubovy manazer
-- [ ] 1.5 Requirements
-    - [ ] Security req - bezpecnost
-    - [ ] Performance, scalability - load, dava smysl (?) snadno up v bodoucnu, scalability - pocet rust bude OK
+- [x] 1.5 Requirements
+    - ~~[ ] Security req - bezpecnost~~
+    - [ ] Performance, scalability - load, dava smysl (?) snadno up v bodoucnu, scalability - pocet rust bude OK [x] JEN PARAGRAPH ADDED //TODO 1par later
 - [ ] 2.4 Pripsat text
     - [x] Zdokumentovat mockupy map -> f pozadavek (mame cislo)
     - [x] Text mezi obrazky - mezi-pozadavky, ktere to pokryvaji
@@ -47,7 +47,7 @@
     - [x] SUS plotting
     - [x] PHP Unit Testing
 ### Dalsi veci co byly treba
-- [ ] mozna plot dummy\_benchmark A dummy bench na projected load v budoucnu, (4x plot do obrazku)
+- [ ] mozna plot dummy\_benchmark A dummy bench na projected load v budoucnu, (4x plot do obrazku) //TODO later 10x run
 ___
  
 ## TODOs 12.03.2023
@@ -67,9 +67,9 @@ ___
     - [x] chs. 2.7 2.8 2.9 - instead table STORY->API F 
 - [ ] **SECTION 3**     
     - [ ] <ins>Add !TODO Doxygen - PDF option: attachment (now just [docu.swimmpair.cz](http://docu.swimmpair.cz))</ins>
-- [ ] **SECTION 4**
+- [x] **SECTION 4**
     - [x] ch. 4.1 PERFORMANCE EVALUATION
-    - [ ] <ins>Add !TODO ch 4.sth - PHPUnit testing, cases prepared</ins>
+    - [x] <ins>Add !TODO ch 4.sth - PHPUnit testing, cases prepared</ins>
 - [ ] **SECTION Deployment**
     - [ ] <ins>Add !TODO - run Redis in Kubernetes Cluster</ins>
 
