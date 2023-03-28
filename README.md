@@ -20,13 +20,13 @@
 - [x] Funct. req
     - [x] vecne oblasti grouping
     - [x] ids pro stories [x] //mby C1-7 U1-4 A1-5
-- [ ] Dom. model 
+- [x] Dom. model 
     - UML Class " Co ma delat s cim" - image
     - popis realneho sveta
     - [x] polozky - ne jmena, ale popisne
     - [x] vyhodit ciselniky
-    - [ ] ~~Objects~~ Domain concepts/entities
-    - [ ] User - ~~uzivatele~~ realny svet, Rozhodci/Klubovy manazer
+    - [x] ~~Objects~~ Domain concepts/entities
+    - [x] User - ~~uzivatele~~ realny svet, Rozhodci/Klubovy manazer
 - [ ] 1.5 Requirements
     - [ ] Security req - bezpecnost
     - [ ] Performance, scalability - load, dava smysl (?) snadno up v bodoucnu, scalability - pocet rust bude OK
@@ -37,12 +37,12 @@
     - [x] jmena tabulek pro db - img
     - [ ] jak jsme dosli k db (Rozhodci, Club manager = User)
     - [ ] text okolo co a jak proc jsme navrhli db
-- [ ] 2.6 Mapovani funkci
+- [x] 2.6 Mapovani funkci
     - tabulka ok
-    - [ ] List retr. funkci lepe nebo pryc
-- [ ] 3.2 Popis manageru
+    - [x] List retr. funkci lepe nebo pryc
+- [x] 3.2 Popis manageru
     - mby UML Sequence Diagram
-    - [ ] text ke kazdemu //TODO same as Doxygen caption (prolong Doxy)
+    - [x] text ke kazdemu //TODO same as Doxygen caption (prolong Doxy)
 - [x] 4 Testing
     - [x] SUS plotting
     - [x] PHP Unit Testing

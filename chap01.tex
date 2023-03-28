@@ -66,12 +66,7 @@ Let's go through entities that have to be represented in our system one by one s
 \par
 \subsection*{Cup}
 \textbf{Cup is the most important entity.} A swimming Cup contains name, description, date and is affiliated to organizing Club.
-\newline 
-Cup serves two purposes:
-\newline 
-i) \textbf{Firstly} - assigning referees for specific tasks (time tracking, computer support, head of the cup, etc.) has to be \textbf{ready by the time the event takes place},
-\newline
-ii) \textbf{Secondly} - statistics summing up participations of Referees and Clubs have to be calculated for each year over all cups in this time period. We also have to discriminate between upcoming and already past cups. Upcoming cups should be displayed, past cups should reside in the archive to be revisited for statistical purposes.
+Cup serves two purposes. \textbf{Firstly}, assigning referees for specific tasks (time tracking, computer support, head of the cup, etc.) has to be \textbf{ready by the time the event takes place}. \textbf{Secondly}, statistics summing up participations of Referees and Clubs have to be calculated for each year over all cups in this time period. We also have to discriminate between upcoming and already past cups. Upcoming cups should be displayed, past cups should reside in the archive to be revisited for statistical purposes.
 \iffalse\subsection*{User - strike}
 \par
 User is an entity modelling swimming referee. A referee participating in this system falls in one of three categories. These categories or levels if you wish are \textbf{referee}, \textbf{club manager} and \textbf{system administrator}. User has to be uniquely identifiable. A person i.e. User in the system is going to have profile information such as first name, family name, email address. Good practice of using email address as a login information is going to be used here. User must also contain SwimmPair hierarchy listed above\footnote{\textbf{Rights} - referee 0 / club manager 1 / system administrator 2} and indicator of one's skill and knowledge in the swimming field, i.e. referee category. User must also belong to exactly one club in our system.
@@ -86,25 +81,25 @@ Coordinator is a person who is head of swimming in specific region. He budgets, 
 \par
 Club is an administrative unit grouping people (in the same city). Club has a specific name, abbrevation and ID in Czech Referee Federation. An image can be included as well. A club will be serving as a formal authority organising Cup by a User who is club manager. Club is unanimously affiliated to Region. Statistics regarding performance of members of Club at swimming competitions must be implemented. Statistics have informative characted and will save time in the current status quo - keeping track of presence and work descriptions in Excel spreadsheets.
 \subsection*{Region}
-One of the 13 regions of the Czech Republic in which this system is used. Clubs are located in one of these regions. When new Club starts using SwimmPair, new region has to be added and potential clubs created and attached to this Region. 
-We list objects of our application model and describe their properties and purpose. 
-%\subsection*{Post}
-%Informative news snippet displayed on the homepage.
-%\newpage
+There are 13 regions of the Czech Republic, we are solving this problem for 2 that are being adminstered together. Maybe we will do more. Clubs are located in one of these regions. When new Club starts using SwimmPair in the future, new Region has to be added and potential clubs created and attached to this Region. 
+
+\iffalse
+\subsection*{Availability}
+Referee is available in the time of Cup.
+\fi
+
+\subsection*{Pairing}
+Pairing is simple list of pairs (\textbf{Referee} x \textbf{Position}) $\rightarrow$ \textbf{Cup}.
+\subsection*{Position}
+Predefined list of tasks necessary to be done at each Cup. This list is probably never going to change since there is a fixed set of roles. Referees are going to be assigned to these Positions for each Cup.
+\newpage
 \subsection*{Schema of entities and connections}
 Majority of focus should be on \textbf{Referee}, \textbf{Club manager} and \textbf{Cup} in the presented schema. Referees belong to Club that belong to Region. These two entities \textbf{Referee} and \textbf{Cup} along with \textbf{Position} will then be brought together as \textbf{Pairing} which contains referees that are available for specific cups and will be performing work at specifies position. Referees must be available in specific time but \textbf{Pairing} is where each record can be assigned a position from prescripted \textbf{Positions}.
-\newline
 \begin{figure}[h]
 \includegraphics[scale=0.160]{img/swimmpair_uml.png}
   \caption{UML Class Diagram outlaying the situation}
   \label{fig1.2:uml}
 \end{figure}
-\subsection*{Availability}
-Referee is available in the time of Cup.
-\subsection*{Pairing}
-Pairing is simple list of pairs (\textbf{Referee} x \textbf{Position}) $\rightarrow$ \textbf{Cup}.
-\subsection*{Position}
-Predefined list of tasks necessary to be done at each Cup. This list is probably never going to change since there is a fixed set of roles. Referees are going to be assigned to these Positions for each Cup.
 \newpage
 \section{Quality/Usability Requirements}
 Several good practices have to be implemented to make SwimmPair easy to use. These practices are either well known or situation specific but they have one thing in common - they should make the application good to use.

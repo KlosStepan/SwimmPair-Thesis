@@ -274,7 +274,9 @@ Configuration table of which positions in what order should be displayed in stat
 \par These five managers work with objects and provide views and functions (i.e. joining more tables in varios ways to achieve all functionality). We're providing an overview of which API functions are calling which internal functions (plain, in cycle) and what are desired return values.  
 \newline
 \textbf{Documentation of model - classes and public functions is available \footnote{\url{http://docu.swimmpair.cz}}}.
+
 \subsection{PostsManager.php}
+PostsManager has API functions to handle Post object/s and delivers it through web application.
 \begin{itemize}
   \setlength\itemsep{0em}
   \item \underline{Post} $\vert$ null $\leftarrow$ \textbf{GetPostById}(\$id)
@@ -289,7 +291,9 @@ Configuration table of which positions in what order should be displayed in stat
   \newline    $\hookrightarrow$ \_CreatePostFromRow(\$row)
   \item \underline{true} $\vert$ false $\leftarrow$ \textbf{UpdatePost}(\$id, \$title, \$content, \$d\_flag, \$sign)
 \end{itemize}
+
 \subsection{UsersManager.php}
+UsersManager has API functions to handle User object/s and delivers is through web application.
 \begin{itemize}
   \setlength\itemsep{0em}
   \item \underline{User} $\vert$ null $\leftarrow$ \textbf{GetUserById}(\$id)
@@ -326,8 +330,8 @@ Configuration table of which positions in what order should be displayed in stat
   %\item \underline{true} $\vert$ false $\leftarrow$ \textbf{UpdatePairing}(\$JSON) //cupId, user-pos JSON
 \end{itemize}
 
-
 \subsection{ClubsManager.php}
+ClubsManager has API functions to handle Club object/s and delivers it through web application.
 \begin{itemize}
   \setlength\itemsep{0em}
   \item \underline{Club} $\vert$ null $\leftarrow$ \textbf{GetClubById}(\$id)
@@ -337,7 +341,9 @@ Configuration table of which positions in what order should be displayed in stat
   \newline    $\searrow$ \_CreateClubsFromStatement(\$stmt)
   \newline    $\hookrightarrow$ \_CreateClubFromRow(\$row)
 \end{itemize}
+
 \subsection{CupsManager.php}
+CupsManager has API functions to handle Cup object/s and delivers it through web application.
 \begin{itemize}
   \setlength\itemsep{0em}
   \item \underline{Cup[]} $\vert$ null $\leftarrow$ \textbf{FindAllUpcomingCupsEarliestFirst}()
@@ -367,8 +373,9 @@ Called together in XMLHttpRequest/\textbf{update\_pairing.php} in transaction.
   \item \underline{true} $\vert$ false $\leftarrow$ \textbf{DeleteOldPairing}(\$cupId)
   \item \underline{true} $\vert$ false $\leftarrow$ \textbf{InsertNewPairing}(\$cupId, \$posId, \$userId)
 \end{itemize}
-%MBY TODO others
+
 \subsection{PositionsManager.php}
+PositionsManager has API functions to handle Position object/s and delivers it through web application.
 \begin{itemize}
   \setlength\itemsep{0em}
   \item \underline{Position[]} $\vert$ null $\leftarrow$  \textbf{FindAllPositions}()

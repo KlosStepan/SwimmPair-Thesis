@@ -84,7 +84,9 @@ After logging in, user can see administrative menu. Based on rights (2/1/0) one 
 \end{figure}
 \newpage
 \section{Database design}
-While designing such, system a well defined database schema modelled on functional requirements is a necessity. We will show basic database schema, which should be understandable after knowledge of UML schema (\autoref{fig1.2:uml}).  
+While designing such, system a well defined database schema modelled on functional requirements is a necessity. Previously outlied real world (\autoref{fig1.2:uml}) has to be rigorously converted to database schema.
+\iffalse
+We will show basic database schema, which should be understandable after knowledge of UML schema (\autoref{fig1.2:uml}).  
 \newline
 \textbf{Basic preview schema}
 \begin{figure}[h]	
@@ -94,6 +96,8 @@ While designing such, system a well defined database schema modelled on function
     \label{fig2.6:dbschemasimpl}
 \end{figure}
 \newline
+\fi
+
 \textbf{Full database schema used for out application}
 \begin{figure}[h]	
 	\centering	
@@ -101,6 +105,7 @@ While designing such, system a well defined database schema modelled on function
 	\caption{Full database schema for the SwimmPair application.}
 	\label{fig2.7:dbschemafull}
 \end{figure}
+
 \iffalse
 % Let's take PostsManager as an example. This manager handles Post and is implemented as follows.
 \textbf{Object - Post.php}
@@ -187,7 +192,8 @@ Listed media queries are used to provide design of the web by manually overridin
     \item \textbf{Sign Myself As Available For Cup} - add my Id to table \textbf{cupId}-\textbf{userId}
 \end{itemize}
 \fi
-\section {Administration tasks to API Functions}
+\newpage
+\section {Functional requirements mapping to API}
 We will show how specific \textbf{functional requirements} administrative tasks are realized via \textbf{model api functions}\footnote{\url{http://docu.swimmpair.cz/functions_func.html}}.
 \newline
 Table has following structure: \textbf{Task} / \textbf{Role} / \textbf{Function(s)}.
@@ -236,6 +242,7 @@ InsertNewPairing\\
  SetAvailabilityCanGo \\
 \hline
 \end{tabularx}
+\iffalse
 These functions are used for \underline{retrieving} data to navigate across the administration.
 \begin{itemize}
     \item Posts: FindAllPostsOrderByIDDesc
@@ -249,3 +256,4 @@ These functions are used for \underline{retrieving} data to navigate across the 
     \item Sign People From My Club Available For Cup : FindAllUpcomingCupsEarliestFirst, GetCupByID, FindAllTeamMembers, FindAllRegisteredTeamMembersForTheCup
     \item Sign Myself As Available For Cup: FindAllUpcomingCupsEarliestFirst, GetCupByID, IsUserAvailableForTheCup, IsComing
 \end{itemize}
+\fi
