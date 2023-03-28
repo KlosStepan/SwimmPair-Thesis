@@ -17,24 +17,24 @@
 
 ## TODOs 24.03.2023
 ### Iterace ze schuzky
-- [ ] Funct. req
-    - [ ] vecne oblasti grouping
-    - [ ] ids pro stories [x] //mby C1-7 U1-4 A1-5
+- [x] Funct. req
+    - [x] vecne oblasti grouping
+    - [x] ids pro stories [x] //mby C1-7 U1-4 A1-5
 - [ ] Dom. model 
     - UML Class " Co ma delat s cim" - image
     - popis realneho sveta
-    - [ ] polozky - ne jmena, ale popisne
-    - [ ] vyhodit ciselniky
+    - [x] polozky - ne jmena, ale popisne
+    - [x] vyhodit ciselniky
     - [ ] ~~Objects~~ Domain concepts/entities
     - [ ] User - ~~uzivatele~~ realny svet, Rozhodci/Klubovy manazer
 - [ ] 1.5 Requirements
     - [ ] Security req - bezpecnost
     - [ ] Performance, scalability - load, dava smysl (?) snadno up v bodoucnu, scalability - pocet rust bude OK
 - [ ] 2.4 Pripsat text
-    - [ ] Zdokumentovat mockupy map -> f pozadavek (mame cislo)
-    - [ ] Text mezi obrazky - mezi-pozadavky, ktere to pokryvaji
+    - [x] Zdokumentovat mockupy map -> f pozadavek (mame cislo)
+    - [x] Text mezi obrazky - mezi-pozadavky, ktere to pokryvaji
 - [ ] 2.5 DB chap
-    - [ ] jmena tabulek pro db - img
+    - [x] jmena tabulek pro db - img
     - [ ] jak jsme dosli k db (Rozhodci, Club manager = User)
     - [ ] text okolo co a jak proc jsme navrhli db
 - [ ] 2.6 Mapovani funkci
@@ -42,7 +42,7 @@
     - [ ] List retr. funkci lepe nebo pryc
 - [ ] 3.2 Popis manageru
     - mby UML Sequence Diagram
-    - [ ] text ke kazdemu
+    - [ ] text ke kazdemu //TODO same as Doxygen caption (prolong Doxy)
 - [x] 4 Testing
     - [x] SUS plotting
     - [x] PHP Unit Testing
