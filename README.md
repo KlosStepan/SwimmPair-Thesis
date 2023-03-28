@@ -19,7 +19,7 @@
 ### Iterace ze schuzky
 - [ ] Funct. req
     - [ ] vecne oblasti grouping
-    - [ ] ids pro stories
+    - [ ] ids pro stories [x] //mby C1-7 U1-4 A1-5
 - [ ] Dom. model 
     - UML Class " Co ma delat s cim" - image
     - popis realneho sveta
@@ -30,22 +30,22 @@
 - [ ] 1.5 Requirements
     - [ ] Security req - bezpecnost
     - [ ] Performance, scalability - load, dava smysl (?) snadno up v bodoucnu, scalability - pocet rust bude OK
-- [ ] 2.4 Priprat text
+- [ ] 2.4 Pripsat text
     - [ ] Zdokumentovat mockupy map -> f pozadavek (mame cislo)
     - [ ] Text mezi obrazky - mezi-pozadavky, ktere to pokryvaji
 - [ ] 2.5 DB chap
-    - [ ] jmena tabulek pro db
+    - [ ] jmena tabulek pro db - img
     - [ ] jak jsme dosli k db (Rozhodci, Club manager = User)
-    - [ ] text okolo co a jak proc 
+    - [ ] text okolo co a jak proc jsme navrhli db
 - [ ] 2.6 Mapovani funkci
     - tabulka ok
-    - [ ] List retr. funkci lepe
+    - [ ] List retr. funkci lepe nebo pryc
 - [ ] 3.2 Popis manageru
     - mby UML Sequence Diagram
     - [ ] text ke kazdemu
-- [ ] Testing
-    - [ ] SUS plotting
-    - [ ] PHP Unit Testing
+- [x] 4 Testing
+    - [x] SUS plotting
+    - [x] PHP Unit Testing
 ### Dalsi veci co byly treba
 - [ ] mozna plot dummy\_benchmark A dummy bench na projected load v budoucnu, (4x plot do obrazku)
 ___
