@@ -84,21 +84,25 @@ After logging in, user can see administrative menu. Based on rights (2/1/0) one 
 \end{figure}
 \newpage
 \section{Database design}
-While designing such, system a well defined database schema modelled on functional requirements is a necessity. Previously outlied real world (\autoref{fig1.2:uml}) has to be rigorously converted to database schema.
-\iffalse
-We will show basic database schema, which should be understandable after knowledge of UML schema (\autoref{fig1.2:uml}).  
-\newline
-\textbf{Basic preview schema}
+While designing such system, well defined database schema modelled from functional requirements and entities is a necessity. Previously outlied real world (\autoref{fig1.2:uml}) has to be rigorously converted to database schema. We will show mappings and merges that had to be made in order to achieve that.
+\subsection*{People entities merge}
 \begin{figure}[h]	
-    \centering	
-    \includegraphics[scale=0.33]{img/swimmpair_db_mockup.png}
-    \caption{Simplified schema without all information just for idea.}
-    \label{fig2.6:dbschemasimpl}
+	\centering	
+    \includegraphics[scale=0.5]{img/entities_to_user.png}
+	\caption{These 3 people entities got merged into the single object.}
+	\label{fig2.7:dbschemafull}
 \end{figure}
-\newline
-\fi
-
-\textbf{Full database schema used for out application}
+\subsection*{Pairing entities to objects}
+\begin{figure}[h]	
+	\centering	
+    \includegraphics[scale=0.5]{img/entities_pairing_to_obj_rels.png}
+	\caption{Entities modeled as 3 objects and 2 relational tables.}
+	\label{fig2.7:dbschemafull}
+\end{figure}
+\subsection*{Remaining entities}
+Mapping of remaining entities is self-evident. 
+\newpage
+\subsection*{Full database schema used for out application}
 \begin{figure}[h]	
 	\centering	
     \includegraphics[scale=0.2175]{img/swimmpair_db_schema.png}
