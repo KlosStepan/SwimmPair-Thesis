@@ -29,25 +29,24 @@
     - [x] User - ~~uzivatele~~ realny svet, Rozhodci/Klubovy manazer
 - [x] 1.5 Requirements
     - ~~[ ] Security req - bezpecnost~~
-    - [ ] Performance, scalability - load, dava smysl (?) snadno up v bodoucnu, scalability - pocet rust bude OK [x] JEN PARAGRAPH ADDED //TODO 1par later
-- [ ] 2.4 Pripsat text
+    - [x] Performance, scalability - load, dava smysl (?) snadno up v bodoucnu, scalability - pocet rust bude OK [x] JEN PARAGRAPH ADDED //TODO 1par later
+- [x] 2.4 Pripsat text
     - [x] Zdokumentovat mockupy map -> f pozadavek (mame cislo)
     - [x] Text mezi obrazky - mezi-pozadavky, ktere to pokryvaji
-- [ ] 2.5 DB chap
+- [x] 2.5 DB chap
     - [x] jmena tabulek pro db - img
-    - [ ] jak jsme dosli k db (Rozhodci, Club manager = User)
-    - [ ] text okolo co a jak proc jsme navrhli db
+    - [x] jak jsme dosli k db (Rozhodci, Club manager = User)
+    - [x] text okolo co a jak proc jsme navrhli db
 - [x] 2.6 Mapovani funkci
     - tabulka ok
     - [x] List retr. funkci lepe nebo pryc
 - [x] 3.2 Popis manageru
     - mby UML Sequence Diagram
     - [x] text ke kazdemu //TODO same as Doxygen caption (prolong Doxy)
-- [x] 4 Testing
+- [ ] 4 Testing
+    - [ ] Benchmark for 5x larger script than "current load" script
     - [x] SUS plotting
     - [x] PHP Unit Testing
-### Dalsi veci co byly treba
-- [ ] mozna plot dummy\_benchmark A dummy bench na projected load v budoucnu, (4x plot do obrazku) //TODO later 10x run
 ___
  
 ## TODOs 12.03.2023
