@@ -69,8 +69,9 @@ ___
 - [x] **SECTION 4**
     - [x] ch. 4.1 PERFORMANCE EVALUATION
     - [x] <ins>Add !TODO ch 4.sth - PHPUnit testing, cases prepared</ins>
-- [ ] **SECTION Deployment**
-    - [ ] <ins>Add !TODO - run Redis in Kubernetes Cluster</ins>
+- [x] **SECTION Deployment**
+    - [x] <ins>Add !TODO - run Redis in Kubernetes Cluster</ins>
+    - [x] Autoscaling 2-5 replicas w/ Redis sync
 
 ## Dalsi veci co byly treba
 - [x] Anotace vsech fotek \caption{Lorem ipsum fotka} a \label{x.y:figloremipsum} - na referencovani skrz text
