@@ -100,7 +100,7 @@ Majority of focus should be on \textbf{Referee}, \textbf{Club manager} and \text
   \caption{UML Class Diagram outlaying the situation}
   \label{fig1.2:uml}
 \end{figure}
-\newpage
+
 \section{Quality/Usability Requirements}
 Several good practices have to be implemented to make SwimmPair easy to use. These practices are either well known or situation specific but they have one thing in common - they should make the application good to use.
 \subsection*{Smooth frontend browsing}
@@ -120,4 +120,13 @@ Upcoming Cup can be directly printed\footnote{\url{https://developer.mozilla.org
 \par
 Red blue and grey are colors that appear pretty much at a swimming pools. These colors will be used in our system as well. The elements should have fresh lightweave look and not appear heavy.
 \section{Scalability/Usability Requirements}
-Application that we are preparing is going to be used for 2 Regions and approximately 100 referees. Maximum scaling would be whole Czech republic, that means  5-6x larger load than the current one, which shouldn't be problem on LAMP stack. We can always scale up number of Kubernetes 
+Application is initially going to be used for 2 Regions and approximately 100 referees. Maximum saturiation would mean that system is used in whole Czech Republic. Maximum traffic is then 5-6x larger load than the current one.
+\newline
+\par
+\textbf{Potentially looming issues:}
+\begin{itemize}
+  \item performance issues - shouldn't be problem using LAMP stack, 
+  \item larger traffic - can be solved via Kubernetes autoscaling \footnote{\url{https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/}},  
+  \item simulaneous application edits - can be solved by locking and comparing hashes of states before comitting,
+  \item sessions consistency - can be solved (even throughout cluster restart) using Redis\footnote{\url{https://redis.io}}.
+\end{itemize}

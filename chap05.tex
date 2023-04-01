@@ -1,24 +1,85 @@
 \chapter{Deployment}
-Development of our application was done locally - using \textbf{Docker compose} to glue up three components necessary to sufficiently run our system - PHP runtime for web application, MySQL Database and Adminer. We have to, however, run our application in Kubernetes Cluster. \textbf{Service} and \textbf{Deployment} have to be written, Service for purposes of routing and taking care of container spawn addresses and Deployment to describe container replicas and approproate images. \textbf{Database} is run as separate entity within the Cluster.
-\newline
-\textbf{Running SwimmPair in Kubernetes Cluster:}
+Development of our application was performed locally using \textbf{docker-compose} to glue up 4 components necessary to sufficiently work \underline{PHP container} for web application, \underline{MySQL container} + \underline{Adminer container} and \underline{Redis container}.
 \par
-\includegraphics[scale=0.275]{img/swimmpair_deployment_k8s.png}
+We have to, however, run our application in \textbf{Kubernetes Cluster}. \textbf{Services} and \textbf{Deployments} have to be written, Services for purposes of routing and taking care of newcontainer spawn addresses and Deployments to describe container definitions - images \& volumes, replica numbers and environment variables. \textbf{Database} is run as a separate standalone entity within the Cluster with persistent storage. \textbf{Redis} for syncing and perserveing sessions as well.
+\newline
+\par
+\section*{SwimmPair running in the Kubernetes Cluster}
+\par
+\begin{figure}[h]
+    \centering	
+    \includegraphics[scale=0.52]{img/swimmpair_deployment_k8s.png}
+    \caption{Preview our specific Kubernetes setup.}
+    \label{fig5.1:deplk8s}
+\end{figure}
+Both \textbf{Database} and \textbf{Redis} can be substituted by Managed Databases\footnote{\url{https://www.digitalocean.com/products/managed-databases}} or their equivalents in different cloud providers. They can be accessed remotely as dedicated self-hosted services within company for example.
+\par \textbf{SwimmPair} can be run using Container Service or "1-click app" as well. 
 \section*{Dockerization of SwimmPair}
 File called \textbf{Dockerfile} has to be created in the project folder.
 \begin{lstlisting}
 FROM thecodingmachine/php:7.4-v4-apache
 COPY --chown=docker . /var/www/html
 \end{lstlisting}
-This image of Apache/PHP\footnote{Image \textbf{thecodingmachine/php:7.4-v4-apache}  by TheCodingMachine - \url{https://github.com/thecodingmachine/docker-images-php}} was chosen because it correctly dockerizes part of so-called LAMP stack. In order to build this image and push it into Dockerhub.com we run these commands:
+This image of PHP7.4/Apache\footnote{Image \textbf{thecodingmachine/php:7.4-v4-apache}  by TheCodingMachine - \url{https://github.com/thecodingmachine/docker-images-php}} was chosen because it correctly dockerizes part of so-called LAMP stack. In order to build this image and push it into Dockerhub.com we run these commands:
 \begin{lstlisting}
 docker build -t stepanklos/swimmpair .
 docker push stepanklos/swimmpair
 \end{lstlisting}
-This image is then pullable as stepanklos/swimmpair from Deployment.
+This image is then pullable as stepanklos/swimmpair by Deployment\footnote{\url{https://hub.docker.com/repository/docker/stepanklos/swimmpair/general}}.
 \section*{Kubernetes}
-We run 2 replicas on 2 Nodes in order to ensure reliability and uptime. 
+We run 2 replicas on 2 Nodes in order to ensure reliability and uptime. For further inflow an autoscaler was setup. 
+\subsection*{Autoscaling - traffic inflow}
+\begin{figure}[h]
+    \centering	
+    \includegraphics[scale=0.52]{img/swimmpair_deloyment_k8s_scaling.png}
+    \caption{Autoscaler for application to accomodate larger traffic.}
+    \label{fig5.2:k8sautoscaling}
+\end{figure}
+\subsection*{Deployment app-swimmpair.yaml}
+\begin{lstlisting}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: swimmpair
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: swimmpair
+  template:
+    metadata:
+      labels:
+        app: swimmpair
+    spec:
+      containers:
+      - name: swimmpair
+        image: stepanklos/swimmpair:latest
+        securityContext:
+          allowPrivilegeEscalation: true
+        ports:
+        - containerPort: 80
+        env:
+        - name: MESSAGE
+          value: Hello from swimmpair Deployment!
+        - name: DATABASE_HOST
+          value: 'mysql-service'
+        - name: DATABASE_USER
+          value: 'root'
+        - name: DATABASE_PASS
+          value: 'heslo'
+        - name: DATABASE_NAME
+          value: 'plavani' 
+        - name: PHP_INI_SESSION__SAVE_HANDLER
+          value: 'redis'
+        - name: PHP_INI_SESSION__SAVE_PATH
+          value: 'tcp://redis-service:6379?auth=aGVzbG8='
+\end{lstlisting}    
 \section*{Database and Redis}
-As mentioned before, our application doesn't come with Database and Adminer, which have to be set up separately using persistent storage PV on which we write PVC and reference from deployment. 
+As mentioned our application doesn't come with Database (and Adminer) nor with Redis - we had to set up them separately using PV (persistent storage) on which a PVC (persistent volume claim) was made. Due to Digital Ocean's PersistentVolume implementation policy we had to run these Services as 1 Pod with manual volume - which is sufficient for our workload.  
 \newline
-\subsection*{Redis - !TODO}
+These two services we set up are internally accessible:
+\begin{itemize}
+    \item MySQL Database\footnote{\url{https://github.com/KlosStepan/DOKS-configs/tree/main/mysql-deployment}}: \textbf{mysql-service:3306} ,
+    \item \textbf{Re}mote \textbf{Di}ctionary \textbf{S}erver: \footnote{\url{https://github.com/KlosStepan/DOKS-configs/tree/main/redis-deployment}} \textbf{redis-service:6379} ,
+\end{itemize}
+in our Kubernetes Cluster.
