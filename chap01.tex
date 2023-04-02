@@ -18,51 +18,51 @@ Groups direclty and indirectly interested in existence of this application and b
 There are several entities that are interested in existence of this application. All these stakeholders will have their job facilitated and organized better to some extent thanks to this application.  
 Interested stakeholders are:
 \begin{itemize}
-  \item \textbf{Czech Swimming Federation} - organization for swimming,
+  \item \textbf{Czech Swimming Federation} - organization of competitive swimmers,
   \item \textbf{Olomouc Region}, \textbf{Zlin Region} - regions administered together,
-  \item \textbf{Lukas K} - manager who demanded this application.
+  \item \textbf{Lukas K} - coordinator who asked for this application.
 \end{itemize}
 \subsection*{Users of application}
-Our users are Czech Swimming Federation members. If their \textbf{region} is \textbf{participating in this application}, clubs and referees from this region must be in our system. With regards to referee's competence level within these clubs, one will have one of these roles: 
+Our users will be Czech Swimming Federation members. If their \textbf{region} is \textbf{participating in this application}, clubs and referees from this region must be in our system. With regards to one's rank within the structure, one will have one of these roles: 
 \begin{itemize}
   \item \textbf{system administrator} ($\sim$1-3),
-  \item \textbf{club manager} + also a referee ($\sim$10s),
-  \item \textbf{referee} ($\sim$100s).
+  \item \textbf{club manager} + also a swimming referee ($\sim$10s),
+  \item \textbf{swimming referee} ($\sim$100s).
 \end{itemize} 
-Roles are self-descriptive and previously casually mentioned. My friend, who came up with this idea is \textbf{system administrator} because he's been running all this agenda offline. Club managers are taking care of competitions on behalf of the club and referees are common people who have some degree of knowledge about competitions. Colected statistics will then be used for accreditation granting, activity monitoring and categorization overall.
+Roles are self-descriptive. The coordinator (my friend), who came up with this idea will be \textbf{system administrator} because he's been running all this agenda offline. \textbf{Club managers} are taking care of competitions on behalf of their club and referees are common people who have some degree of knowledge about competitions and can participate. Colected statistics will then be used for accreditation granting, activity monitoring and categorization overall.
 \par
-We were iterating form and features of the web application with two future system administrators during time of development. We then tested usability on all three groups of users via. SUS \footnote{\textbf{System Usability Scale} is a questionnaire to reveal how friendly tested system is to target audience. We carried on initial testing for 20 people belonging to one of these 3 categories to find out if we met at least an average score which was determined to be 68/100.} questionnaire.
+We iterate requirements and features for this web application with two swimming coordinators (two future system administrators) during time of development. We then test usability on all three groups of users via. SUS \footnote{\textbf{System Usability Scale} is a questionnaire to reveal how friendly tested system is to target audience. We carried on initial testing for 20 people belonging to one of these 3 categories to find out if we met at least an average score which was determined to be 68/100.} questionnaire. We than prepare tests, CI pipeline\footnote{\url{https://komodor.com/blog/ci-cd-pipelines-for-kubernetes-best-practices-and-tools}} and deployment strategy for the application.
 %%%An~example citation: %\cite{Andel07}
 \section{Functional requirements}
-There are some related bundles of tasks that we would like to solve within our application by implementing features and pages to solved them.
+There are areas of similar tasks that we would like adress and solve by our application by implementing features and ui pages for these purposes.
 \subsection*{"C" as Cup administration}
 \begin{enumerate}
     \item \lbrack club manager\rbrack \,needs to\, \lbrack create swimming cup\rbrack \,in order to\, \lbrack publish cup and invite others to participate\rbrack
     \item \lbrack club manager\rbrack \,needs to\, \lbrack create pairing for swimming cup\rbrack \,in order to\, \lbrack finalize preparations of cup the day before it takes place\rbrack
     \item \lbrack club manager\rbrack \,needs to\, \lbrack preview cups and print pairing\rbrack \,in order to\, \lbrack perform inspection and publish information offline\rbrack
-    \item \lbrack club manager\rbrack \,needs to\, \lbrack participate in cup or participate with teammates\rbrack \, in order to\, \lbrack help with swimming cup to happen\rbrack
+    \item \lbrack club manager\rbrack \,needs to\, \lbrack participate in cup or participate with teammates\rbrack \, in order to\, \lbrack help swimming cup to take place\rbrack
 \end{enumerate} 
 \subsection*{"R" as Referees administration \& overview}
 \begin{enumerate}
-\item \lbrack club manager\rbrack \,needs to\, \lbrack manage swimming club\rbrack \,in order to\, \lbrack keep information and users up-to-date\rbrack
-\item \lbrack club manager\rbrack \,needs to\, \lbrack perform referees managment\rbrack \, in order to \, \lbrack keep referees up-to-date\rbrack
-\item \lbrack referee\rbrack \,needs to\, \lbrack view statistics of referees\rbrack \, in order to \, \lbrack have track record about participation\rbrack
-\item \lbrack club manager\rbrack \,needs to\, \lbrack view statistics of clubs\rbrack \, in order to \, \lbrack have information about performance of own club\rbrack
-\item \lbrack club manager\rbrack \,needs to\, \lbrack perform club managment\rbrack \, in order to \, \lbrack keep own club up-to-date\rbrack
-\item \lbrack system administrator\rbrack \,needs to\, \lbrack manage referees\rbrack \, in order to \, \lbrack add, remove, update users in the application\rbrack
+\item \lbrack club manager\rbrack \,needs to\, \lbrack manage swimming club\rbrack \,in order to\, \lbrack keep information and users up to date\rbrack
+\item \lbrack club manager\rbrack \,needs to\, \lbrack perform referees managment\rbrack \, in order to \, \lbrack keep referees up to date\rbrack
+\item \lbrack referee\rbrack \,needs to\, \lbrack view statistics of referees\rbrack \, in order to \, \lbrack have track record about personal participation\rbrack
+\item \lbrack club manager\rbrack \,needs to\, \lbrack view statistics of clubs\rbrack \, in order to \, \lbrack have information about performance of his own club\rbrack
+\item \lbrack club manager\rbrack \,needs to\, \lbrack perform club managment\rbrack \, in order to \, \lbrack keep own club up to date\rbrack
+\item \lbrack system administrator\rbrack \,needs to\, \lbrack manage referees\rbrack \, in order to \, \lbrack add, remove, update users in the database\rbrack
 \item \lbrack system administrator\rbrack \,needs to\, \lbrack list referees overview\rbrack \, in order to \, \lbrack see activity of referees\rbrack
 \end{enumerate} 
 \subsection*{"S" as Stakeholders interests}
 \begin{enumerate}
-  \item \lbrack system administrator\rbrack \,needs to\, \lbrack have overview of clubs\rbrack \, in order to \, \lbrack be informed about happenings (within application)\rbrack
-  \item \lbrack stakeholder\rbrack \,needs to\, \lbrack have overall categorization of federation\rbrack \, in order to \, \lbrack use system for administrative purposes\rbrack
-  \item \lbrack stakeholder\rbrack \,needs to\, \lbrack have database archivation of federation\rbrack \, in order to \, \lbrack use system as archivation tool\rbrack
-  \item \lbrack stakeholder\rbrack \,needs to\, \lbrack have information about participations\rbrack \, in order to\, \lbrack grant accreditations to referees\rbrack
-  \item \lbrack system administrator\rbrack \,needs to\, \lbrack publish news\rbrack \, in order to \, \lbrack notify everybody about new things\rbrack
-  \item \lbrack system administrator\rbrack \,needs to\, \lbrack edit page/s\rbrack \, in order to \, \lbrack change public info page\rbrack
+  \item \lbrack system administrator\rbrack \,needs to\, \lbrack have overview of clubs\rbrack \, in order to \, \lbrack be informed about happenings within his jurisdiction\rbrack
+  \item \lbrack stakeholder\rbrack \,needs to\, \lbrack have overall categorization of federation\rbrack \, in order to \, \lbrack use application for administrative purposes\rbrack
+  \item \lbrack stakeholder\rbrack \,needs to\, \lbrack have database archivation of federation\rbrack \, in order to \, \lbrack use application as archivation tool\rbrack
+  \item \lbrack stakeholder\rbrack \,needs to\, \lbrack have information about participations\rbrack \, in order to\, \lbrack grant accreditations to referees for next season\rbrack
+  \item \lbrack system administrator\rbrack \,needs to\, \lbrack publish news\rbrack \, in order to \, \lbrack notify everybody about what's happening\rbrack
+  \item \lbrack system administrator\rbrack \,needs to\, \lbrack edit page/s\rbrack \, in order to \, \lbrack change static public info in the application\rbrack
 \end{enumerate}
 \section{Domain model}
-Let's go through entities that have to be represented in our system one by one starting from the most important ones. We will outlay entities and their relations. After that basic idea of entities and their relations will be established we proceed to project specification for further implementation endeavours. We, however, worked more iteratively so this is just retrospective domain model for implementation that we were specifying during the time of development. 
+Let's look at the entities which have to be represented in our system one by one - starting from the most important ones. We will outlay entities and their relations. After basic idea of entities and their relations is established we proceed to project specification to delve further into implementation details. However, our approach was more iterative, so this retrospective domain model represents only a snapshot of the implementation details that we were specifying throughout the development process.
 \par
 \subsection*{Cup}
 \textbf{Cup is the most important entity.} A swimming Cup contains name, description, date and is affiliated to organizing Club.
@@ -72,16 +72,16 @@ Cup serves two purposes. \textbf{Firstly}, assigning referees for specific tasks
 User is an entity modelling swimming referee. A referee participating in this system falls in one of three categories. These categories or levels if you wish are \textbf{referee}, \textbf{club manager} and \textbf{system administrator}. User has to be uniquely identifiable. A person i.e. User in the system is going to have profile information such as first name, family name, email address. Good practice of using email address as a login information is going to be used here. User must also contain SwimmPair hierarchy listed above\footnote{\textbf{Rights} - referee 0 / club manager 1 / system administrator 2} and indicator of one's skill and knowledge in the swimming field, i.e. referee category. User must also belong to exactly one club in our system.
 \fi
 \subsection*{Referee}
-Referee is a person and main workforce during swimming competitions. Referee is a member of Club and participates on it's behalf in Cup. Referee has one of ranks  \footnote{\textbf{Referee Rank} - 1/2/3/4/FINA - \url{https://www.czechswimming.cz/index.php/rozhodci}}. Referee is assigned one or more Position/s, such as \underline{timekeeping} or \underline{pc support} and is charge of. 
+Referee is a person and main workforce during swimming competitions. Referee is a member of Club and participates on it's behalf in Cup. Referee has one of ranks  \footnote{\textbf{Referee Rank} - 1/2/3/4/FINA - \url{https://www.czechswimming.cz/index.php/rozhodci}}. Referee is assigned one or more Position/s, such as \underline{timekeeping} or \underline{pc support} and is in charge of it for duration of the cup. 
 \subsection*{Club manager}
-Club manager is usually one person who is in charge of administration of Club. Club manager organizes Cup on behalf on Club and acts as main figure during it. Club manager can also help with some work (Position), however, more they are more of an administrative character, if ever. Club manager completes pairing and plans everything. 
+Club manager is usually one person who is in charge of club administration. Club manager organizes Cup on behalf of Club and acts as main figure during it. Club manager can also help with some work (Position), however, they are more of an administrative character, if ever. Club manager completes pairing and plans everything. 
 \subsection*{Coordinator}
-Coordinator is a person who is head of swimming in specific region. He budgets, plans tournaments, manages administrations and whole database of referees, clubs and cups. He's person of highest administrative importance.
+Coordinator is a person who is head of swimming in specific region. He prepares budgets, plans tournaments, manages administrations and whole database of referees, clubs and cups. He's person of highest administrative importance.
 \subsection*{Club}
 \par
-Club is an administrative unit grouping people (in the same city). Club has a specific name, abbrevation and ID in Czech Referee Federation. An image can be included as well. A club will be serving as a formal authority organising Cup by a User who is club manager. Club is unanimously affiliated to Region. Statistics regarding performance of members of Club at swimming competitions must be implemented. Statistics have informative characted and will save time in the current status quo - keeping track of presence and work descriptions in Excel spreadsheets.
+Club is an administrative unit grouping people (in the same city). Club has a specific name, abbrevation and id in Czech Swimming Federation. A club logo can be included as well. A club will be serving as a formal authority organising Cup by a User who is club manager. Club is unanimously affiliated to Region. Statistics regarding performance of members of Club at swimming competitions must be implemented. Statistics have informative characted and will save time compared to current status quo - keeping track of presence and work descriptions in Excel spreadsheets.
 \subsection*{Region}
-There are 13 regions of the Czech Republic, we are solving this problem for 2 that are being adminstered together. Maybe we will do more. Clubs are located in one of these regions. When new Club starts using SwimmPair in the future, new Region has to be added and potential clubs created and attached to this Region. 
+There are 13 regions of the Czech Republic, we are solving this problem for 2 that are being adminstered together. Maybe others will join. Clubs are located in one of these regions. When new Club starts using SwimmPair in the future, new Region has to be added and potential clubs created and attached to this Region. 
 
 \iffalse
 \subsection*{Availability}
@@ -94,15 +94,15 @@ Pairing is simple list of pairs (\textbf{Referee} x \textbf{Position}) $\rightar
 Predefined list of tasks necessary to be done at each Cup. This list is probably never going to change since there is a fixed set of roles. Referees are going to be assigned to these Positions for each Cup.
 \newpage
 \subsection*{Schema of entities and connections}
-Majority of focus should be on \textbf{Referee}, \textbf{Club manager} and \textbf{Cup} in the presented schema. Referees belong to Club that belong to Region. These two entities \textbf{Referee} and \textbf{Cup} along with \textbf{Position} will then be brought together as \textbf{Pairing} which contains referees that are available for specific cups and will be performing work at specifies position. Referees must be available in specific time but \textbf{Pairing} is where each record can be assigned a position from prescripted \textbf{Positions}.
+Majority of focus should be on \textbf{Referee}, \textbf{Club manager} and \textbf{Cup} in the presented schema. Referees belong to Club that belong to Region. These two entities \textbf{Referee} and \textbf{Cup} along with \textbf{Position} will then be brought together as \textbf{Pairing} which contains referees that are available for specific cups and will be performing work at specified Position. Referees must be available in specific time but \textbf{Pairing} is where each record can be assigned a position from prescripted \textbf{Positions}.
 \begin{figure}[h]
 \includegraphics[scale=0.160]{img/swimmpair_uml.png}
-  \caption{UML Class Diagram outlaying the situation}
+  \caption{UML Class Diagram outlaying administrative structure.}
   \label{fig1.2:uml}
 \end{figure}
 
 \section{Quality/Usability Requirements}
-Several good practices have to be implemented to make SwimmPair easy to use. These practices are either well known or situation specific but they have one thing in common - they should make the application good to use.
+Several good practices have to be implemented to make SwimmPair easy to use. Although some of these practices are well-known and others are situation-specific, they all share a common goal: to improve the usability of the application.
 \subsection*{Smooth frontend browsing}
 \par
 Frontend of SwimmPair should be easy to use. There are several options and use cases of JavaScript that can come in handy. Reduction of page reloads is definitely a good way to go. Therefore there are going to be asynchronous JavaScript calls for obtain semi-partial data. After, next function will modify the DOM based on data received from asynchronous call. 
@@ -125,8 +125,9 @@ Application is initially going to be used for 2 Regions and approximately 100 re
 \par
 \textbf{Potentially looming issues:}
 \begin{itemize}
-  \item performance issues - shouldn't be problem using LAMP stack, 
-  \item larger traffic - can be solved via Kubernetes autoscaling \footnote{\url{https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/}},  
-  \item simulaneous application edits - can be solved by locking and comparing hashes of states before comitting,
-  \item sessions consistency - can be solved (even throughout cluster restart) using Redis\footnote{\url{https://redis.io}}.
+  \item \textbf{performance issues} - shouldn't be problem using LAMP stack, 
+  \item \textbf{larger traffic} - can be solved via Kubernetes autoscaling \footnote{\url{https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/}},  
+  \item \textbf{simulaneous application edits} - can be solved by locking and comparing hashes of states before comitting changes to database,
+  \item \textbf{sessions consistency} - can be solved (even throughout cluster restart) using Redis\footnote{\url{https://redis.io}} for (persistent) session handling.
 \end{itemize}
+These issues can be easily tackled if they are kept in mind during the development.
