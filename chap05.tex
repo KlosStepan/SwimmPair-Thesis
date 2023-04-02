@@ -9,7 +9,7 @@ We have to, however, run our application in \textbf{Kubernetes Cluster}. \textbf
 \begin{figure}[h]
     \centering	
     \includegraphics[scale=0.52]{img/swimmpair_deployment_k8s.png}
-    \caption{Preview our specific Kubernetes setup.}
+    \caption{Preview of our Kubernetes setup w/ SwimmPair.}
     \label{fig5.1:deplk8s}
 \end{figure}
 Both \textbf{Database} and \textbf{Redis} can be substituted by Managed Databases\footnote{\url{https://www.digitalocean.com/products/managed-databases}} or their equivalents in different cloud providers. They can be accessed remotely as dedicated self-hosted services within company for example.
@@ -32,7 +32,7 @@ We run 2 replicas on 2 Nodes in order to ensure reliability and uptime. For furt
 \begin{figure}[h]
     \centering	
     \includegraphics[scale=0.52]{img/swimmpair_deloyment_k8s_scaling.png}
-    \caption{Autoscaler for application to accomodate larger traffic.}
+    \caption{Autoscaler for Deployment to accomodate larger application traffic.}
     \label{fig5.2:k8sautoscaling}
 \end{figure}
 \subsection*{Deployment app-swimmpair.yaml}
