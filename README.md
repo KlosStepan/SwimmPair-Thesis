@@ -14,6 +14,11 @@
 | CZ | Cílem práce je vytvořit webovou aplikaci pro správu plaveckých závodů pro Český svaz plaveckých sportů (CSPS). Na základě současného stavu a iterativních konzultací autor navrhne model a rozhraní řešení, které poté implementujeme. Je třeba pokrýt administraci závodů, ale také databázi uživatelů, jejich přihlašování a správu, v neposlední řadě i veřejné statistiky klubů a rozhodčích pro potřeby udělování akreditací na následující sezónu. K implementaci bude použit LAMP stack. Řešení se bude distribuovat jako Docker image pro produkční běh v libovolném cloudovém prostředí. V našem konkrétním případě se bude jednat o Kubernetes cluster. |
 | EN | The goal of this work is to create web application for managing swimming competitions for Czech Swimming Federation (CSF). In collaboration with employees we analysed status quo and iteratively come up with model and frontend for implementation. Besides administration of competitions we need to deliver database of users who can sign-up, management of users and most importantly public statistics for clubs and users for purposes of renewing accreditations by CSF for upcoming seasons. Tech stack of implementation is LAMP. Web application will be distributed as Docker image for production in arbitrary cloud. This production deployment will use private Kubernetes cluster. |
 | Řešitel | Štěpán Klos |
+## Lowkey TODOs 11.04.2023
+- [ ] vyhodit SUS graf u jednotlivych otazek
+- [ ] vice & poradne unit testy
+- [ ] mby norm. 10t mac, 10t k8s...5x 10t mac, 10t k8s - 4 srovnani (sloupky asi) ... misto toho, co mame ted 
+- [ ] revize js sekce
 
 ## TODOs 24.03.2023
 ### Iterace ze schuzky
