@@ -104,13 +104,14 @@ So we plotted our tes results for further investivation. We can compare results 
 \end{figure}
 \newpage
 \section{Unit testing}
-Testing serves two puposes.
-\newline i) \, \textbf{Firstly}, to ensure that functionality works as intended.
-\newline ii) \textbf{Secondly}, not only that new functionaly works as intended but also that any previous stuff or functions were not broken either.  
-\newline
-We wrote bunch of PHPUnit tests for each Manager called ManagerTest.php in folder \textbf{tests/Unit} in our project. These tests test ordinry CRUD \footnote{CRUD = Create, Read, Update, Delete} functionalities.
+Testing serves two puposes:
+\begin{itemize}
+    \item \textbf{firstly} - to ensure that functionality works as intended,
+    \item \textbf{secondly} - not only that newly added functionaly works as intended but also that any previous functions and mechanisms were not broken either. 
+\end{itemize}
+There is bunch of PHPUnit tests for each Manager called ManagerTest.php in folder \textbf{tests/Unit} in our project. Tests check ordinary CRUD \footnote{CRUD = Create, Read, Update, Delete} functionalities.
 \subsection{Local execution of tests}
-See results of test during local development by following these steps: attach VS Code to running Container \footnote{Volume \textbf{. : /var/www/html} is, in fact, our working folder.} and see results in PHP Tools by DEVSENSE \footnote{\url{https://www.devsense.com/en/features\#vscode}}. We can open command line - \textbf{docker@6bd3d752da84:/var/www/html} and run tests by typing \textbf{phpunit} to the command line. 
+Preview the results of test during local development by attaching VS Code to the running Container \footnote{Volume within \textbf{. : /var/www/html} is, in fact, our working folder.} and seeing results in PHP Tools by DEVSENSE \footnote{\url{https://www.devsense.com/en/features\#vscode}} on the left side. We can also open command line (within container environment already) \textbf{docker@6bd3d752da84:/var/www/html} and run tests simply by using \textbf{phpunit} command. 
 \begin{figure}[h]	
     \centering	
     \includegraphics[scale=0.207]{img/phpunit_locally.png}
@@ -121,13 +122,14 @@ See results of test during local development by following these steps: attach VS
 \subsection{GitHub Actions workflow}
 We then load our project repository with folder with tests and proceed to let automated testing be done upon code push into the repository. After testing is done, we can see results of all steps and if nothing failed green checkbox gets added to our repository header next to hash as a bonus.   
 \newline
-\textbf{Our testing pipeline works as follows:}
-\begin{itemize}
-    \item code gets pushed into master brach of repository,
-    \item GitHub Action workload gets triggered,
+\textbf{Steps that are crucial for our CI pipeline's QA\footnote{QA = quallity assurance} purpose:}
+\begin{enumerate}
+    \item code gets pushed into master brach of the repositor\footnote{\url{https://github.com/KlosStepan/SwimmPair-Www}},
+    \item GitHub Action workload\footnote{\url{https://github.com/KlosStepan/SwimmPair-Www/blob/master/.github/workflows/main.yml}} gets triggered,
     \item creates database, fill it with dummy data, app connects to it,
-    \item then \textbf{phpunit} command is run.
-\end{itemize} 
+    \item then \textbf{phpunit} command is run,
+    \item \textbf{results are reported} for preview for us (\autoref{fig4.4:phpunitghactionswf}).
+\end{enumerate} 
 Result of all these steps are visible on GitHub website. All steps are openable for more deliberate investigation.
 \begin{figure}[h]	
     \centering	
@@ -136,11 +138,11 @@ Result of all these steps are visible on GitHub website. All steps are openable 
     \label{fig4.4:phpunitghactionswf}
 \end{figure}
 \newline
-After all tests are run successfully and nothing fails along the way also, checkbox is placed next to commit hash.
+Once the pipeline runs successfully, a checkbox appears next to the commit hash, providing a quick overview.
 \begin{figure}[h]	
     \centering	
     \includegraphics[scale=0.435]{img/phpunit_actionscheck.png}
-    \caption{Green check next to commit hash after running test pipeline.}
+    \caption{Green checkbox next to the commit hash.}
     \label{fig4.5:phpunitghactionscheck}
 \end{figure}
 \iffalse
