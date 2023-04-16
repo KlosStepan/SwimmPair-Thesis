@@ -693,7 +693,9 @@ Refiltering of referees is triggered by one of these (\autoref{fig3.1:filtering}
 \caption{Filtering of referees for statistics (requirements R3/S4).}
 \label{fig3.1:filtering}
 \end{figure}
-\textbf{FilterQueriedReferees("kraje", "tridy", "inputTrida", "nopplfound")} is called every time one of 3 controls is changed. We then loop all users visible\&hidden and check if this one's \textbf{Region} IsOptionPermissible(raid, args[]) (region id), \textbf{Rank} IsOptionPermissible(rrid, args[]) (referee rank id) and then if one's \textbf{Name} IsNamePermissible(args[]) starts with searched piece of string. We then set one's element style to \textbf{style=""} and continue looping. If we fail one of these three conditions we know that referee does not fall under search conditions and set referee's element's style to \textbf{style="display:none"} - to make not visible in the listing.
+\textbf{FilterQueriedReferees("kraje", "tridy", "inputTrida", "nopplfound")} is called every time one of 3 controls is changed.
+\newline
+We then loop all users \textbf{visible}\&\textbf{hidden} and check if this one's \textbf{Region} - IsOptionPermissible(raid, args[]) (region id), \textbf{Rank} - IsOptionPermissible(rrid, args[]) (referee rank id) and then if one's \textbf{Name} - IsNamePermissible(args[]) starts with queried piece of string from the search bar. We then set one's element style to \textbf{style=""} and continue looping. If we fail one of these three conditions we know that referee does not satisfy search conditions and set referee's element's style to \textbf{style="display:none"} - to make referee not visible in the listing.
 \begin{lstlisting}
 ...  
   //Querying
