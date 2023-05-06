@@ -1,8 +1,8 @@
 \chapter{Status quo and solution}
-Section dedicated to description of problem and proposition of our application.
+In this section, we will describe the problem we aim to address and present our proposed solution in the form of an application design.
 \section{Problem description}
 \par
-A friend of mine reached out to me to ask me in order to ask if I could automate part of his agenda work agenda. Administration of swimming competitions and creating statistics is very repetitive and error-prone list of tasks. However, almost all the tasks are executed in same straightforward order.
+A friend of mine reached out to me to ask me in order to ask if I could automate part of his work agenda. Administration of swimming competitions and creating statistics is very repetitive and error-prone array of tasks. Almost all the tasks are executed in the same straightforward order.
 \par
 The Czech Swimming Federation \footnote{\url{https://www.czechswimming.cz}} structure has to be modeled as objects in the application and database records as a storage. Thus, logical structure should be decided and implemented. Swimming referees belong to clubs, clubs are located in geographical regions. Swimming cup is hosted by club. Each club contains dozen of swimming referees and one of them is a club manager. When a cup is online each referee can sign himself or herself up as available for the cup. Club manager can also sign up members of his club for to attend a cup. At the end of the day, organizer of the cup assigns available referees to positions (dedicated task-related roles during cup) that he finds them suitable for. My friend, the chairman of referee committee should be able to perform additional administration related to the database as whole - such as adding and removing users, creating new clubs and modifying whole structure. Administrator can also notify all visitors by posting news displayed on homepage.
 \begin{figure}[h]
