@@ -1,19 +1,19 @@
 \chapter{System design}
-This chapter will familiriaze reader with architecture of our application. There are two logical parts, \textbf{public web} and \textbf{private administration}. Private administration is hidden behing \textbf{login/password}. 
+This chapter aims to familiarize the reader with the architecture of our application. The system consists of two logical parts: the \textbf{public website} and the \textbf{private administration}. The private administration is secured with a login/password, allowing access only to authorized personnel.
 \par
-When designing such system, object oriented approach and grouping of similar functions together is a must. There are objects that have to be moved around the web application described in previous chapter. These objects are \textbf{Post}, \textbf{User}, \textbf{Club}, \textbf{Cup}, \textbf{Position} and \textbf{Region}. Thus we came up with a concept of managers. Each page of SwimmPair is composed of same/unified headerer, menu, footer. The content part is filled with page's specific results of manager call used to construct data UI page layout. These managers are included and used in all pages via \textbf{start file}.
+When designing such a system, an object-oriented approach and grouping of similar functions together is a must. There are \textbf{objects that have to be moved around the web application}, as described in the previous chapter. These objects will be: post, user, club, cup, position, and region. Thus, we came up with a \textbf{concept of managers}. Each page of SwimmPair is composed of the same/unified header, menu, and footer. The content part is filled with the page’s specific results of manager calls used to construct the data UI page layout. These managers are included and used in all pages via the start file.
 \section{Technologies}
 Following technologies and tools are used for SwimmPair application:
 \begin{itemize}
-    \item \textbf{HTML} is HyperText Markup Language \footnote{\citep{HTML5Standard}} - application pages are templated in HTML by PHP,
+    \item \textbf{HTML} is HyperText Markup Language \footnote{\citep{HTML5Standard}} - application pages are templated by PHP,
     \item \textbf{CSS} is Cascading Style Sheets \footnote{\citep{CSS3Standard}},
     \item \textbf{PHP} is a general-purpose scripting language geared toward web development \footnote{\citep{PHP74Standard}} - object model and backend services are provided by it,
     \item \textbf{JavaScript}  is a general-purpose scripting language that conforms to the ECMAScript specification \footnote{\citep{ECMADocu}},
     \item \textbf{MySQL} is an open-source relational database management system \footnote{\citep{MySQLDocu}},
-    \item \textbf{Git} is a distributed version control system: tracking changes in any set of files - this project is versioned and kept in public GitHub repository \footnote{\url{https://github.com/KlosStepan/SwimmPair-Www}},
-    \item \textbf{Docker} is a set of platform as a service products that use OS-level virtualization to deliver software in packages called containers \footnote{\citep{DockerDocu}} - used for deployment of out application,
-    \item \textbf{GitHub Actions} is a platform for automating workflows in GitHub repositories - our application uses GitHub Actions to automate testing. Specifically, we use the PHP Action to run our backend tests using PHPUnit, along with a Docker image of our database for integration testing. We then use GitHub's reporting features to view the results of our tests and ensure that our code is functioning as expected,
-    \item \textbf{Kubernetes} is an open-source container orchestration system for automating software deployment, scaling, and management \footnote{\citep{K8sDocu}} - used for production deployment of our application into cluster,
+    \item \textbf{Git} is a distributed version control system: tracking changes in any set of files - this project is versioned and kept in project GitHub repository \footnote{\url{https://github.com/KlosStepan/SwimmPair-Www}},
+    \item \textbf{Docker} is a set of platform as a service products that use OS-level virtualization to deliver software in packages called containers \footnote{\citep{DockerDocu}} - used for deployment of our application,
+    \item \textbf{GitHub Actions} is a platform for automating workflows in GitHub repositories - our application uses GitHub Actions to automate testing. Specifically, we use the \textbf{shivammathur/setup-php@v2} to run our backend tests on PHP backend using PHPUnit, along with a \textbf{docker container of our database filled with database schema} for integration testing. We then use GitHub's reporting features to view the results of our tests and ensure that our code is working as expected,
+    \item \textbf{Kubernetes} is an open-source container orchestration system for automating software deployment, scaling, and management \footnote{\citep{K8sDocu}} - used for production deployment of our application into our own Kubernetes cluster,
     \item \textbf{Redis} is an in-memory data store often used for caching, messaging, and session persistence. Our application uses Redis to store session data and share it between running container instances, allowing traffic to be efficiently redirected and load-balanced.
 \end{itemize} 
 \newpage
