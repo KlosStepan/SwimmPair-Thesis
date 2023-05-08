@@ -1,20 +1,20 @@
 \chapter{Implementation Documentation}
-Detailed description of \textbf{database} and \textbf{backend components} and \textbf{functions}.  
+Detailed description of \textbf{database}, \textbf{backend components} and \textbf{functions}.  
 
 \section{Database}
-Full database schema of the application was already shown in previous chapter (\autoref{fig2.8:dbschemafull}). This chapter will introduce reader to detailed description of tables and their relations.  
+Full database schema of the application was already presented to reader in previous chapter (\autoref{fig2.8:dbschemafull}). This chapter will introduce reader to detailed description of tables and their relations.  
 \newline
 Each database table is accompanied with example table preview, where: 
 \begin{itemize}
   \item abbreviated column name: \underline{(a)},
   \item contracted/ommited info: \underline{...},
 \end{itemize}
-followed by full listing of attributes - datatypes, keys, etc.
+followed by full listing of attributes - datatypes, keys etc.
 \subsection{Object tables}
-These are the tables in database modeling the object to satisfy the primary motivation defined as the (\autoref{fig1.2:uml}). These rows are then being converted to \textbf{Object} or \textbf{Array\textless Object\textgreater}  (Club, Cup, Page, PairPositionUser, Position, Post, RefereeRank, Region, StatPositionCnt, StatUserCnt, User) and returned to application page by appropriate Manager.
+These are the tables in database modeling the object to satisfy the primary motivation defined as the (\autoref{fig1.2:uml}). These rows are then being converted to \textbf{Object} or \textbf{Array\textless Object\textgreater}  (Club, Cup, Page, PairPositionUser, Position, Post, RefereeRank, Region, StatPositionCnt, StatUserCnt, User) and returned to application page by appropriate Manager (\autoref{fig2.1:appschema}).
 % \newline
 \subsubsection*{sp\_posts}
-\textbf{Post} is a static snippet of news for homepage of web application.
+\textbf{Post} is a static snippet of news for homepage of the web application.
 \newline
 \underline{Table preview}
 \begin{center}
@@ -43,7 +43,7 @@ These are the tables in database modeling the object to satisfy the primary moti
 \end{enumerate}
 
 \subsubsection*{sp\_users}
-User is referee in the system. User is affiliated to Club has one of UserRights and one of tier from RefereeRank. His statistics are presented via StatUserCnt in public sites via PositionsManager.
+In the system, a \textbf{User} can be a referee affiliated with a Club, with a user right and a tier from the Referee rank. The User's statistics are presented in public sites via the PositionsManager and the StatUserCnt.
 \newline
 \underline{Table preview}
 \begin{center}
@@ -76,7 +76,7 @@ User is referee in the system. User is affiliated to Club has one of UserRights 
 \end{enumerate}
 
 \subsubsection*{sp\_clubs}
-Club is an administrative unit of swimming club grouping bunch of users. One User is ClubManager/1 from UserRights, the rest is Referee/0. It can organize.
+A Club is an administrative unit that groups a bunch of users together in the swimming application. One User has the ClubManager/1 from UserRights, while the others have the Referee/0 from UserRights.
 \newline
 \underline{Table preview}
 \begin{center}
@@ -104,7 +104,7 @@ Club is an administrative unit of swimming club grouping bunch of users. One Use
 \end{enumerate}
 
 \subsubsection*{sp\_cups}
-Cups are stored in this table.
+This table stores information about \textbf{Cups}, including their name, start and end dates, location, and associated Club.
 \newline
 \underline{Table preview}
 \begin{center}
@@ -131,7 +131,7 @@ Cups are stored in this table.
 
 
 \subsubsection*{sp\_positions}
-Position is object representing task for Cup that has to be performed by User. It has internal id based on which it is wired through the system internally.
+A \textbf{Position} is an object within the system that represents a task to be performed by a User for a given Cup. Each Position is assigned a unique internal ID that is used to link it to other objects within the system.
 \newline
 \underline{Table preview}
 \begin{center}
@@ -219,6 +219,7 @@ This table stores pairing information about available referees/users on position
   \item \textbf{position\_id$|$FK}, int(11)
   \item \textbf{user\_id$|$FK}, int(11)
 \end{enumerate}
+\newpage
 \subsection{Content adjustment tables}
 \subsubsection*{sp\_public\_stats\_config}
 Configuration table of which positions in what order should be displayed in statistics on frontend. For frontend then LEFT-JOIN \textbf{position\_id} from table \textbf{sp\_positions} ON \textbf{id} and display \textbf{sp\_positions.name}.
@@ -249,7 +250,7 @@ Configuration table of which positions in what order should be displayed in stat
 \end{enumerate}
 
 \subsubsection*{sp\_pages}
-\textbf{Page} is static website page with information in web application. It has some title and content.
+\textbf{Page} is a static website page with information in our application. It has a title and content.
 \newline
 \underline{Table preview}
 \begin{center}
@@ -271,9 +272,9 @@ Configuration table of which positions in what order should be displayed in stat
 \end{enumerate}
 \newpage
 \section{Managers documentation}
-\par These five managers work with objects and provide views and functions (i.e. joining more tables in varios ways to achieve all functionality). We're providing an overview of which API functions are calling which internal functions (plain, in cycle) and what are desired return values.  
+\par These five managers work with objects and provide views and functions (i.e. joining more tables in various ways to achieve all functionality). We are providing an overview of which API functions are calling which internal functions (plain function call $\searrow$, repeated calls in cycle $\hookrightarrow$) and what are desired return values.  
 \newline
-\textbf{Documentation of model - classes and public functions is available \footnote{\url{http://docu.swimmpair.cz}}}.
+\textbf{Documentation of model - classes and public functions \footnote{\url{http://docu.swimmpair.cz}}}.
 
 \subsection{PostsManager.php}
 PostsManager has API functions to handle Post object/s and delivers it through web application.
@@ -386,7 +387,7 @@ PositionsManager has API functions to handle Position object/s and delivers it t
 \end{itemize}
 \newpage
 \section{Start file}
-Start file is included the in beginning of each page. It serves for \textbf{connection to database},  \textbf{sanitization of input}, \textbf{definition of error handling} and most importantly \textbf{includes objects and managers} and subsequently \textbf{instantiates all managers} by passing reference to live database connection \textbf{\$mysqli} - their only constructor argument.
+Start file is included in the beginning of each page. It serves for \textbf{connection to database},  \textbf{sanitization of input}, \textbf{definition of error handling} and most importantly \textbf{includes objects and managers} and subsequently \textbf{instantiates all managers} by passing reference to live database connection \textbf{\$mysqli} - their only constructor arguments.
 \begin{lstlisting}
 /*Database credentials from environment*/
 $host = getenv("DATABASE_HOST");
@@ -591,14 +592,14 @@ The administration has following structure. After going to /admin/index.php user
 \end{forest}
 
 \section{Templating of web and administration}
-Each page layout of public website has common characteristics such as header, menu and footer. These sections are unified and included everywhere, therfore they are included everywhere. They are:
+Each page on the public website has a common layout, consisting of a header, a menu, and a footer. These sections are unified and included on every page to maintain consistency throughout the website. Specifically, these sections include:
 \begin{itemize}
     \item \textbf{HEADER},
     \item \textbf{MENU},
     \item Generated from result obtained by one or more manager calls. this section might be further updated via \textbf{XMLHttpRequest calls \& DOM modifications} of newly delivered data,
     \item \textbf{FOOTER}.
 \end{itemize}
-Homepage of administration panel /admin/profile.php after login gets assembled with regards to the rights of logged user. Ordering is following: Admin (2) \textgreater \: Club manager (1) \textgreater \: Swimming referee (0) and each user gets snippet of his and lower role snippets:
+Homepage of administration panel /admin/profile.php after login gets assembled with regards to the rights of logged user. Ordering is following: Admin (2) \textgreater \: Club manager (1) \textgreater \: Swimming referee (0) and each user gets snippet of his as well as the sections of lower-ranked users:
 \begin{itemize}
     \item \textbf{SUPERUSER} menu snippet - \textbf{2},
     \item \textbf{CLUB MANAGER} menu snippet - \textbf{1},
@@ -638,9 +639,9 @@ class Auth
 }
 \end{lstlisting}
 \section{JavaScript functionality documentation}
-Frontend functionality is implemented via Vanilla JavaScript. Majority of interactive stuff takes place on \textbf{public part} of the application. This section will give reader a glimpse into how things fork on the frontend.
+Frontend functionality is implemented via Vanilla JavaScript. Majority of interactive stuff takes place on \textbf{public part} of the application. This section will give reader a glimpse into how things work on the frontend.
 \subsection*{Functions in js/SwimmPairFrontendJSLib.js}
-Functions in this library were created to support Ajax calls and DOM operations for \textbf{public part} of our application. Functions have self-descriptive names, function parameter \textbf{this} means reference to the caller DOM element.  
+Functions in this library were created to support Ajax calls and DOM operations for \textbf{public part} of our application. Functions have self-descriptive names, function parameter and \textbf{this} means reference to the caller DOM element.  
 \newline
 Functions are general \& contain \textbf{XMLHttpRequest} and \textbf{DOM modification}:
 \begin{itemize}
@@ -664,7 +665,7 @@ Functions are general \& contain \textbf{XMLHttpRequest} and \textbf{DOM modific
 
 \subsection{Previous post - retrieve older post}
 This button on the main page serves as a tool for loading next post. It has \textbf{onclick="GetPostAppendPost(PushLastId())"}. Both are JavaScript functions, \textbf{PushLastId()} detects id \textbf{\textless article class="post" id="X"... } of last article \textbf{class="post"} from DOM by querySelector and returns it. This value is then used as an argument of call \textbf{GetPostAppendPost(id)}. This function requests article by GET request \textbf{XMLHttpRequest/get\_following\_post.php?id=X}.  
-The result can me:
+The result can be:
 \begin{itemize}
 \item \textbf{null} - button is deleted since there are no other articles to pull from DB,
 \item \textbf{post} - next article is constructed and appended from response.
@@ -690,7 +691,7 @@ Refiltering of referees is triggered by one of these (\autoref{fig3.1:filtering}
 	\centering
 \includegraphics[scale=0.441]{img/filtering-preview.png}
 %\underline{xyz}
-\caption{Filtering of referees for statistics (requirements R3/S4).}
+\caption{Filtering of referees for statistical purposes (requirements R3/S4).}
 \label{fig3.1:filtering}
 \end{figure}
 \textbf{FilterQueriedReferees("kraje", "tridy", "inputTrida", "nopplfound")} is called every time one of 3 controls is changed.
