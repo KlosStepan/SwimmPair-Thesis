@@ -1,16 +1,16 @@
 \chapter{Testing}
-There are two main ways to make sure that a web application works properly and fulfills its role. On one hand there is a code performance testing, performing test on backend level with dummy data insertion and performance benchmarking. On the other hand there is testing to assure that users are able to use system and to get inspiration for future UX improvements via SUS.
+There are two main ways to make sure that a web application works properly and fulfills its role. On one hand, there is automated code testing, which involves testing the backend by dummy data insertion with performance benchmarking and unit testing. On the other hand, there is testing to ensure that users are able to use the system and to get inspiration for future UX improvements via SUS.
 \section{Performance evaluation}
-Performance script \textbf{dummy\_data\_benchmark.php} \footnote{In https://github.com/KlosStepan/SwimmPair-Www \textbf{dummy\_data\_benchmark.php}} is located in main swimmpair folder. It is performed on default database installation (with 2 admin users, with already existing clubs administered by application requesters, and with default referee positions).  
+Performance testing script \textbf{dummy\_data\_benchmark.php} \footnote{In \url{https://github.com/KlosStepan/SwimmPair-Www} file \textbf{dummy\_data\_benchmark.php}} is located in the main project folder. Benchmark is performed on default database installation (with 2 admin users, with already existing clubs administered by application requesters and with default referee positions)\footnote{Database schema for this script and unit testing CI pipeline \url{https://github.com/KlosStepan/SwimmPair-Www/blob/master/_db/1_create_proc_schema_init_data.sql}}.  
 \newline
-\textbf{The script has several tasks (tests) which are performed and benchmarked.}
+\textbf{The script has several tasks (tests) which are performed.}
 \begin{enumerate}
     \item \underline{Create 98 Users} (no. 3-100) - each random affiliation to existing Club (no. 1-15).
     \item \underline{Create 12 Cups} - each random affiliation to existing Club (no. 1-15).
     \item \underline{Fetch new Users}, \underline{fetch new Cups} (+ \underline{fetch static Positions}).
     \item \underline{Create Availabilities} (20 Users available per Cup).
     \item \underline{Create Pairings} (each Availability gets 1 random position).
-    \item \underline{Call stats queries} (20 - randomly either Clubs or Users stats w/ random club\_id or user\_id).
+    \item \underline{Call stats queries} (20 - randomly either Clubs or Users stats with random club\_id or user\_id).
 \end{enumerate}
 \textbf{Docker Compose} - 2.3 GHz Core i5 (I5-8259U) RAM 16GB Storage 512GB
 \newline
@@ -44,7 +44,7 @@ Performance script \textbf{dummy\_data\_benchmark.php} \footnote{In https://gith
     \hline
 \end{tabular}
 \section{System Usability Scale testing}
-We carried on testing of our application by handing SUS questionare to 20 respondents. We then evaluated the scores in order to find out how our application stands. These people are are either managers or common referees \footnote{\cite{SUSDesc}}. 
+We carried on testing of our application by handing SUS questionare to 20 respondents. We then evaluated the scores in order to find out how our application stands. These people are either coordinators, managers or referees \footnote{\cite{SUSDesc}}. 
 \newline
 \textbf{Questionare is made of 10 questions scored 1-5.}
 \begin{enumerate}
@@ -59,7 +59,7 @@ We carried on testing of our application by handing SUS questionare to 20 respon
     \item I felt very confident using the system.
     \item I needed to learn a lot of things before I could get going with this system.
 \end{enumerate}
-\textbf{We calculated\footnote{((A1-1)+(5-A2)+(A3-1)+(5-A4)+(A5-1)+(5-A6)+(A7-1)+(5-A8)+(A9-1)+(5-A10))*2,5} SUS feedbacks based on responses from 20 people.}
+\textbf{We calculated\footnote{Simple formula for calculating SUS results: ((A1-1)+(5-A2)+(A3-1)+(5-A4)+(A5-1)+(5-A6)+(A7-1)+(5-A8)+(A9-1)+(5-A10))*2,5} SUS feedbacks based on responses from 20 people.}
 \newline
 \begin{tabular}{ |c|c|c|c|c|c|c|c|c|c|c|c| } 
     \hline
@@ -88,11 +88,11 @@ We carried on testing of our application by handing SUS questionare to 20 respon
     \hline
 \end{tabular}
 \newpage
-So we plotted our tes results for further investivation. We can compare results and it's distribution in boxplot or look further into specific questions.
+We plotted test results so we can further scrutinize them. 
 \begin{figure}[h]	
     \centering	
     \includegraphics[scale=0.257]{img/sus_general.png}
-    \caption{Boxplot of 20 SUS score results.}
+    \caption{Boxplot of 20 System Usability Scale score results.}
     \label{fig4.1:susgeneral}
 \end{figure}
 
@@ -100,8 +100,8 @@ So we plotted our tes results for further investivation. We can compare results 
 \section{Unit testing}
 Testing serves two puposes:
 \begin{itemize}
-    \item \textbf{firstly} - to ensure that functionality works as intended,
-    \item \textbf{secondly} - not only that newly added functionaly works as intended but also that any previous functions and mechanisms were not broken either. 
+    \item \textbf{firstly} - to ensure that the implemented functionality works as intended,
+    \item \textbf{secondly} - not only that newly added functionality works as intended but also that any previous functions, mechanisms or database were not broken either. 
 \end{itemize}
 There is bunch of PHPUnit tests for each Manager called ManagerTest.php in folder \textbf{tests/Unit} in our project. Tests check ordinary CRUD \footnote{CRUD = Create, Read, Update, Delete} functionalities.
 \subsection{Local execution of tests}
@@ -114,13 +114,13 @@ Preview the results of test during local development by attaching VS Code to the
 \end{figure}
 \newpage
 \subsection{GitHub Actions workflow}
-We then load our project repository with folder with tests and proceed to let automated testing be done upon code push into the repository. After testing is done, we can see results of all steps and if nothing failed green checkbox gets added to our repository header next to hash as a bonus.   
+We load our project repository with a folder containing tests and then run automated testing each time we push new code to the repository. Once the testing is complete, we can review the results of all the steps taken. If everything passes, a green checkbox is added to our repository header next to the hash as confirmation. 
 \newline
 \textbf{Steps that are crucial for our CI pipeline's QA\footnote{QA = quallity assurance} purpose:}
 \begin{enumerate}
     \item code gets pushed into master brach of the repositor\footnote{\url{https://github.com/KlosStepan/SwimmPair-Www}},
     \item GitHub Action workload\footnote{\url{https://github.com/KlosStepan/SwimmPair-Www/blob/master/.github/workflows/main.yml}} gets triggered,
-    \item creates database, fill it with dummy data, app connects to it,
+    \item database created, filled with dummy data, app connects to it,
     \item then \textbf{phpunit} command is run,
     \item \textbf{results are reported} for preview for us (\autoref{fig4.4:phpunitghactionswf}).
 \end{enumerate} 
@@ -128,7 +128,7 @@ Result of all these steps are visible on GitHub website. All steps are openable 
 \begin{figure}[h]	
     \centering	
     \includegraphics[scale=0.205]{img/phpunit_actionswf.png}
-    \caption{GitHub Actions workflows - steps of execution, phpunit step.}
+    \caption{GitHub Actions workflows - steps of execution, phpunit step opened.}
     \label{fig4.4:phpunitghactionswf}
 \end{figure}
 \newline
@@ -136,7 +136,7 @@ Once the pipeline runs successfully, a checkbox appears next to the commit hash,
 \begin{figure}[h]	
     \centering	
     \includegraphics[scale=0.435]{img/phpunit_actionscheck.png}
-    \caption{Green checkbox next to the commit hash.}
+    \caption{Green checkbox next to the commit hash as confirmation.}
     \label{fig4.5:phpunitghactionscheck}
 \end{figure}
 \iffalse
