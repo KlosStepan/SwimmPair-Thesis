@@ -3,41 +3,43 @@ This chapter aims to familiarize the reader with the architecture of our applica
 \par
 When designing such a system, an object-oriented approach and grouping of similar functions together is a must. There are \textbf{objects that have to be moved around the web application}, as described in the previous chapter. These objects will be: post, user, club, cup, position, and region. Thus, we came up with a \textbf{concept of managers}. Each page of SwimmPair is composed of the same/unified header, menu, and footer. The content part is filled with the page’s specific results of manager calls used to construct the data UI page layout. These managers are included and used in all pages via the start file.
 \section{Technologies}
-Following technologies and tools are used for SwimmPair application:
+There are several technologies and tools used for application.
 \begin{itemize}
-    \item \textbf{HTML} is HyperText Markup Language \footnote{\citep{HTML5Standard}} - application pages are templated by PHP,
-    \item \textbf{CSS} is Cascading Style Sheets \footnote{\citep{CSS3Standard}},
-    \item \textbf{PHP} is a general-purpose scripting language geared toward web development \footnote{\citep{PHP74Standard}} - object model and backend services are provided by it,
-    \item \textbf{JavaScript}  is a general-purpose scripting language that conforms to the ECMAScript specification \footnote{\citep{ECMADocu}},
-    \item \textbf{MySQL} is an open-source relational database management system \footnote{\citep{MySQLDocu}},
-    \item \textbf{Git} is a distributed version control system: tracking changes in any set of files - this project is versioned and kept in project GitHub repository \footnote{\url{https://github.com/KlosStepan/SwimmPair-Www}},
-    \item \textbf{Docker} is a set of platform as a service products that use OS-level virtualization to deliver software in packages called containers \footnote{\citep{DockerDocu}} - used for deployment of our application,
-    \item \textbf{GitHub Actions} is a platform for automating workflows in GitHub repositories - our application uses GitHub Actions to automate testing. Specifically, we use the \textbf{shivammathur/setup-php@v2} to run our backend tests on PHP backend using PHPUnit, along with a \textbf{docker container of our database filled with database schema} for integration testing. We then use GitHub's reporting features to view the results of our tests and ensure that our code is working as expected,
-    \item \textbf{Kubernetes} is an open-source container orchestration system for automating software deployment, scaling, and management \footnote{\citep{K8sDocu}} - used for production deployment of our application into our own Kubernetes cluster,
+    \item \textbf{HTML} is HyperText Markup Language \footnote{\citep{HTML5Standard}} - application pages are templated by PHP.
+    \item \textbf{CSS} is Cascading Style Sheets \footnote{\citep{CSS3Standard}}.
+    \item \textbf{PHP} is a general-purpose scripting language geared toward web development \footnote{\citep{PHP74Standard}} - object model and backend services are provided by it.
+    \item \textbf{JavaScript}  is a general-purpose scripting language that conforms to the ECMAScript specification \footnote{\citep{ECMADocu}}.
+    \item \textbf{MySQL} is an open-source relational database management system \footnote{\citep{MySQLDocu}}.
+    \item \textbf{Git} is a distributed version control system: tracking changes in any set of files - this project is versioned and kept in project GitHub repository \footnote{\url{https://github.com/KlosStepan/SwimmPair-Www}}.
+    \item \textbf{Docker} is a set of platform as a service products that use OS-level virtualization to deliver software in packages called containers \footnote{\citep{DockerDocu}} - used for deployment of our application.
+    \item \textbf{GitHub Actions} is a platform for automating workflows in GitHub repositories - our application uses GitHub Actions to automate testing. Specifically, we checkout with \textbf{actions/checkout@v3} and then run PHP using \textbf{shivammathur/setup-php@v2} for our backend tests of PHP backend using PHPUnit, along with a \textbf{docker container of our database filled with database schema} for integration testing. After each push we can see success of CI wokload run.
+    \item \textbf{Kubernetes} is an open-source container orchestration system for automating software deployment, scaling, and management \footnote{\citep{K8sDocu}} - used for production deployment of our application into our own Kubernetes cluster.
     \item \textbf{Redis} is an in-memory data store often used for caching, messaging, and session persistence. Our application uses Redis to store session data and share it between running container instances, allowing traffic to be efficiently redirected and load-balanced.
 \end{itemize} 
 \newpage
 \section{Architecture overview}
-Visitor comes to \textbf{app page}, where \textbf{managers} are included. From page there are API calls on Managers that retrieve and store data data as follows.
+A visitor comes to the \textbf{app page} where \textbf{managers} are included. From the page, there are API calls on managers that retrieve and store data as follows.
 \newline
 \begin{figure}[h]	
 	\centering	
     \includegraphics[scale=0.707]{img/app-schema.jpg}
-	\caption{From page to manager, database, function, database and back.}
+	\caption{From page to manager-database function-database and back.}
 	\label{fig2.1:appschema}
 \end{figure}
 \section{Model Managers}
-Managers are written to provide API functionality for system administration. These managers are populating pages or taking new input from them and administer process of storing them. Each object has a manager handling it and accomodates database loads and stores controlled by transactions.
+Managers are designed to provide API functionality for system administration. They populate pages with data and process new input from users, administering the storage of this data. Each object has a corresponding manager responsible for handling it, which helps to accommodate database loads and stores. These operations are controlled by transactions to ensure data consistency.
+\newline
+\textbf{Classes and their corresponding managers:}
 \begin{itemize}
-    \item Cup / CupsManager
-    \item User / UsersManager
-    \item Club / ClubsManager
-    \item Page / PagesManager
-    \item Post / PostsManager
-    \item Position / PositionsManager
-    \item Region / RegionsManager
+    \item Cup / CupsManager,
+    \item User / UsersManager,
+    \item Club / ClubsManager,
+    \item Page / PagesManager,
+    \item Post / PostsManager,
+    \item Position / PositionsManager,
+    \item Region / RegionsManager.
 \end{itemize}
-Managers are implemented to extract and store data of class by which they are named after.
+Managers are designed to retrieve and store data related to the class they are named after.
 \newpage
 \section{User Interface mockups}
 In this chapter, we present UI mockups for both public and private areas of our application. These mockups serve as initial visualizations for the real UI, but should not be considered exact guidelines. Instead, they provide a starting point for readers and stakeholders to understand the overall direction of the UI design.
@@ -69,12 +71,12 @@ This part is concerned about displaying view-only data for public access.
 %\includegraphics[scale=0.507]{img/def-U-ListingUsers.png}
 \newpage
 \subsection*{Administration mockups}
-After logging in, user can see administrative menu. Based on rights (2/1/0) one gets layout of  appropriate sections. There is list things related to everything from administrative perspective. We will show several mockups of how functional requirements for administration can look like once programmed and designed. 
+After logging in, the user can access the administrative menu, which is tailored to their level of access (2/1/0). This menu provides a list of administrative functions related to various aspects of the application. In the following sections, we will present mockups that demonstrate how these functional requirements may be programmed and designed.
 \begin{figure}[h]	
 	\centering	
 \includegraphics[scale=0.457]{img/A-administrace.png}
 \includegraphics[scale=0.457]{img/A-edit-page.png}
-\caption{Administration menu gets assembled on rights, \underline{page edit (S6)}.}
+\caption{Administration menu gets assembled for rights, \underline{page edit (S6)}.}
 \label{fig2.4:feprivatepages1}
 \end{figure}
 \begin{figure}[h]	
@@ -86,31 +88,31 @@ After logging in, user can see administrative menu. Based on rights (2/1/0) one 
 \end{figure}
 \newpage
 \section{Database design}
-While designing such system, well defined database schema modelled from functional requirements and entities is a necessity. Previously outlied real world (\autoref{fig1.2:uml}) has to be rigorously converted to database schema. We will show mappings and merges that had to be made in order to achieve that.
+In this chapter, we will discuss the importance of a well-defined database schema that accurately models the functional requirements and entities (\autoref{fig1.2:uml}) of the system. To achieve this, we will illustrate the process of converting real-world requirements into a rigorous database schema, highlighting the necessary mappings and merges. By doing so, we aim to design a robust system that accurately represents the needs of the stakeholders.
 \subsection*{People entities merge}
-We've merged three entities (Coordinator, Club Manager, and Referee) that model people into a single entity called User, which includes additional parameters such as access rights and club affiliation.
+We've merged three entities (\textbf{coordinator}, \textbf{club manager}, and \textbf{referee}) that model people into a single entity called user, which includes additional parameters such as access rights and club affiliation.
 \begin{figure}[h]	
 	\centering	
     \includegraphics[scale=0.5]{img/entities_to_user.png}
-	\caption{These 3 people entities got merged into the single object.}
+	\caption{These 3 people entities got merged into one single class.}
 	\label{fig2.6:enttousr}
 \end{figure}
-\subsection*{Pairing entities to objects}
-Majority of logic is modelled as entities. Availability must preceed Pairing.
+\subsection*{Pairing of entities as 3-tuple class}
+Majority of logic here is modelled as entities converted to classes. Furthemore, the \textbf{availability} must preceed \textbf{pairing} in the process.
 \begin{figure}[h]	
 	\centering	
     \includegraphics[scale=0.5]{img/entities_pairing_to_obj_rels.png}
-	\caption{Entities modeled as 3 objects and 2 relational tables.}
+	\caption{Entities modeled as 3 classes and 2 relational tables.}
 	\label{fig2.7:entrels}
 \end{figure}
 \subsection*{Remaining entities}
-Mapping of remaining entities is self-evident. 
+The process of modeling the remaining entities as classes is relatively straightforward.
 \newpage
-\subsection*{Full database schema used for out application}
+\subsection*{Full database schema used for our application}
 \begin{figure}[h]	
 	\centering	
     \includegraphics[scale=0.2175]{img/swimmpair_db_schema.png}
-	\caption{Full database schema for the SwimmPair application.}
+	\caption{Full database schema of our application.}
 	\label{fig2.8:dbschemafull}
 \end{figure}
 
@@ -202,9 +204,9 @@ Listed media queries are used to provide design of the web by manually overridin
 \fi
 \newpage
 \section {Functional requirements mapping to API}
-We will show how specific \textbf{functional requirements} administrative tasks are realized via \textbf{model api functions}\footnote{\url{http://docu.swimmpair.cz/functions_func.html}}.
+We will demonstrate how specific administrative tasks, as outlined in the functional requirements, are achieved through the use of model API functions \footnote{\url{http://docu.swimmpair.cz/functions_func.html}}.
 \newline
-Table has following structure: \textbf{Task} / \textbf{Role} / \textbf{Function(s)}.
+Table has following structure: \textbf{Task} - \textbf{Role} - \textbf{Function(s)}.
 \newline
 \begin{tabularx}{1.0\textwidth} { 
   | >{\raggedright\arraybackslash}X 
