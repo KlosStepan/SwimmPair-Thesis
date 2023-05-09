@@ -105,13 +105,15 @@ Testing serves two puposes:
 \end{itemize}
 There is bunch of PHPUnit tests for each Manager called ManagerTest.php in folder \textbf{tests/Unit} in our project. Tests check ordinary CRUD \footnote{CRUD = Create, Read, Update, Delete} functionalities.
 \subsection{Local execution of tests}
-Preview the results of test during local development by attaching VS Code to the running Container \footnote{Volume within \textbf{. : /var/www/html} is, in fact, our working folder.} and seeing results in PHP Tools by DEVSENSE \footnote{\url{https://www.devsense.com/en/features\#vscode}} on the left side. We can also open command line (within container environment already) \textbf{docker@6bd3d752da84:/var/www/html} and run tests simply by using \textbf{phpunit} command. 
+Preview the results of test during local development by attaching VS Code to the running Container \footnote{Volume within \textbf{. : /var/www/html} is, in fact, our working folder.} and seeing results in PHP Tools by DEVSENSE \footnote{\url{https://www.devsense.com/en/features\#vscode}} on the left side(\autoref{fig4.3:phpunitlocally}). Alternatively, we can also open command line (within the container environment already) \textbf{docker@6bd3d752da84:/var/www/html} and run tests simply by using \textbf{phpunit} command. 
 \begin{figure}[h]	
     \centering	
-    \includegraphics[scale=0.207]{img/phpunit_locally.png}
-    \caption{Attached VS Code to container and running PHPUnit tests.}
+    \includegraphics[scale=0.242]{img/phpunit_locally.png}
+    \caption{Attached VS Code to container running PHPUnit tests.}
     \label{fig4.3:phpunitlocally}
 \end{figure}
+\newline
+As we can see there was problem with execution on one of the tests. After brief investigation, we can conclude that the reason why our \textbf{testInsertCupAndCheckIfUserIsAvailable()} failed was because we did run the tests on already populated database. Thus, we added more than one availability of user for cup. This error wouldn't have occurred if we had run the tests on a fresh database schema or used drag'n'drop in our application to perform desired operation (\autoref{fig2.5:feprivatepages2}).  
 \newpage
 \subsection{GitHub Actions workflow}
 We load our project repository with a folder containing tests and then run automated testing each time we push new code to the repository. Once the testing is complete, we can review the results of all the steps taken. If everything passes, a green checkbox is added to our repository header next to the hash as confirmation. 
@@ -128,14 +130,14 @@ Result of all these steps are visible on GitHub website. All steps are openable 
 \begin{figure}[h]	
     \centering	
     \includegraphics[scale=0.205]{img/phpunit_actionswf.png}
-    \caption{GitHub Actions workflows - steps of execution, phpunit step opened.}
+    \caption{GitHub Actions workflows - steps of execution, PHPUnit step opened.}
     \label{fig4.4:phpunitghactionswf}
 \end{figure}
 \newline
 Once the pipeline runs successfully, a checkbox appears next to the commit hash, providing a quick overview.
 \begin{figure}[h]	
     \centering	
-    \includegraphics[scale=0.435]{img/phpunit_actionscheck.png}
+    \includegraphics[scale=0.460]{img/phpunit_actionscheck.png}
     \caption{Green checkbox next to the commit hash as confirmation.}
     \label{fig4.5:phpunitghactionscheck}
 \end{figure}
