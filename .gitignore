@@ -1,3 +1,9 @@
+abstract.aux
+abstract.fdb_latexmk
+abstract.fls
+abstract.log
+abstract.out
+abstract.synctex.gz
 bibliography.aux
 epilog.aux
 chap01.aux
