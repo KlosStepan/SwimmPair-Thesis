@@ -70,7 +70,7 @@ ___
     - [x] ch. 2.1 OK [x], 2.2 OK [x], 2.3 UI MOCKUPS [x], 2.4 DB DESIGN [x], ...
     - [x] chs. 2.7 2.8 2.9 - instead table STORY->API F 
 - [ ] **SECTION 3**     
-    - [ ] <ins>Add !TODO Doxygen - PDF option: attachment (now just [docu.swimmpair.cz](http://docu.swimmpair.cz))</ins>
+    - [ ] <ins>Add !TODO Doxygen - PDF option: attachment (now just [docu.swimmpair.cz](http://docu.swimmpair.cz))</ins> || added [docu-swimmpair.stkl.cz](http://docu-swimmpair.stkl.cz)
 - [x] **SECTION 4**
     - [x] ch. 4.1 PERFORMANCE EVALUATION
     - [x] <ins>Add !TODO ch 4.sth - PHPUnit testing, cases prepared</ins>
