@@ -2,16 +2,16 @@
 Detailed description of \textbf{database}, \textbf{backend components} and \textbf{functions}.  
 
 \section{Database}
-Full database schema of the application was already presented to reader in previous chapter (\autoref{fig2.8:dbschemafull}). This chapter will introduce reader to detailed description of tables and their relations.  
+Full database schema of the application was already presented to the reader in previous chapter (\autoref{fig2.8:dbschemafull}). This chapter will introduce the reader to detailed description of tables and their relations.  
 \newline
-Each database table is accompanied with example table preview, where: 
+Each database table is accompanied with an example table preview, where: 
 \begin{itemize}
   \item abbreviated column name: \underline{(a)},
   \item contracted/ommited info: \underline{...},
 \end{itemize}
-followed by full listing of attributes - datatypes, keys etc.
+followed by full listing of attributes - datatypes, keys, etc.
 \subsection{Object tables}
-These are the tables in database modeling the object to satisfy the primary motivation defined as the (\autoref{fig1.2:uml}). These rows are then being converted to \textbf{Object} or \textbf{Array\textless Object\textgreater}  (Club, Cup, Page, PairPositionUser, Position, Post, RefereeRank, Region, StatPositionCnt, StatUserCnt, User) and returned to application page by appropriate Manager (\autoref{fig2.1:appschema}).
+These are the tables in database modeling of objects to satisfy the primary motivation defined as the (\autoref{fig1.2:uml}). These row/s are then being converted to \textbf{Object} or \textbf{Array\textless Object\textgreater}  (Club, Cup, Page, PairPositionUser, Position, Post, RefereeRank, Region, StatPositionCnt, StatUserCnt, User) and returned to the application page by appropriate Manager (\autoref{fig2.1:appschema}).
 % \newline
 \subsubsection*{sp\_posts}
 \textbf{Post} is a static snippet of news for homepage of the web application.
@@ -43,7 +43,7 @@ These are the tables in database modeling the object to satisfy the primary moti
 \end{enumerate}
 
 \subsubsection*{sp\_users}
-In the system, a \textbf{User} can be a referee affiliated with a Club, with a user right and a tier from the Referee rank. The User's statistics are presented in public sites via the PositionsManager and the StatUserCnt.
+In the system, a \textbf{User} is usually a referee affiliated to the \textbf{Club}, with a \textbf{user right} and a \textbf{tier} from the \textbf{Referee rank} list (\autoref{fig2.6:enttousr}). The User's statistics are presented in public sites via the PositionsManager and the StatUserCnt.
 \newline
 \underline{Table preview}
 \begin{center}
@@ -76,7 +76,7 @@ In the system, a \textbf{User} can be a referee affiliated with a Club, with a u
 \end{enumerate}
 
 \subsubsection*{sp\_clubs}
-A Club is an administrative unit that groups a bunch of users together in the swimming application. One User has the ClubManager/1 from UserRights, while the others have the Referee/0 from UserRights.
+A Club is an administrative unit that groups bunch of users together within the swimming application (and the real world). One User has the ClubManager/1 from UserRights, while the others have the Referee/0 from UserRights.
 \newline
 \underline{Table preview}
 \begin{center}
