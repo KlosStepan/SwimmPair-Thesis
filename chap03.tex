@@ -76,7 +76,7 @@ In the system, a \textbf{User} is usually a referee affiliated to the \textbf{Cl
 \end{enumerate}
 
 \subsubsection*{sp\_clubs}
-A Club is an administrative unit that groups bunch of users together within the swimming application (and the real world). One User has the ClubManager/1 from UserRights, while the others have the Referee/0 from UserRights.
+A \textbf{Club} is an administrative unit that groups bunch of users together within the application (and the real world). One \textbf{User} has rank ClubManager (1) from UserRights, while the others have rank Referee (0) from UserRights.
 \newline
 \underline{Table preview}
 \begin{center}
@@ -104,7 +104,7 @@ A Club is an administrative unit that groups bunch of users together within the 
 \end{enumerate}
 
 \subsubsection*{sp\_cups}
-This table stores information about \textbf{Cups}, including their name, start and end dates, location, and associated Club.
+This table stores information about each \textbf{Cup}, including their name, start and end date, location, and the Club that it's associated with.
 \newline
 \underline{Table preview}
 \begin{center}
@@ -131,7 +131,7 @@ This table stores information about \textbf{Cups}, including their name, start a
 
 
 \subsubsection*{sp\_positions}
-A \textbf{Position} is an object within the system that represents a task to be performed by a User for a given Cup. Each Position is assigned a unique internal ID that is used to link it to other objects within the system.
+A \textbf{Position} is an object within the system that represents a task that has to be performed by a \textbf{User} on a given \textbf{Cup}. Each position has a unique internal \textbf{id} that is used to link it to other objects within the aplication.
 \newline
 \underline{Table preview}
 \begin{center}
@@ -155,9 +155,9 @@ A \textbf{Position} is an object within the system that represents a task to be 
 \end{enumerate}
 
 \subsection{Relation tables}
-Relation tables hold the most important information stored in the SwimmPair system - the \textbf{pairings} and \textbf{data for underlying statistics}. Both availability for cups and pairings to positions are represented here.
+Relation tables hold the most important information stored in the SwimmPair application - the \textbf{pairings} and \textbf{data for underlying statistics}. Both availability for cups and pairings are represented here.
 \subsubsection*{sp\_user\_cup\_availability}
-This table stores relationships between referees/\underline{users} and \underline{cups} called availability. Referees are signed up by their team manager or themselves as available for the cup. In case of sudden inability to participate, the attendance\_flag is switched to 0 in case the user is already assigned to some position. In that case the administrator is going to see the user in red box.
+This table stores relationships between referees/\underline{users} and \underline{cups} called availability. Referees are signed up by their team manager or themselves as available for the cup. In case of sudden inability to participate, the \textbf{attendance\_flag} is switched to 0 in case the user is already assigned to some position. In that case system administrator is going to see the user non-attending in a red box.
 \newline
 \underline{Table preview}
 \begin{center}
@@ -185,7 +185,7 @@ This table stores relationships between referees/\underline{users} and \underlin
 \end{enumerate}
 
 \subsubsection*{sp\_user\_position\_pairing}
-This table stores pairing information about available referees/users on positions for each cup. This is the most time saving utility of the SwimmPair.
+This table stores pairing information about available referees/\underline{users} on positions for each cup. This is the most time saving utility of the SwimmPair application.
 \newline
 \underline{Table preview}
 \begin{center}
@@ -222,7 +222,7 @@ This table stores pairing information about available referees/users on position
 \newpage
 \subsection{Content adjustment tables}
 \subsubsection*{sp\_public\_stats\_config}
-Configuration table of which positions in what order should be displayed in statistics on frontend. For frontend then LEFT-JOIN \textbf{position\_id} from table \textbf{sp\_positions} ON \textbf{id} and display \textbf{sp\_positions.name}.
+Configuration of which positions in what order should be displayed in statistics on frontend. For frontend then LEFT-JOIN \textbf{position\_id} from table \textbf{sp\_positions} ON \textbf{id} and display \textbf{sp\_positions.name} is performed in order to display each \textbf{Position}'s name.
 \newline
 \underline{Table preview}
 \begin{center}
@@ -250,7 +250,7 @@ Configuration table of which positions in what order should be displayed in stat
 \end{enumerate}
 
 \subsubsection*{sp\_pages}
-\textbf{Page} is a static website page with information in our application. It has a title and content.
+\textbf{Page} is a static website page with information. It has a title and content.
 \newline
 \underline{Table preview}
 \begin{center}
@@ -272,12 +272,12 @@ Configuration table of which positions in what order should be displayed in stat
 \end{enumerate}
 \newpage
 \section{Managers documentation}
-\par These five managers work with objects and provide views and functions (i.e. joining more tables in various ways to achieve all functionality). We are providing an overview of which API functions are calling which internal functions (plain function call $\searrow$, repeated calls in cycle $\hookrightarrow$) and what are desired return values.  
+\par These five managers work with objects and provide views and functions (i.e. joining more tables in various ways to achieve desired functionality). We are providing an overview of which API functions are calling which internal functions (plain function call $\searrow$, repeated calls in cycle $\hookrightarrow$) and what are the return values.  
 \newline
-\textbf{Documentation of model - classes and public functions \footnote{Additional documentation for this work can be found at \url{http://docu-swimmpair.stkl.cz}, or as a PDF attachment (also accessible here \url{https://github.com/KlosStepan/SwimmPair-Www/blob/master/_doc/pdf/refman.pdf}), providing further details.}}.
+\textbf{Documentation of model - classes and public functions \footnote{Additional documentation for this work can be found at \url{http://docu-swimmpair.stkl.cz}, or as a PDF attachment (also accessible here \url{https://github.com/KlosStepan/SwimmPair-Www/blob/master/_doc/pdf/refman.pdf}) providing further details.}}.
 
 \subsection{PostsManager.php}
-PostsManager has API functions to handle Post object/s and delivers it through web application.
+PostsManager has API functions to handle the Post object(s) and delivers them through the web application.
 \begin{itemize}
   \setlength\itemsep{0em}
   \item \underline{Post} $\vert$ null $\leftarrow$ \textbf{GetPostById}(\$id)
@@ -294,7 +294,7 @@ PostsManager has API functions to handle Post object/s and delivers it through w
 \end{itemize}
 
 \subsection{UsersManager.php}
-UsersManager has API functions to handle User object/s and delivers is through web application.
+UsersManager has API functions to handle the User object(s) and delivers them through the web application.
 \begin{itemize}
   \setlength\itemsep{0em}
   \item \underline{User} $\vert$ null $\leftarrow$ \textbf{GetUserById}(\$id)
@@ -332,7 +332,7 @@ UsersManager has API functions to handle User object/s and delivers is through w
 \end{itemize}
 
 \subsection{ClubsManager.php}
-ClubsManager has API functions to handle Club object/s and delivers it through web application.
+ClubsManager has API functions to handle the Club object(s) and delivers them through the web application.
 \begin{itemize}
   \setlength\itemsep{0em}
   \item \underline{Club} $\vert$ null $\leftarrow$ \textbf{GetClubById}(\$id)
@@ -344,7 +344,7 @@ ClubsManager has API functions to handle Club object/s and delivers it through w
 \end{itemize}
 
 \subsection{CupsManager.php}
-CupsManager has API functions to handle Cup object/s and delivers it through web application.
+CupsManager has API functions to handle the Cup object(s) and delivers them through the web application.
 \begin{itemize}
   \setlength\itemsep{0em}
   \item \underline{Cup[]} $\vert$ null $\leftarrow$ \textbf{FindAllUpcomingCupsEarliestFirst}()
@@ -376,7 +376,7 @@ Called together in XMLHttpRequest/\textbf{update\_pairing.php} in transaction.
 \end{itemize}
 
 \subsection{PositionsManager.php}
-PositionsManager has API functions to handle Position object/s and delivers it through web application.
+PositionsManager has API functions to handle the Position object(s) and delivers them through the web application.
 \begin{itemize}
   \setlength\itemsep{0em}
   \item \underline{Position[]} $\vert$ null $\leftarrow$  \textbf{FindAllPositions}()
@@ -387,7 +387,7 @@ PositionsManager has API functions to handle Position object/s and delivers it t
 \end{itemize}
 \newpage
 \section{Start file}
-Start file is included in the beginning of each page. It serves for \textbf{connection to database},  \textbf{sanitization of input}, \textbf{definition of error handling} and most importantly \textbf{includes objects and managers} and subsequently \textbf{instantiates all managers} by passing reference to live database connection \textbf{\$mysqli} - their only constructor arguments.
+The \textbf{start file} is included in the beginning of each page. It agregates \textbf{connection to database}, \textbf{sanitization of input}, \textbf{definition of error handling} and most importantly \textbf{includes object classes and managers} and subsequently \textbf{instantiates all managers} by passing a reference of live database connection \textbf{\$mysqli} - their only constructor argument.
 \begin{lstlisting}
 /*Database credentials from environment*/
 $host = getenv("DATABASE_HOST");
@@ -441,8 +441,8 @@ $regionsManager = new RegionsManager($mysqli);
 \end{lstlisting}
 \newpage
 \section{Application structure - files defined}
-\subsection*{User part of the system}
-The system is running on Czech URLs for convinience reasons of browsing. English equivalents of route pages are attached in brackets to demonstrate what the pages do for non-czech speaker. There is no client side routing with traditional LAMP stack.  
+\subsection*{User part of the application}
+For convenience of browsing, the system uses Czech URLs. English equivalents of the route pages are provided in brackets to help non-Czech speakers understand what the pages do. It's worth noting that the traditional LAMP stack used by the system doesn't include client-side routing. 
 \newline
 \begin{forest}
   for tree={
@@ -487,8 +487,8 @@ The system is running on Czech URLs for convinience reasons of browsing. English
 ]
 \end{forest}
 \newpage
-\subsection*{Admin part of the system} 
-The administration has following structure. After going to /admin/index.php user gets logs in and goes to /administration/profile.php. Regarding user's rights (that are passed around along with other information in \textbf{SESSION}, retrievable like \textbf{\$SESSION\_['rights']}) one has following structure (\textbf{Administration}, \textbf{My Club}, \textbf{Me}). Each user has profile settings for reseting password and other stuff.  
+\subsection*{Admin part of the application} 
+The administration has following structure and flow preceeding the admin dashboard. After going to /admin/index.php user gets logged in and goes to /administration/profile.php. Regarding the user's rights (which are passed around along with other information in \textbf{SESSION}, retrievable like \textbf{\$SESSION\_['rights']}) one gets following structure (\textbf{Administration}, \textbf{My Club}, \textbf{Me}). Each user has profile settings - page for reseting password and other stuff.  
 \newline
 \begin{forest}
   for tree={
@@ -592,16 +592,16 @@ The administration has following structure. After going to /admin/index.php user
 \end{forest}
 
 \section{Templating of web and administration}
-Each page on the public website has a common layout, consisting of a header, a menu, and a footer. These sections are unified and included on every page to maintain consistency throughout the website. Specifically, these sections include:
+Each page of the public part has a common layout which consists of a header, menu and footer. These sections are unified and included on every page to maintain consistency throughout the website. Specifically, these sections are as follows:
 \begin{itemize}
     \item \textbf{HEADER},
     \item \textbf{MENU},
-    \item Generated from result obtained by one or more manager calls. this section might be further updated via \textbf{XMLHttpRequest calls \& DOM modifications} of newly delivered data,
+    \item specific page logic - generated from result the obtained by one or more manager calls. This section might be further updated via \textbf{XMLHttpRequest calls \& DOM modifications} of newly delivered data,
     \item \textbf{FOOTER}.
 \end{itemize}
 Homepage of administration panel /admin/profile.php after login gets assembled with regards to the rights of logged user. Ordering is following: Admin (2) \textgreater \: Club manager (1) \textgreater \: Swimming referee (0) and each user gets snippet of his as well as the sections of lower-ranked users:
 \begin{itemize}
-    \item \textbf{SUPERUSER} menu snippet - \textbf{2},
+    \item \textbf{SYSTEM ADMINISTRATOR} menu snippet - \textbf{2},
     \item \textbf{CLUB MANAGER} menu snippet - \textbf{1},
     \item \textbf{SWIMMING REFEREE} menu snippet - \textbf{0}.
 \end{itemize}
@@ -639,9 +639,9 @@ class Auth
 }
 \end{lstlisting}
 \section{JavaScript functionality documentation}
-Frontend functionality is implemented via Vanilla JavaScript. Majority of interactive stuff takes place on \textbf{public part} of the application. This section will give reader a glimpse into how things work on the frontend.
+Frontend functionality is implemented via Vanilla JavaScript. Majority of interactive stuff takes place on \textbf{public part} of the application. In this section, we will provide reader with a glimpse into how things work on the frontend.
 \subsection*{Functions in js/SwimmPairFrontendJSLib.js}
-Functions in this library were created to support Ajax calls and DOM operations for \textbf{public part} of our application. Functions have self-descriptive names, function parameter and \textbf{this} means reference to the caller DOM element.  
+Functions in this library were created to support Ajax calls and DOM operations for \textbf{public part} of our application. Functions have self-descriptive names, function parameter; \textbf{this} means reference to the caller DOM element.  
 \newline
 Functions are general \& contain \textbf{XMLHttpRequest} and \textbf{DOM modification}:
 \begin{itemize}
@@ -663,29 +663,29 @@ Functions are general \& contain \textbf{XMLHttpRequest} and \textbf{DOM modific
     \item get\_club\_statistics\_for\_the\_season.php, \textbf{GET args}: club\textunderscore \textbf{id}, \textbf{year}
 \end{itemize}
 
-\subsection{Previous post - retrieve older post}
+\subsection{Previous post - retrieve an older post}
 This button on the main page serves as a tool for loading next post. It has \textbf{onclick="GetPostAppendPost(PushLastId())"}. Both are JavaScript functions, \textbf{PushLastId()} detects id \textbf{\textless article class="post" id="X"... } of last article \textbf{class="post"} from DOM by querySelector and returns it. This value is then used as an argument of call \textbf{GetPostAppendPost(id)}. This function requests article by GET request \textbf{XMLHttpRequest/get\_following\_post.php?id=X}.  
 The result can be:
 \begin{itemize}
-\item \textbf{null} - button is deleted since there are no other articles to pull from DB,
-\item \textbf{post} - next article is constructed and appended from response.
+\item \textbf{null} - button is deleted since there are no other articles to fetch from DB,
+\item \textbf{post} - next article is \textbf{createElement}-ed from response and appended.
 \end{itemize}
 
 \subsection{User statistics - year change}
-All individual referees have seasons years picker when opened. Default season is the current season. Clicking different season visibily changes selected year and obtains appropriate statistics and updates the stats table. Clicking \textbf{\textless span onclick="ProcessPersonForTheSeason(userId, this)"... } calls inside \textbf{CommunicateStatsXhrAndPopulateStats(userId, year)} gets data from \textbf{XMLHttpRequest/call\_get\_person\_statistics\_for\_the\_season.php}\newline \textbf{?id=userId\&year=YYYY} and updates table. Also via \text{this} reference in call the button is marked as selected.  
+All individual referees have seasons years picker when opened. Default season is the current season. Clicking different season visibily changes selected year and obtains appropriate statistics and updates the stats table. Clicking \textbf{\textless span onclick="ProcessPersonForTheSeason(userId, this)"... } calls inside \textbf{CommunicateStatsXhrAndPopulateStats(userId, year)} gets data from \textbf{XMLHttpRequest/call\_get\_person\_statistics\_for\_the\_season.php}\newline \textbf{?id=userId\&year=YYYY} and updates table. Also via \textbf{this} reference in the call the button is marked as selected.  
 
 \subsection{Club statistics - year change}
-Club statistics are updated by clicking appropriate year that gets switched. Year onclick calls \textbf{ProcessClubForTheSeason(clubId, this)} which gets statistics by calling \textbf{CommunicateClubStatsXhrAndUpdateTable(clubId, year)}
+Club statistics are updated by clicking appropriate year that gets selected. Year onclick calls \textbf{ProcessClubForTheSeason(clubId, this)} which gets statistics by calling \textbf{CommunicateClubStatsXhrAndUpdateTable(clubId, year)}
 \newline by calling \textbf{XMLHttpRequest/get\_club\_statistics\_for\_the\_season.php}
 \newline \textbf{?id=clubId\&year=Year} and subsequently calling function modifying DOM 
 \newline \textbf{UpdateClubStatsTable(returnedGetJSON)} which literally updates stats.
 
-\subsection{Filtering referees}
-Refiltering of referees is triggered by one of these (\autoref{fig3.1:filtering}) functions on events: 
+\subsection{Filtering the referees}
+Refiltering referees list is triggered by one of these (\autoref{fig3.1:filtering}) functions on one of these events: 
 \begin{itemize}
-  \item \textbf{region changed} - onclick="RegionPickerChanged(this)", 
-  \item \textbf{ref. rank changed} - onclick="RefereeRankPickerChanged(this)",
-  \item \textbf{searchbar changed} - onkeyup="SearchBarChanged()".
+  \item \textbf{region changed} - onclick="\textbf{RegionPickerChanged(this)}", 
+  \item \textbf{ref. rank changed} - onclick="\textbf{RefereeRankPickerChanged(this)}",
+  \item \textbf{searchbar changed} - onkeyup="\textbf{SearchBarChanged()}".
 \end{itemize}
 \begin{figure}[h]	
 	\centering
@@ -694,7 +694,7 @@ Refiltering of referees is triggered by one of these (\autoref{fig3.1:filtering}
 \caption{Filtering of referees for statistical purposes (requirements R3/S4).}
 \label{fig3.1:filtering}
 \end{figure}
-\textbf{FilterQueriedReferees("kraje", "tridy", "inputTrida", "nopplfound")} is called every time one of 3 controls is changed.
+\textbf{FilterQueriedReferees("kraje", "tridy", "inputTrida", "nopplfound")} is called every time one of these 3 control elements is changed.
 \newline
 We then loop all users \textbf{visible}\&\textbf{hidden} and check if this one's \textbf{Region} - IsOptionPermissible(raid, args[]) (region id), \textbf{Rank} - IsOptionPermissible(rrid, args[]) (referee rank id) and then if one's \textbf{Name} - IsNamePermissible(args[]) starts with queried piece of string from the search bar. We then set one's element style to \textbf{style=""} and continue looping. If we fail one of these three conditions we know that referee does not satisfy search conditions and set referee's element's style to \textbf{style="display:none"} - to make referee not visible in the listing.
 \begin{lstlisting}
