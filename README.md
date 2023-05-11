@@ -15,10 +15,10 @@
 | EN | The goal of this work is to create web application for managing swimming competitions for Czech Swimming Federation (CSF). In collaboration with employees we analysed status quo and iteratively come up with model and frontend for implementation. Besides administration of competitions we need to deliver database of users who can sign-up, management of users and most importantly public statistics for clubs and users for purposes of renewing accreditations by CSF for upcoming seasons. Tech stack of implementation is LAMP. Web application will be distributed as Docker image for production in arbitrary cloud. This production deployment will use private Kubernetes cluster. |
 | Řešitel | Štěpán Klos |
 ## Lowkey TODOs 11.04.2023
-- [ ] vyhodit SUS graf u jednotlivych otazek
-- [ ] vice & poradne unit testy
-- [ ] mby norm. 10t mac, 10t k8s...5x 10t mac, 10t k8s - 4 srovnani (sloupky asi) ... misto toho, co mame ted 
-- [ ] revize js sekce
+- [x] vyhodit SUS graf u jednotlivych otazek
+- [x] vice & poradne unit testy
+- ~~[ ] mby norm. 10t mac, 10t k8s...5x 10t mac, 10t k8s - 4 srovnani (sloupky asi) ... misto toho, co mame ted ~~
+- [x] revize js sekce
 
 ## TODOs 24.03.2023
 ### Iterace ze schuzky
@@ -49,7 +49,7 @@
     - mby UML Sequence Diagram
     - [x] text ke kazdemu //TODO same as Doxygen caption (prolong Doxy)
 - [ ] 4 Testing
-    - [ ] Benchmark for 5x larger script than "current load" script
+    - ~~[ ] Benchmark for 5x larger script than "current load" script~~
     - [x] SUS plotting
     - [x] PHP Unit Testing
 ___
@@ -70,7 +70,7 @@ ___
     - [x] ch. 2.1 OK [x], 2.2 OK [x], 2.3 UI MOCKUPS [x], 2.4 DB DESIGN [x], ...
     - [x] chs. 2.7 2.8 2.9 - instead table STORY->API F 
 - [ ] **SECTION 3**     
-    - [ ] <ins>Add !TODO Doxygen - PDF option: attachment (now just [docu.swimmpair.cz](http://docu.swimmpair.cz))</ins> || added [docu-swimmpair.stkl.cz](http://docu-swimmpair.stkl.cz)
+    - [x] <ins>Add !TODO Doxygen - PDF option: attachment (now just [docu.swimmpair.cz](http://docu.swimmpair.cz))</ins> || added [docu-swimmpair.stkl.cz](http://docu-swimmpair.stkl.cz)
 - [x] **SECTION 4**
     - [x] ch. 4.1 PERFORMANCE EVALUATION
     - [x] <ins>Add !TODO ch 4.sth - PHPUnit testing, cases prepared</ins>
