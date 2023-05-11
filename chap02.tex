@@ -1,24 +1,24 @@
 \chapter{System design}
-This chapter aims to familiarize the reader with the architecture of our application. The system consists of two logical parts: the \textbf{public website} and the \textbf{private administration}. The private administration is secured with a login/password, allowing access only to authorized personnel.
+This chapter aims to familiarize the reader with architecture of our application. The system consists of two logical parts: \textbf{public website} and \textbf{private administration}. The private administration is secured with simple login/password, allowing access only to authorized personnel.
 \par
-When designing such a system, an object-oriented approach and grouping of similar functions together is a must. There are \textbf{objects that have to be moved around the web application}, as described in the previous chapter. These objects will be: post, user, club, cup, position, and region. Thus, we came up with a \textbf{concept of managers}. Each page of SwimmPair is composed of the same/unified header, menu, and footer. The content part is filled with the page’s specific results of manager calls used to construct the data UI page layout. These managers are included and used in all pages via the start file.
+When designing such system, an object-oriented approach and grouping of similar functions together is a must. There are \textbf{objects that have to be moved around our web application}, as described in the previous chapter. These objects will be: post, user, club, cup, position, and region. Thus, we came up with a \textbf{concept of managers}. Each page of SwimmPair is composed of the same/unified header, menu, and footer. The content part is filled with the page’s specific results of manager calls used to construct the data UI page layout. These managers are included and used in all pages via the start file.
 \section{Technologies}
-There are several technologies and tools used for application.
+There are several technologies and tools used for creating the application.
 \begin{itemize}
     \item \textbf{HTML} is HyperText Markup Language \footnote{\citep{HTML5Standard}} - application pages are templated by PHP.
     \item \textbf{CSS} is Cascading Style Sheets \footnote{\citep{CSS3Standard}}.
-    \item \textbf{PHP} is a general-purpose scripting language geared toward web development \footnote{\citep{PHP74Standard}} - object model and backend services are provided by it.
+    \item \textbf{PHP} is a general-purpose scripting language geared toward web development \footnote{\citep{PHP74Standard}} - object model and backend services are delivered by PHP.
     \item \textbf{JavaScript}  is a general-purpose scripting language that conforms to the ECMAScript specification \footnote{\citep{ECMADocu}}.
     \item \textbf{MySQL} is an open-source relational database management system \footnote{\citep{MySQLDocu}}.
     \item \textbf{Git} is a distributed version control system: tracking changes in any set of files - this project is versioned and kept in project GitHub repository \footnote{\url{https://github.com/KlosStepan/SwimmPair-Www}}.
     \item \textbf{Docker} is a set of platform as a service products that use OS-level virtualization to deliver software in packages called containers \footnote{\citep{DockerDocu}} - used for deployment of our application.
-    \item \textbf{GitHub Actions} is a platform for automating workflows in GitHub repositories - our application uses GitHub Actions to automate testing. Specifically, we checkout with \textbf{actions/checkout@v3} and then run PHP using \textbf{shivammathur/setup-php@v2} for our backend tests of PHP backend using PHPUnit, along with a \textbf{docker container of our database filled with database schema} for integration testing. After each push we can see success of CI wokload run.
-    \item \textbf{Kubernetes} is an open-source container orchestration system for automating software deployment, scaling, and management \footnote{\citep{K8sDocu}} - used for production deployment of our application into our own Kubernetes cluster.
+    \item \textbf{GitHub Actions} is a platform for automating workflows in GitHub repositories - our application uses GitHub Actions to automate testing. Specifically, we checkout with \textbf{actions/checkout@v3} and then run PHP using \textbf{shivammathur/setup-php@v2} for our backend tests using PHPUnit, along with a \textbf{docker container of our database filled with database schema} for integration testing. After each push we can see success of CI wokload run.
+    \item \textbf{Kubernetes} is an open-source container orchestration system for automating software deployment, scaling, and management \footnote{\citep{K8sDocu}} - used for production deployment of our application.
     \item \textbf{Redis} is an in-memory data store often used for caching, messaging, and session persistence. Our application uses Redis to store session data and share it between running container instances, allowing traffic to be efficiently redirected and load-balanced.
 \end{itemize} 
 \newpage
 \section{Architecture overview}
-A visitor comes to the \textbf{app page} where \textbf{managers} are included. From the page, there are API calls on managers that retrieve and store data as follows.
+A visitor comes to the \textbf{app page} where \textbf{managers} are included. From the page, there are API calls on managers that retrieve and store data as follows (\autoref{fig2.1:appschema}).
 \newline
 \begin{figure}[h]	
 	\centering	
@@ -27,7 +27,7 @@ A visitor comes to the \textbf{app page} where \textbf{managers} are included. F
 	\label{fig2.1:appschema}
 \end{figure}
 \section{Model Managers}
-Managers are designed to provide API functionality for system administration. They populate pages with data and process new input from users, administering the storage of this data. Each object has a corresponding manager responsible for handling it, which helps to accommodate database loads and stores. These operations are controlled by transactions to ensure data consistency.
+Managers are designed to provide API functionality for the system administration. Managers populate pages with data and process new input from users, administering the storage of this data. Each object has a corresponding manager responsible for handling it, which helps to accommodate database loads and stores. These operations are controlled by transactions to ensure data consistency.
 \newline
 \textbf{Classes and their corresponding managers:}
 \begin{itemize}
